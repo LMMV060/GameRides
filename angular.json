@@ -94,8 +94,21 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "introAngular:build:production",
+            "firebaseProject": "playcar-f3770",
+            "firebaseHostingSite": "playcar-f3770"
+          }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

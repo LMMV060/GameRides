@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "playcar-f3770": {
+      "hosting": {
+        "introAngular": [
+          "playcar-f3770"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "playcar-f3770"
+  }
+}

@@ -1,0 +1,28 @@
+<br>
+<br>
+<br>
+<div class="login-page">
+
+  <label position="floating" >Correo electrónico</label>
+  <br>
+
+  <input required type="email" id="email" (input)="ObtenerEmail($event)">
+<br>
+
+  <label position="floating">Contraseña</label>
+  <br>
+  <input required type="password" id="contra" (input)="ObtenerPWD($event)">
+
+
+<button expand="block" (click)="Login()">Login</button>
+
+<button expand="block" class="btn btn-info" (click)="LoginWithGoogle()">Google</button>
+
+<div class="externos">
+  <br>
+  <a href="/registrar">¿Desea registrarse?</a>
+  <br>
+  <a href="/recuperar-contra">¿Se ha olvidado de su contraseña?</a>
+</div>
+
+</div>

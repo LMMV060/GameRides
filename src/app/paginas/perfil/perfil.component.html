@@ -1,0 +1,13 @@
+<br>
+<br>
+<br>
+<p>Perfil</p>
+<p>{{nombre}}</p>
+<div *ngIf="loading"  class="spinner"></div>
+
+<img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
+
+<button (click)="Editar()" class="button-71">Editar</button>
+
+
+

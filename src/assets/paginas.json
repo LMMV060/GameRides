@@ -1,0 +1,40 @@
+[
+  {
+      "nombre": "Home",
+      "ruta":"/home",
+      "color": "primary",
+      "icono": "home-outline"
+  },
+  {
+      "nombre":"Perfil",
+      "ruta":"/perfil",
+      "color": "secondary",
+      "icono": "man-outline"
+
+  },
+  {
+    "nombre":"Peticiones",
+    "ruta":"/peticiones",
+    "color": "tertiary",
+    "icono": "car-outline"
+  },
+  {
+    "nombre":"Buscar usuario",
+    "ruta":"/usuarios",
+    "color": "tertiary",
+    "icono": "people-outline"
+
+},
+{
+  "nombre":"Ajustes",
+  "ruta":"/ajustes",
+  "color": "tertiary",
+  "icono": "build-outline"
+},
+{
+  "nombre":"Cerrar sesión",
+  "ruta":"/logout",
+  "color": "tertiary",
+  "icono": "log-out-outline"
+}
+  ]
