@@ -8,45 +8,48 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit{
   token = "d469385fa45e0c309e3c176dd5b62f70";
 
-  torneos = [];
+  torneos:any = [];
   unixTime: number | undefined;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.unixTime = Math.floor(new Date().getTime() / 1000);
     console.log(this.unixTime);
 
 
 
 
-    const query = `query SocalTournaments($perPage: Int, $coordinates: String!, $radius: String!) {
-      tournaments(query: {
-        perPage: $perPage
-        filter: {
-          location: {
-            distanceFrom: $coordinates,
-            distance: $radius
-          },
+    // const query = `query SocalTournaments($perPage: Int, $coordinates: String!, $radius: String!) {
+    //   tournaments(query: {
+    //     perPage: $perPage
+    //     filter: {
+    //       location: {
+    //         distanceFrom: $coordinates,
+    //         distance: $radius
+    //       },
 
-        }
-      }) {
-        nodes {
-          id
-          name
-          city
-          countryCode
-          endAt
-        }
-      }
-    } `;
+    //     }
+    //   }) {
+    //     nodes {
+    //       id
+    //       name
+    //       city
+    //       countryCode
+    //       images{
+    //         url
+    //       }
+    //       endAt
+    //     }
+    //   }
+    // } `;
 
-    const variables = {
-      perPage: 100,
-      coordinates: "40.4168,3.7038",
-      radius: "200mi",
+    // const variables = {
+    //   perPage: 100,
+    //   coordinates: "40.4168,3.7038",
+    //   radius: "200mi",
 
-    };
+    // };
 
-    /*const query = `query TournamentsByCountry($cCode: String!, $perPage: Int!) {
+    const query = `query TournamentsByCountry($cCode: String!, $perPage: Int!) {
       tournaments(query: {
         perPage: $perPage
         filter: {
@@ -74,8 +77,8 @@ export class HomeComponent implements OnInit{
 
     const variables = {
       cCode: 'ES',
-      perPage: 22
-    };*/
+      perPage: 100
+    };
 
     fetch('https://api.start.gg/gql/alpha', {
       method: 'POST',
@@ -89,9 +92,9 @@ export class HomeComponent implements OnInit{
       })
     })
       .then(response => response.json())
-      .then(data => {
+      .then(async data => {
         console.log(data.data.tournaments.nodes)
-        this.torneos = data.data.tournaments.nodes;
+        this.torneos = await data.data.tournaments.nodes;
         console.log(this.torneos);
 
       })

@@ -55,3 +55,46 @@
   .boton-lista button:hover {
   background-color: #0056b3;
   }
+
+  #segmento {
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    margin-bottom: 10px;
+    }
+
+    #segmento option {
+    font-size: 18px;
+    color: #333;
+    }
+
+    .mi-boton {
+      background-color: #fff; /* color de fondo del botón */
+      border-radius: 5px;
+      color: #333; /* color del texto */
+      padding: 15px 32px; /* espacio entre el borde y el contenido del botón */
+      text-align: center; /* alineación del texto */
+      text-decoration: none; /* decoración del texto */
+      display: inline-block; /* muestra el botón en línea con otros elementos */
+      font-size: 16px; /* tamaño de fuente del texto */
+      margin: 4px 2px; /* margen del botón */
+      cursor: pointer; /* cambia el cursor cuando se pasa sobre el botón */
+      border-radius: 8px; /* da una forma redondeada al borde del botón */
+    }
+
+    .card-img-top {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .select-image-option {
+      background-repeat: no-repeat;
+      background-position: left center;
+      padding-left: 30px;
+    }
+

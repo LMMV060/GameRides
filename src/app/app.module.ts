@@ -9,6 +9,9 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { NgOptimizedImage } from '@angular/common'
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -20,8 +23,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     CommonModule,
     ReactiveFormsModule,
+    NgOptimizedImage,
+    MatCardModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAuth(() => getAuth())
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
 
   ],
   exports: [

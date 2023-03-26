@@ -1,14 +1,118 @@
 <br>
-<br>
-<br>
 
 
 <div>
-  <label for="segmento" >Selecciona una opción:</label>
   <select id="segmento" name="segmento" (change)="Busqueda($event)">
     <option value="Conductores">Conductores</option>
     <option value="Pasajeros">Pasajeros</option>
   </select>
+
+  <br>
+
+
+  <div *ngIf="opcionSeleccionada === 'Pasajeros'">
+    <button type="button" class="btn btn-primary" (click)="mostrarContenido = !mostrarContenido">
+      Da la información de la peticion
+    </button>
+
+    <div *ngIf="mostrarContenido">
+      <label position="floating" >Fecha de ida</label>
+      <br>
+
+      <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha">
+
+
+      <label position="floating" >Eventos</label>
+
+      <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
+        <option value=null>- Seleccione un evento -</option>
+        <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+
+          {{ evento.name}}
+        </option>
+
+      </select>
+    </div>
+
+
+    <br>
+
+    <button class="mi-boton" (click)="realizarPeticion()">Pedir peticion</button>
+
+    <div *ngFor="let peticion of Peticiones">
+      <div class="card" >
+        <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{peticion.nombre}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
+          <p class="card-text">{{peticion.descripcion}}</p>
+        </div>
+      </div>
+      <br>
+    </div>
+
+
+  </div>
+  <div *ngIf="opcionSeleccionada === 'Conductores'">
+    <button type="button" class="btn btn-primary" (click)="mostrarContenido = !mostrarContenido">
+      Da la información de la peticion
+    </button>
+
+    <div *ngIf="mostrarContenido">
+      <label position="floating" >Fecha de ida</label>
+      <br>
+
+      <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha">
+
+      <br>
+
+
+      <label position="floating" >Matricula</label>
+
+      <select id="vehiculo" name="vehiculo" (change)="Alias($event)" >
+        <option value="">- Seleccione un coche -</option>
+        <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.alias}}">{{ vehiculo.alias}}</option>
+      </select>
+
+      <br>
+
+      <label position="floating" >Eventos</label>
+
+      <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
+        <option value="">- Seleccione un evento -</option>
+        <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+
+          {{ evento.name}}
+        </option>
+
+
+      </select>
+
+      <br>
+
+    </div>
+
+    <br>
+
+    <button class="mi-boton" (click)="ofrecerTransporte()">Ofrecer transporte</button>
+
+    <div *ngFor="let transporte of Transportes">
+      <div class="card" >
+        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{transporte.nombre}}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{transporte.fecha}}</h6>
+          <p class="card-text">{{transporte.descripcion}}</p>
+        </div>
+      </div>
+      <br>
+    </div>
+
+  </div>
+
+
+
+
 
 </div>
 

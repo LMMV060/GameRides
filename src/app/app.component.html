@@ -1,15 +1,18 @@
 
-<header>
+<header style="height: 100px;">
   <nav>
-    <ul *ngFor="let c of paginas" [routerLink]="c.ruta">
-      <li>{{c.nombre}}</li>
-      
-    </ul>
+    <ng-container *ngFor="let c of paginas">
+      <a [routerLink]="c.ruta">{{c.nombre}}</a>
+    </ng-container>
   </nav>
+
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
 </header>
 
-<router-outlet></router-outlet>
+<div style="padding-top: 100px;">
+  <router-outlet></router-outlet>
+</div>
+
 

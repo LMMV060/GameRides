@@ -19,6 +19,12 @@
     "icono": "car-outline"
   },
   {
+    "nombre":"Coches",
+    "ruta":"/coches",
+    "color": "tertiary",
+    "icono": "build-outline"
+  },
+  {
     "nombre":"Buscar usuario",
     "ruta":"/usuarios",
     "color": "tertiary",

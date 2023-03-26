@@ -3,6 +3,9 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
+import { doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Usuarios } from 'src/app/interfaces/usuarios';
+import { collection, getDocFromCache, getDocs } from 'firebase/firestore';
 
 @Component({
   selector: 'app-login',
@@ -25,8 +28,6 @@ export class LoginComponent implements OnInit {
       console.log("Login");
     } else {
       this.router.navigateByUrl('/home');
-
-
     }
   }
 
@@ -58,21 +59,42 @@ export class LoginComponent implements OnInit {
 
   async LoginWithGoogle(){
     this.fire.loginWithGoogle()
-    .then(response => {
+    .then(async response => {
       console.log(response);
-      this.router.navigateByUrl('/home');
+
+      if(this.auth.currentUser && this.auth.currentUser.displayName && this.auth.currentUser.photoURL){
+        const usuario:Usuarios= {
+          uid:this.auth.currentUser.uid,
+          nombre: this.auth.currentUser.displayName,
+          imgUrl: this.auth.currentUser.photoURL,
+          isAdmin: false
+        };
+
+        const query = await getDocs(collection(this.fire.basededatos(), "Usuarios"))
+        let filtro = undefined;
+        query.forEach((doc) => {
+          if(doc.id == "Usuario-"+this.auth.currentUser?.uid){
+            filtro = doc.data();
+          }
+        })
+
+        if(filtro == undefined){
+          const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)
+          console.log("Usuario creado");
+        } else {
+          console.log("Bienvenido");
+        }
+
+
+
+
+
+
+
+          this.router.navigateByUrl('/home');
+
+      }
     })
     .catch(error => console.log(error));
   }
-
-
-  /*Registrar
-  this.fire.register(this.email, this.pwd)
-    .then(response => {
-      console.log(response);
-
-    })
-    .catch(error => console.log(error)
-    )
-  */
 }

@@ -1,0 +1,28 @@
+<br>
+
+<div class="labels-container">
+  <label for="matricula" class="label-floating">Matricula</label>
+  <input required type="string" id="matricula" (input)="ObtenerMatricula($event)" pattern="[A-Za-z]{3}">
+
+  <label for="alias" class="label-floating">Alias</label>
+  <input required type="string" id="alias" (input)="ObtenerAlias($event)">
+</div>
+
+  <br>
+  <br>
+  <button type="button" class="btn btn-primary" (click)="SubirCoche()">
+    Registrar matrícula
+  </button>
+
+  <h1>Mis vehiculos</h1>
+
+  <div *ngFor="let peticion of misVehiculos">
+    <div class="card" >
+      <div class="card-body">
+        <h5 class="card-title">{{peticion.alias}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{peticion.matricula}}</h6>
+
+      </div>
+    </div>
+    <br>
+  </div>

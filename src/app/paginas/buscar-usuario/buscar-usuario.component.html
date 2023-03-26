@@ -1,0 +1,21 @@
+<br>
+<br>
+<br>
+<br>
+
+<div class="topnav">
+
+  <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
+
+</div>
+
+<div *ngFor="let data of datosFiltrados" (click)="irAPerfil(data.uid)">
+
+  <div class="card">
+    <img class="imagen-perfil"src={{data.imgUrl}} alt="Avatar" style="width:100%">
+    <div class="container">
+      <h4><b>{{data.nombre}}</b></h4>
+      <p>{{data.uid}}</p>
+    </div>
+  </div>
+</div>

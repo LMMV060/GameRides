@@ -1,12 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile } from '@angular/fire/auth';
-
+import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
 export class FirebaseService {
+  VehiculosTotales: any = [];
+  misVehiculos: any = [];
+  VehiculoEspecifico:any;
 
-  constructor(private auth: Auth) { }
+  constructor(
+    private auth: Auth,
+    private bbdd:Firestore
+    ) { }
 
   register(email:any, pwd:any, nombre:any){
     return createUserWithEmailAndPassword(this.auth, email, pwd)
@@ -41,5 +47,31 @@ export class FirebaseService {
     return signOut(this.auth);
   }
 
+  basededatos(){
+    return this.bbdd;
+  }
+
+  deletePeticiones(base:any){
+    console.log(base.fecha);
+    return base.fecha;
+  }
+
+  async getCocheData(matricula:any){
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Coches"));
+    querySnapshot.forEach((doc) => {
+
+      this.VehiculosTotales.push(doc.data());
+
+
+    });
+
+    this.VehiculosTotales.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.misVehiculos.push(objeto));
+
+    this.misVehiculos.filter((object:any) => object.alias == matricula).forEach((objeto: any) => {
+      console.log(objeto);
+
+      return objeto;
+      });
+  }
 
 }

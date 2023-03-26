@@ -14,18 +14,16 @@ nav {
   justify-content: space-between;
 }
 
-ul {
-  display: flex;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  margin: 0 10px;
-}
-
 a {
   color: #fff;
   text-decoration: none;
+}
+
+nav a {
+  left: 5;
+  right:5;
+  display: block; /* Establece los elementos a como bloques */
+  border-bottom: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
+  border-top: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
+  padding: 10px; /* Agrega un espacio de relleno para separar los elementos */
 }
