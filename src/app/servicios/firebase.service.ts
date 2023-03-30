@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile } from '@angular/fire/auth';
-import { collection, Firestore, getDocs } from '@angular/fire/firestore';
+import { collection, DocumentData, Firestore, getDocs } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
@@ -72,6 +72,23 @@ export class FirebaseService {
 
       return objeto;
       });
+  }
+
+  async getCurrentUser(){
+    const datos:any = [];
+    let usuarioActual:any;
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+
+      datos.push(doc.data());
+    });
+
+    usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
+
+    console.log(usuarioActual[0]);
+    return usuarioActual[0];
+
   }
 
 }

@@ -17,7 +17,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CochesComponent } from './coches/coches.component';
 import { FormsModule } from '@angular/forms';
 import { AjustesComponent } from './ajustes/ajustes.component';
-
+import { MatProgressSpinnerModule } from '@angular/material';
 
 
 
@@ -35,6 +35,7 @@ import { AjustesComponent } from './ajustes/ajustes.component';
     DashboardComponent,
     CochesComponent,
     AjustesComponent,
+
   ],
   imports: [
     CommonModule,
@@ -42,7 +43,8 @@ import { AjustesComponent } from './ajustes/ajustes.component';
     NgOptimizedImage,
     MatCardModule,
     MatBadgeModule,
-    FormsModule
+    FormsModule,
+    MatProgressSpinnerModule
   ],
   exports:[
     HomeComponent,

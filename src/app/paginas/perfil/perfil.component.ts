@@ -13,6 +13,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/fires
 })
 export class PerfilComponent implements OnInit {
 
+  isAdmin:boolean = false;
   usuario:any = [];
   public nombre = this.auth.currentUser?.displayName;
   public img:any = this.auth.currentUser?.photoURL;
@@ -29,6 +30,10 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+    const usuarioActual = await this.fire.getCurrentUser();
+
+    this.isAdmin = usuarioActual.isAdmin;
+
     console.log(this.auth.currentUser?.uid);
 
     const docRef = doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
@@ -75,24 +80,11 @@ export class PerfilComponent implements OnInit {
     this.loading = false;
   }
 
-  hovered = false;
-
-  setHovered(valor:boolean){
-    this.hovered = valor;
-  }
-
   async eliminarPeticion(peticion:any){
-    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
-    querySnapshot.forEach((doc) => {
 
-    });
+    if (confirm('¿Está seguro de que desea eliminar esta petición?')) {
 
-    console.log(peticion);
-
-    if (confirm('¿Está seguro de que desea eliminar este elemento?')) {
-
-
-      await deleteDoc(doc(this.fire.basededatos(), "Peticiones", peticion));
+      await deleteDoc(doc(this.fire.basededatos(), "Peticiones", peticion.id));
 
       this.PeticionesUsuario = this.PeticionesUsuario.filter((o:any) => o !== peticion);
       console.log("Objeto eliminado:", peticion);
@@ -103,7 +95,13 @@ export class PerfilComponent implements OnInit {
   }
 
   async eliminarOferta(peticion:any){
-    
+    if (confirm('¿Está seguro de que desea eliminar esta oferta?')) {
+
+      await deleteDoc(doc(this.fire.basededatos(), "Transportes", peticion.id));
+
+      this.TransportesUsuario = this.TransportesUsuario.filter((o:any) => o !== peticion);
+      console.log("Objeto eliminado:", peticion);
+    }
   }
 
   opcionSeleccionada:any = "Pasajeros";
@@ -112,5 +110,9 @@ export class PerfilComponent implements OnInit {
 
     console.log(event.target.value);
     this.opcionSeleccionada = event.target.value;
+  }
+
+  irADashboard(){
+    this.router.navigateByUrl("/dashboard");
   }
 }

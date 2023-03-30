@@ -32,6 +32,9 @@
         </option>
 
       </select>
+
+      <label position="floating" >Descripción</label>
+      <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
     </div>
 
 
@@ -43,8 +46,11 @@
       <div class="card" >
         <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
         <div class="card-body">
+          <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
+          <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
           <h5 class="card-title">{{peticion.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
+
           <p class="card-text">{{peticion.descripcion}}</p>
         </div>
       </div>
@@ -70,9 +76,15 @@
       <label position="floating" >Matricula</label>
 
       <select id="vehiculo" name="vehiculo" (change)="Alias($event)" >
-        <option value="">- Seleccione un coche -</option>
-        <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.alias}}">{{ vehiculo.alias}}</option>
+        <ng-container *ngIf="misVehiculos.length > 0; else noVehiculos">
+          <option value="">- Seleccione un coche -</option>
+          <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.alias}}">{{ vehiculo.alias }}</option>
+        </ng-container>
+        <ng-template #noVehiculos>
+          <option value="">- No tiene coches registrados -</option>
+        </ng-template>
       </select>
+
 
       <br>
 
@@ -84,12 +96,16 @@
 
           {{ evento.name}}
         </option>
-
-
       </select>
 
       <br>
 
+
+      <label position="floating" >Descripción</label>
+      <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
+
+
+      <br>
     </div>
 
     <br>
@@ -100,9 +116,12 @@
       <div class="card" >
         <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap">
         <div class="card-body">
+          <img class="logo-t" *ngIf="transporte.evento"  src="{{transporte.evento.images[0].url}}" alt="">
+          <h4 class="card-title" *ngIf="transporte.evento">{{transporte.evento.name}}</h4>
           <h5 class="card-title">{{transporte.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{transporte.fecha}}</h6>
           <p class="card-text">{{transporte.descripcion}}</p>
+
         </div>
       </div>
       <br>

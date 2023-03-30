@@ -83,3 +83,8 @@ img{
     border-radius: 8px; /* da una forma redondeada al borde del botón */
   }
 
+
+  .logo-t{
+    max-width: 100px;
+    max-height: 100px;
+  }

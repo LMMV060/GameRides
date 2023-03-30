@@ -6,6 +6,7 @@
 
 <img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
 
+<button (click)="irADashboard()" *ngIf="isAdmin" >Dashboard</button>
 <button (click)="Editar()" class="button-71">Editar</button>
 <br>
 <br>
@@ -17,13 +18,15 @@
 </select>
 
 <div *ngIf="opcionSeleccionada === 'Pasajeros'">
-  <div *ngFor="let peticion of PeticionesUsuario" (mouseover)="setHovered(true)" (mouseleave)="setHovered(false)">
+  <div *ngFor="let peticion of PeticionesUsuario">
     <div class="card my-card" >
 
       <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
 
       <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
       <div class="card-body">
+        <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
+          <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
         <h5 class="card-title">{{peticion.nombre}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
         <p class="card-text">{{peticion.descripcion}}</p>
@@ -34,13 +37,15 @@
 </div>
 
 <div *ngIf="opcionSeleccionada === 'Conductores'">
-  <div *ngFor="let peticion of TransportesUsuario" (mouseover)="setHovered(true)" (mouseleave)="setHovered(false)">
+  <div *ngFor="let peticion of TransportesUsuario">
     <div class="card my-card" >
 
       <button class="delete-button" (click)="eliminarOferta(peticion)">Eliminar</button>
 
       <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
       <div class="card-body">
+        <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
+          <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
         <h5 class="card-title">{{peticion.nombre}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
         <p class="card-text">{{peticion.descripcion}}</p>
@@ -53,7 +58,7 @@
 
 
 
-
+<app-footer></app-footer>
 
 
 

@@ -62,9 +62,9 @@ export class BuscarUsuarioComponent implements OnInit {
     if(id == this.auth.currentUser?.uid){
       this.router.navigateByUrl("/perfil")
     } else {
-      let usuarioClick = this.datos.find((item: { uid: any; }) => item.uid === id);
+      let usuarioClick:any = this.datos.find((item: { uid: any; }) => item.uid === id);
       console.log(usuarioClick);
-      localStorage.setItem('UsuarioAjeno',usuarioClick)
+      localStorage.setItem('UsuarioAjeno',usuarioClick.uid)
 
       this.router.navigate(["/perfil", usuarioClick.nombre])
     }

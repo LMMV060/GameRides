@@ -2,23 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { FuncionesService } from './servicios/funciones.service';
 import { FirebaseService } from './servicios/firebase.service';
 import { collection, deleteDoc, getDocs, doc } from '@angular/fire/firestore';
+import { Auth } from '@angular/fire/auth';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  title = 'introAngular';
+  title = 'GameRides';
   public paginas:any;
 
   constructor(
     private servi: FuncionesService,
-    private fire:FirebaseService
+    private fire:FirebaseService,
   ){
 
   }
 
   async ngOnInit() {
+
     this.paginas = await this.servi.getPaginas();
 
     const unixTime = Math.floor(new Date().getTime() / 1000);

@@ -14,6 +14,7 @@ import { PerfilAjenoComponent } from './paginas/perfil-ajeno/perfil-ajeno.compon
 import { CochesComponent } from './paginas/coches/coches.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AjustesComponent } from './paginas/ajustes/ajustes.component';
+import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 const rutas:Routes = [
   {
     path:'',
@@ -34,7 +35,8 @@ const rutas:Routes = [
   },
   {
     path: 'perfil/:nombre',
-    component: PerfilAjenoComponent
+    component: PerfilAjenoComponent,
+
   },
   {
     path:'login',
@@ -48,6 +50,10 @@ const rutas:Routes = [
   {
     path:'usuarios',
     component: BuscarUsuarioComponent
+  },
+  {
+    path:'dashboard',
+    component: DashboardComponent,
   },
   {
     path:'registrar',

@@ -1,4 +1,5 @@
 export interface Peticion {
+  id:string,
   uid:string,
   url:string,
   nombre:string,

@@ -24,6 +24,7 @@ export class PeticionesComponent implements OnInit {
   coche:any;
   eventoSeleccionado:any;
   eventos:any = [];
+  descripcion:any;
 
 
   constructor(
@@ -60,7 +61,7 @@ export class PeticionesComponent implements OnInit {
 
     this.VehiculosTotales.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.misVehiculos.push(objeto));
 
-    console.log(this.misVehiculos[0].alias);
+    //console.log(this.misVehiculos[0].alias);
 
     //this.alias = this.misVehiculos[0].alias;
 
@@ -127,16 +128,6 @@ export class PeticionesComponent implements OnInit {
 
 
     if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha){
-      const pet:Peticion= {
-        uid:this.auth.currentUser?.uid,
-        url:this.auth.currentUser.photoURL,
-        nombre:this.auth.currentUser.displayName,
-        fecha: this.fecha,
-        precio:20,
-        evento: this.eventoSeleccionado || null,
-        descripcion:"Quiero ir a este sitio porque me parece la ostia",
-      }
-
 
       for(let i = 1; i<= 5; i++){
         const docRef = doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid);
@@ -146,8 +137,20 @@ export class PeticionesComponent implements OnInit {
             console.log("Numero máximo de peticiones alcanzadas");
           }
         } else {
+          const pet:Peticion= {
+            id: "Peticion-"+ i + "-"+this.auth.currentUser.uid,
+            uid:this.auth.currentUser?.uid,
+            url:this.auth.currentUser.photoURL,
+            nombre:this.auth.currentUser.displayName,
+            fecha: this.fecha,
+            precio:20,
+            evento: this.eventoSeleccionado || null,
+            descripcion: this.descripcion,
+          }
+
           const response = await setDoc(doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid), pet)
           console.log("Peticion creada");
+          location.reload();
           i = 21;
         }
 
@@ -167,17 +170,6 @@ export class PeticionesComponent implements OnInit {
     console.log("Transporte");
 
     if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.alias != "" && this.alias){
-      const pet:Ofertas= {
-        uid:this.auth.currentUser?.uid,
-        url:this.auth.currentUser.photoURL,
-        nombre:this.auth.currentUser.displayName,
-        fecha: this.fecha,
-        vehiculo: this.alias,
-        precio:20,
-        evento: this.eventoSeleccionado || null,
-        descripcion:"Ofrezco ir a este sitio",
-      }
-
 
       for(let i = 1; i<= 5; i++){
         const docRef = doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid);
@@ -187,8 +179,21 @@ export class PeticionesComponent implements OnInit {
             console.log("Numero máximo de transportes alcanzadas");
           }
         } else {
+          const pet:Ofertas= {
+            id: "Transporte-"+ i + "-"+this.auth.currentUser.uid,
+            uid:this.auth.currentUser?.uid,
+            url:this.auth.currentUser.photoURL,
+            nombre:this.auth.currentUser.displayName,
+            fecha: this.fecha,
+            vehiculo: this.alias,
+            precio:20,
+            evento: this.eventoSeleccionado || null,
+            descripcion: this.descripcion,
+          }
+
           const response = await setDoc(doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid), pet)
           console.log("Transporte creada");
+          location.reload();
           i = 21;
         }
 

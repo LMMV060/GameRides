@@ -19,11 +19,16 @@ export class LogoutComponent implements OnInit {
   }
 
   logout(){
-    this.fire.logout()
+    if (confirm('¿Desea cerrar la sesión?')) {
+      this.fire.logout()
     .then(() => {
       this.router.navigateByUrl('/home')
     })
     .catch(error => console.log(error));
+    } else {
+      this.router.navigateByUrl('/home')
+    }
+
 
   }
 }

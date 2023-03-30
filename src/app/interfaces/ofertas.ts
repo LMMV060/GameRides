@@ -1,4 +1,5 @@
 export interface Ofertas {
+  id:string,
   uid:string,
   url:string,
   nombre:string,
