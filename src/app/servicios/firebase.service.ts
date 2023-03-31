@@ -104,9 +104,10 @@ export class FirebaseService {
       datos.push(doc.data());
     });
 
+    let usuariosBuenos:any = [];
 
-    console.log(datos);
-    return datos;
+    usuariosBuenos = datos.filter((objeto:any) => !objeto.isDisabled);
+    return usuariosBuenos;
   }
 
   async getAllPeticiones(){
