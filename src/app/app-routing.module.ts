@@ -15,6 +15,7 @@ import { CochesComponent } from './paginas/coches/coches.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AjustesComponent } from './paginas/ajustes/ajustes.component';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
+import { DashboardGuard } from './guards/dashboard.guard';
 const rutas:Routes = [
   {
     path:'',
@@ -54,6 +55,7 @@ const rutas:Routes = [
   {
     path:'dashboard',
     component: DashboardComponent,
+    //canActivate:[DashboardGuard]
   },
   {
     path:'registrar',

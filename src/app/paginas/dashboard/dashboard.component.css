@@ -1,0 +1,18 @@
+* {
+  text-align: center;
+}
+
+.imagen-perfil {
+  width: 10px;
+  height: 10px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.card .delete-button {
+  display: none;
+}
+
+.card:hover .delete-button {
+  display: block;
+}

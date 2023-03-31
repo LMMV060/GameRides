@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile } from '@angular/fire/auth';
-import { collection, DocumentData, Firestore, getDocs } from '@angular/fire/firestore';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth } from '@angular/fire/auth';
+import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, updateDoc } from '@angular/fire/firestore';
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +14,8 @@ export class FirebaseService {
 
   constructor(
     private auth: Auth,
-    private bbdd:Firestore
+    private bbdd:Firestore,
+
     ) { }
 
   register(email:any, pwd:any, nombre:any){
@@ -87,8 +91,63 @@ export class FirebaseService {
     usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
 
     console.log(usuarioActual[0]);
-    return usuarioActual[0];
+    return usuarioActual[0].isAdmin;
 
   }
 
+  async getAllUsers(){
+    const datos:any = [];
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+
+      datos.push(doc.data());
+    });
+
+
+    console.log(datos);
+    return datos;
+  }
+
+  async getAllPeticiones(){
+    const peticiones:any = [];
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Peticiones"));
+    querySnapshot.forEach((doc) => {
+
+      peticiones.push(doc.data());
+    });
+
+
+    console.log(peticiones);
+    return peticiones;
+  }
+
+  async getAllTransportes(){
+    const transportes:any = [];
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Transportes"));
+    querySnapshot.forEach((doc) => {
+
+      transportes.push(doc.data());
+    });
+
+
+    console.log(transportes);
+    return transportes;
+  }
+
+  async inhabilitar(user:any){
+    const usuario = doc(this.basededatos(), "Usuarios", "Usuario-"+user.uid);
+
+
+    await deleteDoc(doc(this.basededatos(), "Usuarios", user.uid));
+    await updateDoc(usuario, {
+      isDisabled: true
+    });
+
+
+    //console.log(user);
+
+  }
 }

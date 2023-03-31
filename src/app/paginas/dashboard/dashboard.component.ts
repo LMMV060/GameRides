@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { firebaseApp$, initializeApp } from '@angular/fire/app';
+import { Auth, deleteUser, getAuth } from '@angular/fire/auth';
+import { deleteDoc, doc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +12,9 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  usuarios:any = [];
+  peticiones:any = [];
+  transportes:any = [];
   isAdmin:boolean = false;
   constructor(
     private fire: FirebaseService,
@@ -19,13 +24,56 @@ export class DashboardComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
-    const usuarioActual = await this.fire.getCurrentUser();
 
-    this.isAdmin = usuarioActual.isAdmin;
+    this.usuarios = await this.fire.getAllUsers();
+    this.peticiones = await this.fire.getAllPeticiones();
+    this.transportes = await this.fire.getAllTransportes();
 
-    if(!this.isAdmin){
+    console.log(this.peticiones);
+
+    try{
+      const admin = await this.fire.getCurrentUser();
+
+      if(admin){
+        console.log("Bienvenido");
+
+      } else {
+        this.router.navigateByUrl("/error")
+      }
+    } catch(err){
       this.router.navigateByUrl("/error")
     }
+
+
+
+  }
+
+  opcionSeleccionada:any = "Usuarios";
+
+  Busqueda(event:any){
+
+    console.log(event.target.value);
+    this.opcionSeleccionada = event.target.value;
+  }
+
+  ObtenerNombre(event:any){
+    const text = event.target.value;
+
+    console.log(text)
+  }
+
+  async eliminarUsuario(usuario:any){
+    this.fire.inhabilitar(usuario);
+
+    /*if (confirm('¿Está seguro de que desea eliminar esta petición?')) {
+
+      await deleteDoc(doc(this.fire.basededatos(), "Usuarios", usuario.uid));
+
+      console.log("Objeto eliminado:", usuario);
+    }*/
+
+
+
   }
 
 }

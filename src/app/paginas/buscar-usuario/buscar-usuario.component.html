@@ -8,6 +8,7 @@
   <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
 
 </div>
+<br>
 
 <div *ngFor="let data of datosFiltrados" (click)="irAPerfil(data.uid)">
 
@@ -19,3 +20,5 @@
     </div>
   </div>
 </div>
+<br>
+<app-footer></app-footer>

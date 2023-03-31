@@ -13,6 +13,7 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgOptimizedImage } from '@angular/common'
 import {MatCardModule} from '@angular/material/card';
 
+
 @NgModule({
   declarations: [
     AppComponent,

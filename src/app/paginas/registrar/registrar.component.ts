@@ -70,7 +70,8 @@ export class RegistrarComponent implements OnInit {
             uid:this.auth.currentUser.uid,
             nombre: this.nombre,
             imgUrl: "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png",
-            isAdmin: false
+            isAdmin: false,
+            isDisabled: false
           };
 
           const response = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)

@@ -19,8 +19,6 @@ import { FormsModule } from '@angular/forms';
 import { AjustesComponent } from './ajustes/ajustes.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 
-
-
 @NgModule({
   declarations: [
     HomeComponent,

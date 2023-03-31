@@ -67,7 +67,8 @@ export class LoginComponent implements OnInit {
           uid:this.auth.currentUser.uid,
           nombre: this.auth.currentUser.displayName,
           imgUrl: this.auth.currentUser.photoURL,
-          isAdmin: false
+          isAdmin: false,
+          isDisabled:false
         };
 
         const query = await getDocs(collection(this.fire.basededatos(), "Usuarios"))
