@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
         console.log("Estas baneado: ",usuarioBan);
 
         const ban = await setDoc(doc(this.fire.basededatos(), "Lista_Negra", "Ban-"+this.auth.currentUser?.uid), usuarioBan)
-        const borrarUsuario = await deleteDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser));
+        //const borrarUsuario = await deleteDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser));
 
         this.auth.signOut();
       } else {

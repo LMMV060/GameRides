@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   usuarios:any = [];
   peticiones:any = [];
   transportes:any = [];
+  lista_negra:any = [];
   isAdmin:boolean = false;
   constructor(
     private fire: FirebaseService,
@@ -28,7 +29,7 @@ export class DashboardComponent implements OnInit {
     this.usuarios = await this.fire.getAllUsers();
     this.peticiones = await this.fire.getAllPeticiones();
     this.transportes = await this.fire.getAllTransportes();
-
+    this.lista_negra = await this.fire.getAllBans();
     console.log(this.peticiones);
 
     try{
@@ -64,16 +65,24 @@ export class DashboardComponent implements OnInit {
 
   async eliminarUsuario(usuario:any){
     this.fire.inhabilitar(usuario);
-
     /*if (confirm('¿Está seguro de que desea eliminar esta petición?')) {
 
       await deleteDoc(doc(this.fire.basededatos(), "Usuarios", usuario.uid));
 
       console.log("Objeto eliminado:", usuario);
     }*/
+  }
 
+  async eliminarTransporte(Transporte:any){
+    this.fire.borrarTransporte(Transporte);
+  }
 
+  async eliminarPeticion(Peticion:any){
+    this.fire.borrarPeticion(Peticion);
+  }
 
+  async perdonarUsuario(usuario:any){
+    this.fire.perdonarUsuario(usuario);
   }
 
 }

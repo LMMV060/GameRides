@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth } from '@angular/fire/auth';
-import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, updateDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Usuarios } from '../interfaces/usuarios';
 
 
 
@@ -138,17 +139,84 @@ export class FirebaseService {
     return transportes;
   }
 
-  async inhabilitar(user:any){
-    const usuario = doc(this.basededatos(), "Usuarios", "Usuario-"+user.uid);
+  async getAllBans(){
+    const lista_negra:any = [];
 
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Lista_Negra"));
+    querySnapshot.forEach((doc) => {
 
-    await deleteDoc(doc(this.basededatos(), "Usuarios", user.uid));
-    await updateDoc(usuario, {
-      isDisabled: true
+      lista_negra.push(doc.data());
     });
 
 
-    //console.log(user);
+    return lista_negra;
+  }
+
+  async inhabilitar(user:any){
+    const usuario = doc(this.basededatos(), "Usuarios", "Usuario-"+user.uid);
+
+    if(user.uid === this.auth.currentUser?.uid){
+      console.log("My brother in christ te quieres banear a ti mismo?");
+
+    } else {
+      //await deleteDoc(doc(this.basededatos(), "Usuarios", user.uid));
+      await updateDoc(usuario, {
+        isDisabled: true
+      });
+
+      const usuarioBan:Usuarios = {
+        uid:this.auth.currentUser?.uid || "",
+        nombre: this.auth.currentUser?.displayName || "",
+        imgUrl: this.auth.currentUser?.photoURL|| "",
+        isAdmin: false,
+        isDisabled:true
+      }
+      console.log("Estas baneado: ",usuarioBan);
+
+      const ban = await setDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+this.auth.currentUser?.uid), usuarioBan)
+    }
+
+  }
+
+  async borrarTransporte(Transporte:any){
+    await deleteDoc(doc(this.basededatos(), "Transportes", Transporte.id))
+    .then(()=> {
+      alert("Transporte borrado, porfavor, actualiza")
+    })
+    .catch(err => {
+      console.log(err);
+
+    })
+
+  }
+
+  async borrarPeticion(Peticion:any){
+    await deleteDoc(doc(this.basededatos(), "Peticiones", Peticion.id))
+    .then(()=> {
+      alert("Peticion borrada, porfavor, actualiza")
+    })
+    .catch(err => {
+      console.log(err);
+
+    })
+
+  }
+
+  async perdonarUsuario(usuario:any){
+    const user = doc(this.basededatos(), "Usuarios", "Usuario-"+usuario.uid);
+
+
+    await deleteDoc(doc(this.basededatos(), "Lista_Negra", usuario.uid))
+    .then(async ()=> {
+      await updateDoc(user, {
+        isDisabled: false
+      });
+      console.log("teperD0no");
+    })
+    .catch(err => {
+      console.log(err);
+
+    })
 
   }
 }

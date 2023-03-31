@@ -3,24 +3,23 @@
 
 <div class="topnav">
 
-
-
 </div>
 
 <select id="segmento" name="segmento" (change)="Busqueda($event)">
   <option value="Usuarios">Usuarios</option>
   <option value="Transportes">Transportes</option>
   <option value="Peticiones">Peticiones</option>
+  <option value="Lista_Negra">Lista Negra</option>
 </select>
 <div *ngIf="opcionSeleccionada === 'Usuarios'">
   <h2>Usuarios</h2>
 
   <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
-
+  <br>
 <div *ngFor="let usuario of usuarios" >
   <div class="card">
     <button class="delete-button" (click)="eliminarUsuario(usuario)">Eliminar</button>
-    <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" style="width:100%">
+    <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar">
     <div class="container">
       <h4><b>{{usuario.nombre}}</b></h4>
       <p>{{usuario.uid}}</p>
@@ -32,10 +31,14 @@
 
 <div *ngIf="opcionSeleccionada === 'Transportes'" >
   <h2>Transportes</h2>
+
+  <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
+  <br>
+
 <div *ngFor="let transporte of transportes" >
   <div class="card">
-    
-    <img class="imagen-perfil"src={{transporte.url}} alt="Avatar" style="width:100%">
+    <button class="delete-button" (click)="eliminarTransporte(transporte)">Eliminar</button>
+    <img class="imagen-perfil"src={{transporte.url}} alt="Avatar">
     <div class="container">
       <h4><b>{{transporte.nombre}}</b></h4>
       <p>{{transporte.evento?.name}}</p>
@@ -46,9 +49,12 @@
 
 <div *ngIf="opcionSeleccionada === 'Peticiones'" >
   <h2>Peticiones</h2>
+  <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
+  <br>
 <div *ngFor="let peticion of peticiones" >
   <div class="card">
-    <img class="imagen-perfil"src={{peticion.url}} alt="Avatar" style="width:100%">
+    <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
+    <img class="imagen-perfil"src={{peticion.url}} alt="Avatar">
     <div class="container">
       <h4><b>{{peticion.nombre}}</b></h4>
       <p>{{peticion.evento?.name}}</p>
@@ -57,5 +63,21 @@
 </div>
 </div>
 
+<div *ngIf="opcionSeleccionada === 'Lista_Negra'">
+  <h2>Usuarios</h2>
 
+  <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
+  <br>
+  <div *ngFor="let usuario of lista_negra" >
+    <div class="card">
+      <button class="delete-button" (click)="perdonarUsuario(usuario)">Desbanear</button>
+      <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" >
+      <div class="container">
+        <h4><b>{{usuario.nombre}}</b></h4>
+        <p>{{usuario.uid}}</p>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
 
