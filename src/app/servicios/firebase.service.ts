@@ -165,15 +165,15 @@ export class FirebaseService {
       });
 
       const usuarioBan:Usuarios = {
-        uid:this.auth.currentUser?.uid || "",
-        nombre: this.auth.currentUser?.displayName || "",
-        imgUrl: this.auth.currentUser?.photoURL|| "",
+        uid: user.uid || "",
+        nombre: user.nombre || "",
+        imgUrl: user.imgUrl|| "",
         isAdmin: false,
         isDisabled:true
       }
-      console.log("Estas baneado: ",usuarioBan);
+      console.log("Baneando al usuario: ",usuarioBan);
 
-      const ban = await setDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+this.auth.currentUser?.uid), usuarioBan)
+      const ban = await setDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+user.uid), usuarioBan)
     }
 
   }
@@ -206,7 +206,7 @@ export class FirebaseService {
     const user = doc(this.basededatos(), "Usuarios", "Usuario-"+usuario.uid);
 
 
-    await deleteDoc(doc(this.basededatos(), "Lista_Negra", usuario.uid))
+    await deleteDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+usuario.uid))
     .then(async ()=> {
       await updateDoc(user, {
         isDisabled: false

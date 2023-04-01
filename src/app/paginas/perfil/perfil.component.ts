@@ -15,7 +15,7 @@ export class PerfilComponent implements OnInit {
 
   isAdmin:boolean = false;
   usuario:any = [];
-  public nombre = this.auth.currentUser?.displayName;
+  public nombre:any = this.auth.currentUser?.displayName;
   public img:any = this.auth.currentUser?.photoURL;
 
   Peticiones:any = [];
@@ -32,7 +32,7 @@ export class PerfilComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const usuarioActual = await this.fire.getCurrentUser();
 
-    this.isAdmin = usuarioActual.isAdmin;
+    //this.isAdmin = true;
 
     console.log(this.auth.currentUser?.uid);
 
@@ -43,12 +43,13 @@ export class PerfilComponent implements OnInit {
       console.log("Document data:", docSnap.data());
       this.usuario.push(docSnap.data())
       this.img = this.usuario[0].imgUrl
-      if(this.auth.currentUser && this.auth.currentUser?.photoURL != this.usuario[0].imgUrl){
+      this.nombre = this.usuario[0].nombre
+      this.isAdmin = this.usuario[0].isAdmin;
+      if(this.auth.currentUser){
         updateProfile(this.auth.currentUser, {
+          displayName: this.usuario[0].nombre,
           photoURL: this.usuario[0].imgUrl
         })
-      } else {
-
       }
     }
 

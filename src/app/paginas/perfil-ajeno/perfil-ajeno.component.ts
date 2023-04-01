@@ -17,6 +17,7 @@ export class PerfilAjenoComponent implements OnInit {
   PeticionesUsuario:any = [];
   Transportes:any = [];
   TransportesUsuario:any = [];
+  isBan:boolean = false;
 
   cargaPerfil:boolean = false;
   constructor(
@@ -40,6 +41,7 @@ export class PerfilAjenoComponent implements OnInit {
 
     this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
 
+    this.isBan = this.usuarioActual[0].isDisabled
     const queryPeticiones = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
     queryPeticiones.forEach((doc) => {
       this.Peticiones.push(doc.data());

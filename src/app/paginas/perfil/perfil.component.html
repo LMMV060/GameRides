@@ -1,13 +1,20 @@
 <br>
 
-<p>Perfil</p>
-<p>{{nombre}}</p>
-<div *ngIf="loading"  class="spinner"></div>
+<div class="container">
+  <button (click)="irADashboard()" *ngIf="isAdmin" class="izquierdo" >Dashboard</button>
+  <h1 class="centrado">{{nombre}}</h1>
+  <button (click)="Editar()" class="derecho">Editar</button>
+</div>
 
-<img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
+<br>
 
-<button (click)="irADashboard()" *ngIf="isAdmin" >Dashboard</button>
-<button (click)="Editar()" class="button-71">Editar</button>
+<div class="perfil-container">
+  <div *ngIf="loading" class="spinner"></div>
+  <img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
+</div>
+
+
+
 <br>
 <br>
 

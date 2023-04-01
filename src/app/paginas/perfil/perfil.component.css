@@ -20,6 +20,7 @@
 
 *{
   text-align: center;
+  position: relative;
 }
 
 
@@ -28,7 +29,10 @@
   height: 300px;
   object-fit: cover;
   border-radius: 50%;
+  display: block;
+  margin: auto;
 }
+
 
 img{
   display: block;
@@ -88,3 +92,39 @@ img{
     max-width: 100px;
     max-height: 100px;
   }
+
+  .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+.izquierdo,
+.derecho {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+.centrado {
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.derecho {
+  margin-left: auto;
+}
+
+
+

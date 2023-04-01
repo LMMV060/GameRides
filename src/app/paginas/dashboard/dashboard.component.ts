@@ -85,4 +85,11 @@ export class DashboardComponent implements OnInit {
     this.fire.perdonarUsuario(usuario);
   }
 
+
+  ObtenerNombreUsuario(event:any){
+    const text = event.target.value;
+
+    console.log(text)
+  }
+
 }

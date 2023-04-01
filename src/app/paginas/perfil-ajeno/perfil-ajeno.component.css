@@ -28,7 +28,15 @@
   height: 300px;
   object-fit: cover;
   border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+
 }
+
+
+
+
+
 
 img{
   display: block;
@@ -207,3 +215,15 @@ img{
       transform: rotate(360deg);
     }
   }
+
+  .aviso {
+    background-color: #ff3333;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .mensaje {
+    font-weight: bold;
+  }
+

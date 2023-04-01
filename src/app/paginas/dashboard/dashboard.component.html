@@ -14,7 +14,7 @@
 <div *ngIf="opcionSeleccionada === 'Usuarios'">
   <h2>Usuarios</h2>
 
-  <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
+  <input type="text" placeholder="Search.." (input)="ObtenerNombreUsuario($event)">
   <br>
 <div *ngFor="let usuario of usuarios" >
   <div class="card">

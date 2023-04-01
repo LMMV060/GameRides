@@ -1,11 +1,19 @@
 <br>
-<div class="loading" *ngIf="!cargaPerfil" >Loading&#8230;</div>
+<div *ngIf="isBan" >
+  <div class="aviso">
+    <p class="mensaje">Este usuario está baneado.</p>
+  </div>
+
+</div>
+<div *ngIf="!isBan" >
+
+  <div class="loading" *ngIf="!cargaPerfil" >Loading&#8230;</div>
 
 <div *ngIf="cargaPerfil">
   <div *ngFor="let user of usuarioActual" >
     <p>{{user.nombre}}</p>
 
-<img src="{{user.imgUrl}}" class="imagen-perfil">
+  <img src="{{user.imgUrl}}" class="imagen-perfil">
   </div>
   <br>
   <select id="segmento" name="segmento" (change)="Busqueda($event)">
@@ -47,4 +55,4 @@
   </div>
 </div>
 
-
+</div>
