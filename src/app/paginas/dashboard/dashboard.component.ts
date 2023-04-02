@@ -13,9 +13,13 @@ import firebase from 'firebase/compat/app';
 })
 export class DashboardComponent implements OnInit {
   usuarios:any = [];
+  usuariosFiltrados:any = [];
   peticiones:any = [];
+  peticionesFiltradas:any = [];
   transportes:any = [];
+  transportesFiltrados:any = [];
   lista_negra:any = [];
+  lista_negra_filtrada:any = [];
   isAdmin:boolean = false;
   constructor(
     private fire: FirebaseService,
@@ -27,9 +31,13 @@ export class DashboardComponent implements OnInit {
 
 
     this.usuarios = await this.fire.getAllUsers();
+    this.usuariosFiltrados = await this.fire.getAllUsers();
     this.peticiones = await this.fire.getAllPeticiones();
+    this.peticionesFiltradas = await this.fire.getAllPeticiones();
     this.transportes = await this.fire.getAllTransportes();
+    this.transportesFiltrados = await this.fire.getAllTransportes();
     this.lista_negra = await this.fire.getAllBans();
+    this.lista_negra_filtrada = await this.fire.getAllBans();
     console.log(this.peticiones);
 
     try{
@@ -88,7 +96,49 @@ export class DashboardComponent implements OnInit {
 
   ObtenerNombreUsuario(event:any){
     const text = event.target.value;
+    if (text && text.trim() !== '') {
+      this.usuariosFiltrados = this.usuarios.filter((item:any) => {
+          return (item.nombre.toLowerCase().indexOf(text.toLowerCase()) > -1);
+      });
+    }else {
+      this.usuariosFiltrados = this.usuarios;
+    }
+    console.log(text)
+  }
 
+  ObtenerNombreTransporte(event:any){
+    const text = event.target.value;
+    if (text && text.trim() !== '') {
+      this.transportesFiltrados = this.transportes.filter((item:any) => {
+          return (item.nombre.toLowerCase().indexOf(text.toLowerCase()) > -1);
+      });
+    }else {
+      this.transportesFiltrados = this.transportes;
+    }
+    console.log(text)
+  }
+
+  ObtenerNombrePeticiones(event:any){
+    const text = event.target.value;
+    if (text && text.trim() !== '') {
+      this.peticionesFiltradas = this.peticiones.filter((item:any) => {
+          return (item.nombre.toLowerCase().indexOf(text.toLowerCase()) > -1);
+      });
+    }else {
+      this.peticionesFiltradas = this.peticiones;
+    }
+    console.log(text)
+  }
+
+  ObtenerNombreBan(event:any){
+    const text = event.target.value;
+    if (text && text.trim() !== '') {
+      this.lista_negra_filtrada = this.lista_negra.filter((item:any) => {
+          return (item.nombre.toLowerCase().indexOf(text.toLowerCase()) > -1);
+      });
+    }else {
+      this.lista_negra_filtrada = this.lista_negra;
+    }
     console.log(text)
   }
 

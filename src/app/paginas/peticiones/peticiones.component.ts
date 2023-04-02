@@ -137,11 +137,12 @@ export class PeticionesComponent implements OnInit {
             console.log("Numero máximo de peticiones alcanzadas");
           }
         } else {
+          const real:any = await this.fire.getUserDataReal();
           const pet:Peticion= {
             id: "Peticion-"+ i + "-"+this.auth.currentUser.uid,
             uid:this.auth.currentUser?.uid,
-            url:this.auth.currentUser.photoURL,
-            nombre:this.auth.currentUser.displayName,
+            url: real.imgUrl,
+            nombre:real.nombre,
             fecha: this.fecha,
             precio:20,
             evento: this.eventoSeleccionado || null,
@@ -179,11 +180,13 @@ export class PeticionesComponent implements OnInit {
             console.log("Numero máximo de transportes alcanzadas");
           }
         } else {
+          const real:any = await this.fire.getUserDataReal();
+
           const pet:Ofertas= {
             id: "Transporte-"+ i + "-"+this.auth.currentUser.uid,
             uid:this.auth.currentUser?.uid,
-            url:this.auth.currentUser.photoURL,
-            nombre:this.auth.currentUser.displayName,
+            url:real.imgUrl,
+            nombre: real.nombre,
             fecha: this.fecha,
             vehiculo: this.alias,
             precio:20,

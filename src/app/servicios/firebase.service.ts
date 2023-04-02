@@ -79,6 +79,21 @@ export class FirebaseService {
       });
   }
 
+  async getUserDataReal(){
+    const datos:any = [];
+    let usuarioActual:any;
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+
+      datos.push(doc.data());
+    });
+
+    usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
+
+    console.log(usuarioActual[0].nombre);
+    return usuarioActual[0];
+  }
   async getCurrentUser(){
     const datos:any = [];
     let usuarioActual:any;
