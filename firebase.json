@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist\\gameRides",
+    "public": "dist/GameRides",
     "ignore": [
       "firebase.json",
       "**/.*",
