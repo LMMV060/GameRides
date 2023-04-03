@@ -23,6 +23,10 @@ export class PerfilComponent implements OnInit {
 
   Transportes:any = [];
   TransportesUsuario:any = [];
+
+  Noticias:any = [];
+  NoticiasUsuario:any = [];
+
   constructor(
     private fire: FirebaseService,
     private router:Router,
@@ -30,7 +34,8 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-    const usuarioActual = await this.fire.getCurrentUser();
+    try{
+      const usuarioActual = await this.fire.getCurrentUser();
 
     //this.isAdmin = true;
 
@@ -66,6 +71,19 @@ export class PerfilComponent implements OnInit {
     });
 
     this.Transportes.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.TransportesUsuario.push(objeto));
+
+    const queryNoticias = await getDocs(collection(this.fire.basededatos(), "Noticias"));
+    queryNoticias.forEach((doc) => {
+      this.Noticias.push(doc.data());
+    });
+
+    this.Noticias.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.NoticiasUsuario.push(objeto));
+
+
+    } catch(err){
+      console.log(err);
+
+    }
 
 
   }

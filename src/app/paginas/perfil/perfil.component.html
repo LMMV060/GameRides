@@ -21,7 +21,7 @@
 <select id="segmento" name="segmento" (change)="Busqueda($event)">
   <option value="Pasajeros">Peticiones</option>
   <option value="Conductores">Transportes ofrecidos</option>
-
+  <option *ngIf="isAdmin" value="Mis-Noticias">Mis noticias</option>
 </select>
 
 <div *ngIf="opcionSeleccionada === 'Pasajeros'">
@@ -64,8 +64,10 @@
 
 
 
-
-<app-footer></app-footer>
-
-
-
+<div *ngIf="opcionSeleccionada === 'Mis-Noticias'">
+  <div *ngFor="let noticia of NoticiasUsuario" >
+    <div class="card my-card" >
+      <div class="card-body" [innerHTML]="noticia.contenido"></div>
+    </div>
+  </div>
+</div>

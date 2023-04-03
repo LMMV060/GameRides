@@ -6,6 +6,11 @@
   border-left-color: #09f;
 
   animation: spin 1s ease infinite;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes spin {

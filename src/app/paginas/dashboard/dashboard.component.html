@@ -87,3 +87,58 @@
   </div>
 </div>
 
+<div *ngIf="opcionSeleccionada === 'Noticias'">
+  <br>
+
+  <div id="botones">
+    <button onclick="document.execCommand('bold', false, null)"><b>Negrita</b></button>
+    <button onclick="document.execCommand('italic', false, null)"><i>Cursiva</i></button>
+    <button onclick="document.execCommand('underline', false, null)"><u>Subrayado</u></button>
+    <select onchange="document.execCommand('fontSize', false, this.value);">
+      <option value="">Tamaño de letra</option>
+      <option value="1">8</option>
+      <option value="2">10</option>
+      <option value="3">12</option>
+      <option value="4">14</option>
+      <option value="5">18</option>
+      <option value="6">24</option>
+      <option value="7">36</option>
+    </select>
+
+    <select class="color" onchange="document.execCommand('foreColor', false, this.value);">
+      <option value="">Color de letra</option>
+      <option class="negro" value="black">Negro</option>
+      <option class="rojo" value="red">Rojo</option>
+      <option class="azul" value="blue">Azul</option>
+      <option class="verde" value="green">Verde</option>
+      <option class="naranja" value="orange">Naranja</option>
+      <option class="morado" value="purple">Morado</option>
+    </select>
+    <button class="boton-vinetas" onclick="document.execCommand('insertUnorderedList', false, null);">Lista no ordenada</button>
+    <button class="boton-vinetas" onclick="document.execCommand('insertOrderedList', false, null);">Lista ordenada</button>
+
+    <button onclick="document.execCommand('justifyleft', false, null)"><i class="fas fa-align-left"></i></button>
+    <button onclick="document.execCommand('justifycenter', false, null)"><i class="fas fa-align-center"></i></button>
+    <button onclick="document.execCommand('justifyright', false, null)"><i class="fas fa-align-right"></i></button>
+    <button onclick="document.execCommand('justifyfull', false, null)"><i class="fas fa-align-justify"></i></button>
+
+    <br>
+    <button (click)="mostrarEmojis()">🙂</button>
+
+    <div id="emojis" [hidden]="!mostrandoEmojis" style="display: flex; flex-wrap: wrap;">
+      <span *ngFor="let emoji of emojis" (click)="insertarEmoji(emoji.emoji)" style="margin-right: 10px;">{{emoji.emoji}}</span>
+    </div>
+
+  </div>
+
+
+  <div id="editor" contenteditable="true" (input)="onEditorInput($event)">
+
+  </div>
+
+  <button (click)="guardarNoticia()">Guardar</button>
+
+
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</div>

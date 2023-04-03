@@ -16,3 +16,60 @@
 .card:hover .delete-button {
   display: block;
 }
+
+#editor {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  min-height: 200px;
+}
+
+#botones {
+  margin-top: 10px;
+}
+
+button select{
+  font-size: 14px;
+  padding: 5px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #eee;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+select.color {
+  background-color: white;
+}
+select.color option.negro {
+  background-color: black;
+  color: white;
+}
+select.color option.rojo {
+  background-color: red;
+}
+select.color option.azul {
+  background-color: blue;
+  color: white;
+}
+select.color option.verde {
+  background-color: green;
+  color: white;
+}
+select.color option.naranja {
+  background-color: orange;
+}
+select.color option.morado {
+  background-color: purple;
+  color: white;
+}
+.color-box {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin-right: 10px;
+  border: 1px solid black;
+}

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { firebaseApp$, initializeApp } from '@angular/fire/app';
 import { Auth, deleteUser, getAuth } from '@angular/fire/auth';
-import { deleteDoc, doc } from '@angular/fire/firestore';
+import { deleteDoc, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
-import firebase from 'firebase/compat/app';
+import { Noticia } from 'src/app/interfaces/noticia';
+import { FuncionesService } from 'src/app/servicios/funciones.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +13,8 @@ import firebase from 'firebase/compat/app';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+
+
   usuarios:any = [];
   usuariosFiltrados:any = [];
   peticiones:any = [];
@@ -21,14 +24,17 @@ export class DashboardComponent implements OnInit {
   lista_negra:any = [];
   lista_negra_filtrada:any = [];
   isAdmin:boolean = false;
+
+  emojis:any = [];
   constructor(
     private fire: FirebaseService,
     private router:Router,
-    private auth: Auth
+    private auth: Auth,
+    private a: FuncionesService
   ) { }
 
   async ngOnInit(): Promise<void> {
-
+    this.emojis = this.a.getEmojis();
 
     this.usuarios = await this.fire.getAllUsers();
     this.usuariosFiltrados = await this.fire.getAllUsers();
@@ -142,4 +148,75 @@ export class DashboardComponent implements OnInit {
     console.log(text)
   }
 
+  contenidoEditor = '';
+
+  onEditorInput(event:any) {
+    this.contenidoEditor = event.target.innerHTML;
+    console.log(this.contenidoEditor);
+  }
+
+
+
+
+  /*
+  rutaImagen = ''; // propiedad para guardar la ruta de la imagen
+
+  insertarImagen() {
+    const imagen = '<img src="' + this.rutaImagen + ' style="width: 50px;"">'; // agregar la ruta de la imagen
+    this.contenidoEditor += imagen;
+
+    console.log(this.contenidoEditor);
+
+  }
+
+  seleccionarImagen(event: any) {
+    const archivo = event.target.files[0]; // obtener el archivo seleccionado
+    const lector = new FileReader();
+    lector.readAsDataURL(archivo); // leer el archivo como base64
+    lector.onload = () => {
+      this.rutaImagen = lector.result as string; // guardar la ruta de la imagen como base64
+
+      this.insertarImagen();
+    };
+  }*/
+
+  mostrandoEmojis = false;
+
+  mostrarEmojis() {
+    this.mostrandoEmojis = !this.mostrandoEmojis;
+  }
+
+  insertarEmoji(emoji: any) {
+    const editor:any = document.getElementById('editor');
+    editor.innerHTML += emoji;
+    editor.focus();
+  }
+
+  async guardarNoticia(){
+    for(let i = 1; i<= 30; i++){
+      const docRef = doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists()){
+        if(i == 30){
+          console.log("Numero máximo de noticias alcanzadas");
+        }
+      } else {
+        let noticia:Noticia = {
+          id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
+          contenido: this.contenidoEditor,
+          fecha_creacion: Math.floor(new Date().getTime() / 1000),
+          uid: this.auth.currentUser?.uid
+        }
+
+        const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
+        console.log("Noticia creada");
+        location.reload();
+        i = 31;
+      }
+
+    }
+
+
+
+  }
 }
