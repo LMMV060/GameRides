@@ -234,4 +234,21 @@ export class FirebaseService {
     })
 
   }
+
+  async getAllNoticias(){
+    const Noticias:any = [];
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Noticias"));
+    querySnapshot.forEach((doc) => {
+
+      Noticias.push(doc.data());
+    });
+
+
+    return Noticias;
+  }
+
+  async getNoticiaByUser(uid:any){
+    
+  }
 }

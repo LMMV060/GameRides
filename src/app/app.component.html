@@ -1,17 +1,23 @@
 
-<header style="height: 100px;" class="header">
-  <nav>
-    <ng-container *ngFor="let c of paginas">
-      <a [routerLink]="c.ruta">{{c.nombre}}</a>
-    </ng-container>
+<header style="height: 150px;" class="navbar navbar-expand navbar-dark bg-dark">
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="row">
+        <ng-container *ngFor="let c of paginas">
+          <a [routerLink]="c.ruta" class="col text-center flex-grow-1 text-nowrap w-100">
+            <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.75rem;">1.{{c.nombre}}</span>
+            <span class="d-none d-sm-inline d-md-none">2.{{c.nombre}}</span>
+            <span class="d-none d-md-inline d-lg-none">3.{{c.nombre}}</span>
+            <span class="d-none d-lg-inline d-sm-none" style="font-size: 1.5rem;">4.{{c.nombre}}</span>
+          </a>
+        </ng-container>
+      </div>
+    </div>
   </nav>
-
-
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
 </header>
 
-<div style="padding-top: 100px;">
+<div style="padding-top: 200px;">
   <router-outlet></router-outlet>
 </div>
 

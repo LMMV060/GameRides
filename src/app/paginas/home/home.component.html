@@ -1,32 +1,31 @@
 <br>
-<br>
-<br>
-<br>
 
-<div style="width: 100%; text-align: center;">
 
-  <div style="width: 33.33%; float: left;">
-    <h1>Columna 1</h1>
+<div class="row"  style="width: 100%; text-align: center;">
+  <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+    <h1>Torneos activos</h1>
 
     <div *ngFor="let torneo of torneos" (load)="onTwLoad()">
       <h3>{{torneo.name}}</h3>
       <img  *ngIf="torneo.images[0]" [ngSrc]="torneo.images[0].url" width="100" height="100">
     </div>
-
   </div>
-
-  <div style="width: 33.33%; float: left;">
-    <h1>Columna 2</h1>
-    <p>Hola hente esto es una prueba</p>
-    <p>Holaaaaaaaaaaaaaaa</p>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+    <h1>Noticias</h1>
+    <div *ngFor="let noticia of noticias" >
+      <div class="card my-card" >
+        <h4 class="card-title" >{{noticia.titulo}}</h4>
+        <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{noticia.subtitulo}}</h6>
+        <div class="card-body" [innerHTML]="noticia.contenido"></div>
+      </div>
+      <br>
+    </div>
 
     <div class="loading" *ngIf="loading" >Loading&#8230;</div>
-
-
-
   </div>
-  <div style="width: 33.33%; float: left;">
-    <h1>Columna 3</h1>
+  <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+    <h1>Redes sociales</h1>
 
     <!--<div text-align="center"><div class="twitter-timeline twitter-timeline-rendered" style="display: flex; width: 400px; max-width: 100%; margin-top: 0px; margin-bottom: 0px;"><iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="" style="position: static; visibility: visible; width: 300px; height: 600px; display: block; flex-grow: 1;" title="Twitter Timeline" src="https://syndication.twitter.com/srv/timeline-profile/screen-name/GameOverGlitch?dnt=true&amp;embedId=twitter-widget-0&amp;features=eyJ0ZndfdGltZWxpbmVfbGlzdCI6eyJidWNrZXQiOltdLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X2ZvbGxvd2VyX2NvdW50X3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0ZndfdHdlZXRfZWRpdF9iYWNrZW5kIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd19yZWZzcmNfc2Vzc2lvbiI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0Zndfc2hvd19idXNpbmVzc192ZXJpZmllZF9iYWRnZSI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfbWl4ZWRfbWVkaWFfMTU4OTciOnsiYnVja2V0IjoidHJlYXRtZW50IiwidmVyc2lvbiI6bnVsbH0sInRmd19leHBlcmltZW50c19jb29raWVfZXhwaXJhdGlvbiI6eyJidWNrZXQiOjEyMDk2MDAsInZlcnNpb24iOm51bGx9LCJ0ZndfZHVwbGljYXRlX3NjcmliZXNfdG9fc2V0dGluZ3MiOnsiYnVja2V0Ijoib24iLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X3ZpZGVvX2hsc19keW5hbWljX21hbmlmZXN0c18xNTA4MiI6eyJidWNrZXQiOiJ0cnVlX2JpdHJhdGUiLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X3Nob3dfYmx1ZV92ZXJpZmllZF9iYWRnZSI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfbGVnYWN5X3RpbWVsaW5lX3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0Zndfc2hvd19nb3ZfdmVyaWZpZWRfYmFkZ2UiOnsiYnVja2V0Ijoib24iLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X3Nob3dfYnVzaW5lc3NfYWZmaWxpYXRlX2JhZGdlIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd190d2VldF9lZGl0X2Zyb250ZW5kIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH19&amp;frame=false&amp;hideBorder=false&amp;hideFooter=false&amp;hideHeader=false&amp;hideScrollBar=false&amp;lang=en&amp;maxHeight=600px&amp;origin=https%3A%2F%2Fiframely.net%2F7P220g5%3F_theme%3Ddark%26_maxwidth%3D300%26_height%3D600%26_limit%3D20%26app%3D1%26demo%3D1&amp;sessionId=f0b999ccedb78979d15daaa9dbb9b9a31312c153&amp;showHeader=true&amp;showReplies=false&amp;theme=dark&amp;transparent=false&amp;widgetsVersion=aaf4084522e3a%3A1674595607486" (load)="onTwLoad()"></iframe></div>
       <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -36,8 +35,4 @@
       <script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </div>
   </div>
-
-
-
-
 </div>

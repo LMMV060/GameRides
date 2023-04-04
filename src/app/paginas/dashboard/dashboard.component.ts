@@ -155,6 +155,17 @@ export class DashboardComponent implements OnInit {
     console.log(this.contenidoEditor);
   }
 
+  titulo:any = "";
+
+  subtitulo:any = "";
+
+
+  addLink() {
+    const url = prompt("Por favor ingrese la URL del enlace:");
+    if (url) {
+      document.execCommand('createLink', false, url);
+    }
+  }
 
 
 
@@ -193,30 +204,36 @@ export class DashboardComponent implements OnInit {
   }
 
   async guardarNoticia(){
-    for(let i = 1; i<= 30; i++){
-      const docRef = doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
-      const docSnap = await getDoc(docRef);
-      if(docSnap.exists()){
-        if(i == 30){
-          console.log("Numero máximo de noticias alcanzadas");
-        }
-      } else {
-        let noticia:Noticia = {
-          id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
-          contenido: this.contenidoEditor,
-          fecha_creacion: Math.floor(new Date().getTime() / 1000),
-          uid: this.auth.currentUser?.uid
-        }
+    if(this.titulo === "" || this.subtitulo === "" || this.contenidoEditor === ''){
+      console.log("error");
 
-        const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
-        console.log("Noticia creada");
-        location.reload();
-        i = 31;
+    } else {
+      for(let i = 1; i<= 30; i++){
+        const docRef = doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.exists()){
+          if(i == 30){
+            console.log("Numero máximo de noticias alcanzadas");
+          }
+        } else {
+          let usuarioActual:any = await this.fire.getUserDataReal();
+          let noticia:Noticia = {
+            id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
+            titulo: this.titulo,
+            subtitulo: this.subtitulo,
+            contenido: this.contenidoEditor,
+            fecha_creacion: Math.floor(new Date().getTime() / 1000),
+            uid: this.auth.currentUser?.uid,
+            nombre_user: usuarioActual.nombre
+          }
+
+          const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
+          console.log("Noticia creada");
+          location.reload();
+          i = 31;
+
+        }
       }
-
     }
-
-
-
   }
 }

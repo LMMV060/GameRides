@@ -1,5 +1,5 @@
+import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,12 +9,23 @@ export class HomeComponent implements OnInit{
   token = "d469385fa45e0c309e3c176dd5b62f70";
 
   torneos:any = [];
+  noticias:any = [];
   unixTime: number | undefined;
+
+  constructor(
+    private fire: FirebaseService
+  ){
+
+  }
 
   async ngOnInit() {
     this.unixTime = Math.floor(new Date().getTime() / 1000);
     console.log(this.unixTime);
 
+    this.noticias = await this.fire.getAllNoticias();
+
+    this.noticias.sort((a:any, b:any) => b.fecha_creacion - a.fecha_creacion);
+    console.log("Noticias:",this.noticias);
 
 
 

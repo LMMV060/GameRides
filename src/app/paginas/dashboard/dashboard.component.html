@@ -88,7 +88,24 @@
 </div>
 
 <div *ngIf="opcionSeleccionada === 'Noticias'">
+
   <br>
+  <h1>Título</h1>
+  <br>
+  <input type="text" class="titulo" placeholder="Escribe aquí el título" maxlength="50" [(ngModel)]="titulo">
+  <div>{{titulo.length}} / 50 caracteres</div>
+
+
+  <br>
+  <h2>Sub-título</h2>
+  <br>
+  <input type="text" class="subtitulo" placeholder="Escribe aquí el subtítulo" maxlength="50" [(ngModel)]="subtitulo">
+  <div>{{subtitulo.length}} / 50 caracteres</div>
+
+
+  <br>
+
+  <h2>Contenido</h2>
 
   <div id="botones">
     <button onclick="document.execCommand('bold', false, null)"><b>Negrita</b></button>
@@ -121,6 +138,7 @@
     <button onclick="document.execCommand('justifycenter', false, null)"><i class="fas fa-align-center"></i></button>
     <button onclick="document.execCommand('justifyright', false, null)"><i class="fas fa-align-right"></i></button>
     <button onclick="document.execCommand('justifyfull', false, null)"><i class="fas fa-align-justify"></i></button>
+    <button (click)="addLink()">Agregar enlace</button>
 
     <br>
     <button (click)="mostrarEmojis()">🙂</button>
@@ -131,10 +149,12 @@
 
   </div>
 
+  <br>
 
   <div id="editor" contenteditable="true" (input)="onEditorInput($event)">
 
   </div>
+  <br>
 
   <button (click)="guardarNoticia()">Guardar</button>
 

@@ -13,6 +13,7 @@ header {
 nav {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 a {
@@ -26,5 +27,20 @@ nav a {
   display: block; /* Establece los elementos a como bloques */
   border-bottom: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
   border-top: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
+  border-left: 1px solid white;
+  border-right: 1px solid white;
   padding: 10px; /* Agrega un espacio de relleno para separar los elementos */
 }
+
+.container-fluid {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  margin-left: 14%;
+  margin-right: 14%;
+}
+

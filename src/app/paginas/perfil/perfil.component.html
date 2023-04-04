@@ -67,7 +67,11 @@
 <div *ngIf="opcionSeleccionada === 'Mis-Noticias'">
   <div *ngFor="let noticia of NoticiasUsuario" >
     <div class="card my-card" >
-      <div class="card-body" [innerHTML]="noticia.contenido"></div>
+      <h4 class="card-title" >{{noticia.titulo}}</h4>
+      <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
+      <h6 class="card-subtitle mb-2 text-muted">{{noticia.subtitulo}}</h6>
+      <!--<div class="card-body" [innerHTML]="noticia.contenido"></div>-->
     </div>
+    <br>
   </div>
 </div>
