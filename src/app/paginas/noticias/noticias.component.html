@@ -1,0 +1,15 @@
+
+<div *ngFor="let noticia of noticias" >
+  <div class="card my-card" (click)="irANoticia(noticia.titulo)">
+    <h4 class="card-title" >{{noticia.titulo}}</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">{{noticia.subtitulo}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">{{noticia.fecha_creacion}}</h6>
+    <!--<div class="card-body" [innerHTML]="noticia.contenido"></div>-->
+  </div>
+  <br>
+</div>
+
+<button (click)="retrocederPagina()" [disabled]="paginaActual === 0">Anterior</button>
+<button (click)="avanzarPagina()" [disabled]="ultimoItem >= noticias.length">Siguiente</button>
+

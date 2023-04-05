@@ -10,7 +10,6 @@
       "ruta":"/perfil",
       "color": "secondary",
       "icono": "man-outline"
-
   },
   {
     "nombre":"Peticiones",
@@ -23,6 +22,12 @@
     "ruta":"/coches",
     "color": "tertiary",
     "icono": "build-outline"
+  },
+  {
+    "nombre":"Noticias",
+    "ruta":"/noticias",
+    "color": "secondary",
+    "icono": "man-outline"
   },
   {
     "nombre":"Buscar usuario",

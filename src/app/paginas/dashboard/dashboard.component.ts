@@ -222,7 +222,7 @@ export class DashboardComponent implements OnInit {
             titulo: this.titulo,
             subtitulo: this.subtitulo,
             contenido: this.contenidoEditor,
-            fecha_creacion: Math.floor(new Date().getTime() / 1000),
+            fecha_creacion: this.convertirUnixAFecha(Math.floor(new Date().getTime() / 1000)),
             uid: this.auth.currentUser?.uid,
             nombre_user: usuarioActual.nombre
           }
@@ -235,5 +235,13 @@ export class DashboardComponent implements OnInit {
         }
       }
     }
+  }
+
+  convertirUnixAFecha(unix: number): string {
+    const fecha = new Date(unix * 1000); // Convertir el número unix a milisegundos
+    const anio = fecha.getFullYear();
+    const mes = ('0' + (fecha.getMonth() + 1)).slice(-2); // Añadir un 0 si el mes es de un solo dígito
+    const dia = ('0' + fecha.getDate()).slice(-2); // Añadir un 0 si el día es de un solo dígito
+    return `${anio}-${mes}-${dia}`;
   }
 }

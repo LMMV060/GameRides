@@ -1,0 +1,6 @@
+<div *ngFor="let not of noticiaEspecifica" >
+  <h1>{{not.titulo}}</h1>
+  <h2>{{not.subtitulo}}</h2>
+  <p>{{not.nombre_user}}</p>
+  <div [innerHTML]="not.contenido"></div>
+</div>

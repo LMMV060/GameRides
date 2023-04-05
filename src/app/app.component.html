@@ -5,10 +5,10 @@
       <div class="row">
         <ng-container *ngFor="let c of paginas">
           <a [routerLink]="c.ruta" class="col text-center flex-grow-1 text-nowrap w-100">
-            <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.75rem;">1.{{c.nombre}}</span>
-            <span class="d-none d-sm-inline d-md-none">2.{{c.nombre}}</span>
-            <span class="d-none d-md-inline d-lg-none">3.{{c.nombre}}</span>
-            <span class="d-none d-lg-inline d-sm-none" style="font-size: 1.5rem;">4.{{c.nombre}}</span>
+            <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.75rem;">{{c.nombre}}</span>
+            <span class="d-none d-sm-inline d-md-none">{{c.nombre}}</span>
+            <span class="d-none d-md-inline d-lg-none">{{c.nombre}}</span>
+            <span class="d-none d-lg-inline d-sm-none" style="font-size: 1.5rem;">{{c.nombre}}</span>
           </a>
         </ng-container>
       </div>

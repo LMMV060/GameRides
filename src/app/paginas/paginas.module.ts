@@ -18,6 +18,8 @@ import { CochesComponent } from './coches/coches.component';
 import { FormsModule } from '@angular/forms';
 import { AjustesComponent } from './ajustes/ajustes.component';
 import { MatProgressSpinnerModule } from '@angular/material';
+import { NoticiasComponent } from './noticias/noticias.component';
+import { NoticiaEspecificaComponent } from './noticia-especifica/noticia-especifica.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { MatProgressSpinnerModule } from '@angular/material';
     DashboardComponent,
     CochesComponent,
     AjustesComponent,
-
+    NoticiasComponent,
+    NoticiaEspecificaComponent,
   ],
   imports: [
     CommonModule,

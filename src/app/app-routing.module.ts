@@ -15,6 +15,8 @@ import { CochesComponent } from './paginas/coches/coches.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AjustesComponent } from './paginas/ajustes/ajustes.component';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
+import { NoticiasComponent } from './paginas/noticias/noticias.component';
+import { NoticiaEspecificaComponent } from './paginas/noticia-especifica/noticia-especifica.component';
 import { DashboardGuard } from './guards/dashboard.guard';
 const rutas:Routes = [
   {
@@ -37,7 +39,6 @@ const rutas:Routes = [
   {
     path: 'perfil/:nombre',
     component: PerfilAjenoComponent,
-
   },
   {
     path:'login',
@@ -47,6 +48,14 @@ const rutas:Routes = [
   {
     path:'coches',
     component: CochesComponent,
+  },
+  {
+    path:'noticias',
+    component: NoticiasComponent
+  },
+  {
+    path: 'noticias/:titulo',
+    component: NoticiaEspecificaComponent,
   },
   {
     path:'usuarios',
