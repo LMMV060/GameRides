@@ -64,6 +64,7 @@ export class LoginComponent implements OnInit {
           uid:this.auth.currentUser?.uid || "",
           nombre: this.auth.currentUser?.displayName || "",
           imgUrl: this.auth.currentUser?.photoURL|| "",
+          password: "",
           isAdmin: false,
           isDisabled:true
         }
@@ -98,6 +99,7 @@ export class LoginComponent implements OnInit {
           uid:this.auth.currentUser.uid,
           nombre: this.auth.currentUser.displayName,
           imgUrl: this.auth.currentUser.photoURL,
+          password: "?",
           isAdmin: false,
           isDisabled:false
         };
@@ -119,6 +121,7 @@ export class LoginComponent implements OnInit {
               uid:this.auth.currentUser.uid,
               nombre: this.auth.currentUser.displayName,
               imgUrl: this.auth.currentUser.photoURL,
+              password: "",
               isAdmin: false,
               isDisabled:true
             }

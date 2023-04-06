@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser } from '@angular/fire/auth';
 import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Usuarios } from '../interfaces/usuarios';
 
@@ -111,6 +111,62 @@ export class FirebaseService {
 
   }
 
+  async deleteAllFromUser(uid:any){
+    try {
+
+    //Borrar coches
+
+    for(let i = 1; i <= 3;i++){
+      await deleteDoc(doc(this.basededatos(), "Coches", "Coche-"+i+"-" + uid));
+    }
+    console.log("Coches borrados");
+
+    //Borrarlo de la lista negra
+
+    await deleteDoc(doc(this.basededatos(), "Lista_Negra", "Ban-" + uid));
+    console.log("Baneado borrado");
+
+    //Borrar todas las noticias
+
+    for(let i = 1; i <= 50;i++){
+      await deleteDoc(doc(this.basededatos(), "Noticias", "Noticia-"+i+"-" + uid));
+    }
+
+    console.log("Noticias borradas");
+
+    //Borrar peticiones de transporte
+
+    for(let i = 1; i <= 10;i++){
+      await deleteDoc(doc(this.basededatos(), "Peticiones", "Peticion-"+i+"-" + uid));
+    }
+
+    console.log("Peticiones borradas");
+
+    //Borrar ofertas de transporte
+
+    for(let i = 1; i <= 10;i++){
+      await deleteDoc(doc(this.basededatos(), "Transportes", "Transporte-"+i+"-" + uid));
+    }
+
+    console.log("Ofertas borradas");
+
+    //Borrar usuario
+
+    await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + uid));
+    if(this.auth.currentUser){
+      deleteUser(this.auth.currentUser).then(async () => {
+        console.log("Usuario borrado");
+      })
+    }
+
+    } catch(err){
+      console.log(err);
+    }
+
+
+
+  }
+
   async getAllUsers(){
     const datos:any = [];
 
@@ -183,6 +239,7 @@ export class FirebaseService {
         uid: user.uid || "",
         nombre: user.nombre || "",
         imgUrl: user.imgUrl|| "",
+        password: user.password || "?",
         isAdmin: false,
         isDisabled:true
       }
@@ -249,6 +306,6 @@ export class FirebaseService {
   }
 
   async getNoticiaByUser(uid:any){
-    
+
   }
 }

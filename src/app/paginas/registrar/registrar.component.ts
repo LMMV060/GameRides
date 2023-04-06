@@ -5,6 +5,9 @@ import { Usuarios } from 'src/app/interfaces/usuarios';
 import { collection, doc, getDocs, setDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
+import * as crypto from 'crypto-js';
+
+
 @Component({
   selector: 'app-registrar',
   templateUrl: './registrar.component.html',
@@ -70,6 +73,7 @@ export class RegistrarComponent implements OnInit {
             uid:this.auth.currentUser.uid,
             nombre: this.nombre,
             imgUrl: "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png",
+            password: crypto.SHA512(this.pwd).toString(),
             isAdmin: false,
             isDisabled: false
           };

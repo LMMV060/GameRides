@@ -1,2 +1,31 @@
-<br>
-<p>Pagina en construccion</p>
+<div *ngIf="cuentaGoogle" >
+  Error
+</div>
+<div style="display: flex;">
+  <div style="padding: 20px;" class="menu">
+    <div *ngFor="let item of ajustes" (click)="mostrarMensaje(item)" style="max-width: 300px; cursor: pointer;">
+      {{item.nombre}}
+    </div>
+  </div>
+</div>
+
+
+<ng-container *ngIf="mensaje === 'Borrar cuenta'">
+  <div>
+    <h2>Borrar cuenta</h2>
+
+    <div>
+      <label position="floating" >Correo electrónico actual</label>
+      <br>
+      <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailBorrar">
+    </div>
+
+    <div>
+      <label position="floating">Contraseña actual</label>
+      <br>
+      <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdBorrar">
+    </div>
+
+    <button expand="block" (click)="borrarCuenta()">Borrar cuenta</button>
+  </div>
+</ng-container>

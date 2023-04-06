@@ -72,7 +72,8 @@ const rutas:Routes = [
   },
   {
     path:'ajustes',
-    component: AjustesComponent
+    component: AjustesComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
     path:'logout',
