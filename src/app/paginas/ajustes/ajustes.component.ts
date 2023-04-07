@@ -55,6 +55,52 @@ export class AjustesComponent implements OnInit {
     }
   }
 
+  //Cambiar email (Siendo cuenta normal, y no de google)
+  emailActual:any;
+  emailNuevo:any;
+  emailConfirmar:any;
+  pwdEmail:any;
+
+  cambiarEmail(){
+    if(this.auth.currentUser?.email === this.emailActual){
+      if(this.emailNuevo === this.emailConfirmar){
+        if (crypto.SHA512(this.pwdEmail).toString() === this.currentUser.password) {
+          //Comienda a cambiar el email
+          this.fire.updateEmail(this.auth.currentUser?.uid,this.emailNuevo);
+        } else {
+          alert("Contraseña erronea")
+        }
+      } else {
+        alert("Error: El nuevo email no es el mismo para confirmar")
+      }
+    } else {
+      alert("Error: El email no es el de la sesión actual")
+    }
+  }
+
+  //Cambiar PWD
+  pwdActual:any;
+  pwdNuevo:any;
+  pwdConfirmar:any;
+  cambiarPwd(){
+    if (crypto.SHA512(this.pwdActual).toString() === this.currentUser.password) {
+      if(this.pwdNuevo === this.pwdConfirmar){
+        if(this.pwdNuevo === "" || !this.pwdNuevo){
+          alert("Cambio de contraseña vacia")
+        } else {
+          //Empieza a cambiar la contraseña
+          //this.pwdNuevo = crypto.SHA512(this.pwdNuevo).toString();
+          this.fire.updatePwd(this.auth.currentUser?.uid,this.pwdNuevo);
+        }
+
+
+      } else {
+        alert("La nueva contraseña no coincide con la confirmación");
+      }
+    } else {
+      alert('La contraseña no coincide con la de esta sesión');
+    }
+  }
 
   //Borrar cuenta
   emailBorrar:any;
@@ -65,13 +111,23 @@ export class AjustesComponent implements OnInit {
     if(this.auth.currentUser?.email == this.emailBorrar){
       if (crypto.SHA512(this.pwdBorrar).toString() === this.currentUser.password) {
         //empieza a borrar
-        this.fire.deleteAllFromUser(this.currentUser.uid);
+        await this.fire.deleteAllFromUser(this.currentUser.uid);
 
         this.router.navigateByUrl("/home")
       } else {
         alert('La contraseña no coincide');
       }
 
+    } else {
+      alert("Error: El email no es el de la sesión actual")
+    }
+  }
+
+  async borrarCuentaGoogle(){
+    if(this.auth.currentUser?.email == this.emailBorrar){
+        //empieza a borrar
+        await this.fire.deleteAllFromUser(this.currentUser.uid);
+        this.router.navigateByUrl("/home")
     } else {
       alert("Error: El email no es el de la sesión actual")
     }

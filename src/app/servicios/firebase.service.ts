@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Usuarios } from '../interfaces/usuarios';
+import { Router } from '@angular/router';
+import * as crypto from 'crypto-js';
+
 
 
 
@@ -16,7 +19,7 @@ export class FirebaseService {
   constructor(
     private auth: Auth,
     private bbdd:Firestore,
-
+    private router: Router
     ) { }
 
   register(email:any, pwd:any, nombre:any){
@@ -108,6 +111,52 @@ export class FirebaseService {
 
     console.log(usuarioActual[0]);
     return usuarioActual[0].isAdmin;
+
+  }
+
+  async updatePwd(uid:any, nuevoPwd:any){
+    if(this.auth.currentUser){
+      let userActual = doc(this.bbdd, "Usuarios", "Usuario-"+this.auth.currentUser.uid);
+      updatePassword(this.auth.currentUser, nuevoPwd).then(async () => {
+        await updateDoc(userActual, {
+          password: crypto.SHA512(nuevoPwd).toString()
+        });
+
+        alert("Contraseña cambiada");
+
+        this.router.navigateByUrl("/home");
+      }) .catch(async (error) => {
+        console.log(error.code)
+
+        if(error.code === 'invalid-argument'){
+          alert('No se ha dado ninguna nueva contraseña');
+        }
+
+        if(error.code === 'auth/weak-password'){
+          alert('La nueva contraseña es demasiado debil')
+        }
+      });
+    }
+  }
+
+  async updateEmail(uid:any, nuevoEmail:any){
+    if(this.auth.currentUser){
+      updateEmail(this.auth.currentUser, nuevoEmail).then(async () => {
+        alert("Cambio de email realizado");
+
+        this.router.navigateByUrl("/home");
+      }) .catch(async (error) => {
+            console.log(error);
+
+          if(error.code === 'auth/invalid-email'){
+            alert('El nuevo email no tiene el formato necesario')
+          }
+
+          if(error.code === 'auth/email-already-in-use'){
+            alert('El nuevo email ya está en uso por otro usuario')
+          }
+      })
+    }
 
   }
 

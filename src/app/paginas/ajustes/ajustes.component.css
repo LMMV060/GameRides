@@ -2,5 +2,30 @@
   background-color: black;
   color: #fff;
   transition:  color 0.2s ease-out, background-color 0.2s ease-out;
-  
 }
+
+.aviso {
+  background-color: #ff3333;
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+
+.mensaje {
+  font-weight: bold;
+}
+
+.contenedor {
+  display: flex;
+  width: 100%;
+}
+
+.seleccion {
+  width: 300px;
+  margin-left: 33%;
+}
+
+.seleccion input {
+  width: 100%;
+}
+

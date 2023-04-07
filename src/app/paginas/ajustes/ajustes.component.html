@@ -1,31 +1,121 @@
-<div *ngIf="cuentaGoogle" >
-  Error
-</div>
-<div style="display: flex;">
-  <div style="padding: 20px;" class="menu">
+<div class="contenedor">
+
+  <div class="aviso" *ngIf="cuentaGoogle">
+    <p class="mensaje">Se está usando una cuenta Google, solo estará disponible la opción "Borrar cuenta"</p>
+  </div>
+
+<br>
+
+<div style="padding: 20px;" class="menu">
     <div *ngFor="let item of ajustes" (click)="mostrarMensaje(item)" style="max-width: 300px; cursor: pointer;">
       {{item.nombre}}
     </div>
-  </div>
+</div>
+
+<div class="seleccion">
+
+  <ng-container *ngIf="mensaje === 'Cambiar email'">
+    <div *ngIf="cuentaGoogle">
+      <br>
+      <p>No se puede cambiar el email</p>
+    </div>
+
+    <div *ngIf="!cuentaGoogle">
+      <h2>Cambiar email</h2>
+      <div >
+        <label position="floating" >Correo electrónico actual</label>
+        <br>
+        <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailActual">
+      </div>
+
+      <div>
+        <label position="floating">Nuevo correo electrónico</label>
+        <br>
+        <input required type="email" id="NuevoEmail" autocomplete="off" [(ngModel)]="emailNuevo">
+      </div>
+
+      <div>
+        <label position="floating">Confirmar nuevo correo electrónico</label>
+        <br>
+        <input required type="email" id="ConfEmail" autocomplete="off" [(ngModel)]="emailConfirmar">
+      </div>
+
+      <div>
+        <label position="floating">Contraseña</label>
+        <br>
+        <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdEmail">
+      </div>
+      <br>
+      <button expand="block" (click)="cambiarEmail()">Cambiar email</button>
+
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="mensaje === 'Cambiar contraseña'">
+    <div *ngIf="cuentaGoogle">
+      <br>
+      <p>No se puede cambiar la contraseña</p>
+    </div>
+
+    <div *ngIf="!cuentaGoogle">
+      <h2>Cambiar contraseña</h2>
+            <div>
+              <label position="floating">Contraseña actual</label>
+              <br>
+              <input required type="password" class="pwd" autocomplete="off" [(ngModel)]="pwdActual">
+            </div>
+
+            <div>
+              <label position="floating">Contraseña nueva</label>
+              <br>
+              <input required type="password" class="pwd" autocomplete="off" [(ngModel)]="pwdNuevo">
+            </div>
+
+            <div>
+              <label position="floating">Confirmar contraseña</label>
+              <br>
+              <input required type="password" class="pwd" autocomplete="off" [(ngModel)]="pwdConfirmar">
+            </div>
+            <br>
+            <button expand="block" (click)="cambiarPwd()">Cambiar contraseña</button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="mensaje === 'Borrar cuenta'">
+    <div *ngIf="!cuentaGoogle">
+      <h2>Borrar cuenta</h2>
+
+      <div>
+        <label position="floating" >Correo electrónico actual</label>
+        <br>
+        <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailBorrar">
+      </div>
+
+      <div>
+        <label position="floating">Contraseña actual</label>
+        <br>
+        <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdBorrar">
+      </div>
+      <br>
+      <button expand="block" (click)="borrarCuenta()">Borrar cuenta</button>
+    </div>
+
+    <div *ngIf="cuentaGoogle">
+      <h2>Borrar cuenta</h2>
+
+      <div>
+        <label position="floating" >Correo electrónico actual</label>
+        <br>
+        <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailBorrar">
+      </div>
+      <br>
+      <button expand="block" (click)="borrarCuentaGoogle()">Borrar cuenta</button>
+
+    </div>
+  </ng-container>
+
 </div>
 
 
-<ng-container *ngIf="mensaje === 'Borrar cuenta'">
-  <div>
-    <h2>Borrar cuenta</h2>
 
-    <div>
-      <label position="floating" >Correo electrónico actual</label>
-      <br>
-      <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailBorrar">
-    </div>
-
-    <div>
-      <label position="floating">Contraseña actual</label>
-      <br>
-      <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdBorrar">
-    </div>
-
-    <button expand="block" (click)="borrarCuenta()">Borrar cuenta</button>
-  </div>
-</ng-container>
+</div>
