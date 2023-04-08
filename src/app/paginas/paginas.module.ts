@@ -20,6 +20,8 @@ import { AjustesComponent } from './ajustes/ajustes.component';
 import { MatProgressSpinnerModule } from '@angular/material';
 import { NoticiasComponent } from './noticias/noticias.component';
 import { NoticiaEspecificaComponent } from './noticia-especifica/noticia-especifica.component';
+import { RecuperarContraComponent } from './recuperar-contra/recuperar-contra.component';
+import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { NoticiaEspecificaComponent } from './noticia-especifica/noticia-especif
     AjustesComponent,
     NoticiasComponent,
     NoticiaEspecificaComponent,
+    RecuperarContraComponent,
+    EditarPerfilComponent,
   ],
   imports: [
     CommonModule,

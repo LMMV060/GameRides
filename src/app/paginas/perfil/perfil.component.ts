@@ -91,6 +91,7 @@ export class PerfilComponent implements OnInit {
 
 
   Editar(){
+    this.router.navigateByUrl('editar-perfil');
   }
 
   loading = true;

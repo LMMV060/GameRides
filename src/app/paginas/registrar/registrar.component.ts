@@ -78,6 +78,8 @@ export class RegistrarComponent implements OnInit {
             isDisabled: false
           };
 
+          this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png");
+
           const response = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)
           console.log("Usuario creado");
           this.router.navigate(["/home"]);

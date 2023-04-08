@@ -1,0 +1,142 @@
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border-left-color: #09f;
+
+  animation: spin 1s ease infinite;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+*{
+  text-align: center;
+  position: relative;
+}
+
+
+.imagen-perfil {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+  margin: auto;
+}
+
+
+img{
+  display: block;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-img-top {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+
+
+
+.card .delete-button {
+  display: none;
+}
+
+.card:hover .delete-button {
+  display: block;
+}
+
+#segmento {
+  font-size: 20px;
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  margin-bottom: 10px;
+  }
+
+  #segmento option {
+  font-size: 18px;
+  color: #333;
+  }
+
+  .mi-boton {
+    background-color: #fff; /* color de fondo del botón */
+    border-radius: 5px;
+    color: #333; /* color del texto */
+    padding: 15px 32px; /* espacio entre el borde y el contenido del botón */
+    text-align: center; /* alineación del texto */
+    text-decoration: none; /* decoración del texto */
+    display: inline-block; /* muestra el botón en línea con otros elementos */
+    font-size: 16px; /* tamaño de fuente del texto */
+    margin: 4px 2px; /* margen del botón */
+    cursor: pointer; /* cambia el cursor cuando se pasa sobre el botón */
+    border-radius: 8px; /* da una forma redondeada al borde del botón */
+  }
+
+
+  .logo-t{
+    max-width: 100px;
+    max-height: 100px;
+  }
+
+  .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+.izquierdo,
+.derecho {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: #007bff;
+  cursor: pointer;
+}
+
+.centrado {
+  font-size: 24px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+}
+
+.derecho {
+  margin-left: auto;
+}
+
+
+
+
+#editor {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  min-height: 200px;
+}

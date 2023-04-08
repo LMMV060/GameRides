@@ -12,6 +12,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgOptimizedImage } from '@angular/common'
 import {MatCardModule} from '@angular/material/card';
+import { provideStorage,getStorage } from '@angular/fire/storage';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import {MatCardModule} from '@angular/material/card';
     MatCardModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage())
 
   ],
   exports: [

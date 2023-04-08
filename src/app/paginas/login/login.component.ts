@@ -44,10 +44,6 @@ export class LoginComponent implements OnInit {
   }
 
   async Login(){
-
-
-
-
     this.fire.login(this.email, this.pwd)
     .then(async response => {
 
@@ -113,7 +109,8 @@ export class LoginComponent implements OnInit {
         })
 
         if(filtro == undefined){
-          const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)
+          const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario);
+          this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.auth.currentUser.photoURL);
           console.log("Usuario creado");
         } else {
           if(filtro.isDisabled){

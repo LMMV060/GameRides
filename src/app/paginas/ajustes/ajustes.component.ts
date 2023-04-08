@@ -92,8 +92,6 @@ export class AjustesComponent implements OnInit {
           //this.pwdNuevo = crypto.SHA512(this.pwdNuevo).toString();
           this.fire.updatePwd(this.auth.currentUser?.uid,this.pwdNuevo);
         }
-
-
       } else {
         alert("La nueva contraseña no coincide con la confirmación");
       }

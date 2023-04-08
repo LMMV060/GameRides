@@ -17,6 +17,8 @@ import { AjustesComponent } from './paginas/ajustes/ajustes.component';
 import { DashboardComponent } from './paginas/dashboard/dashboard.component';
 import { NoticiasComponent } from './paginas/noticias/noticias.component';
 import { NoticiaEspecificaComponent } from './paginas/noticia-especifica/noticia-especifica.component';
+import { RecuperarContraComponent } from './paginas/recuperar-contra/recuperar-contra.component';
+import { EditarPerfilComponent } from './paginas/editar-perfil/editar-perfil.component';
 import { DashboardGuard } from './guards/dashboard.guard';
 const rutas:Routes = [
   {
@@ -33,6 +35,10 @@ const rutas:Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
+    path:'editar-perfil',
+    component: EditarPerfilComponent,
+  },
+  {
     path:'peticiones',
     component: PeticionesComponent
   },
@@ -43,6 +49,11 @@ const rutas:Routes = [
   {
     path:'login',
     component: LoginComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path:'recuperar-contra',
+    component: RecuperarContraComponent,
     canActivate:[AuthGuard]
   },
   {
@@ -68,7 +79,8 @@ const rutas:Routes = [
   },
   {
     path:'registrar',
-    component: RegistrarComponent
+    component: RegistrarComponent,
+    canActivate:[AuthGuard]
   },
   {
     path:'ajustes',

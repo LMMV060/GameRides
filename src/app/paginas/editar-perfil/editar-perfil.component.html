@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="centrado">{{nombre}}</h1>
+  <button (click)="GuardarCambios()" class="derecho">Guardar</button>
+</div>
+
+<br>
+
+<div class="perfil-container" (click)="seleccionarImagen()">
+  <div *ngIf="loading" class="spinner"></div>
+  <img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
+</div>
+<label for="img">Select image:</label>
+
+<br>
+
+<div id="editor" contenteditable="true" (input)="onEditorInput($event)"></div>

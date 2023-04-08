@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser, updateEmail, updatePassword, sendPasswordResetEmail } from '@angular/fire/auth';
 import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
+import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
 
 
 
@@ -19,7 +20,8 @@ export class FirebaseService {
   constructor(
     private auth: Auth,
     private bbdd:Firestore,
-    private router: Router
+    private router: Router,
+    private storage:Storage
     ) { }
 
   register(email:any, pwd:any, nombre:any){
@@ -356,5 +358,41 @@ export class FirebaseService {
 
   async getNoticiaByUser(uid:any){
 
+  }
+
+  async enviarRecuperacionContra(email:any){
+    sendPasswordResetEmail(this.auth, email).then(()=> {
+      console.log("Correo enviado");
+
+    })
+  }
+
+  imagenNueva:any;
+
+  async guardarNuevaImagen(uid:any, img:any){
+    const imgRef = ref(this.storage, `ImagenesUsuario/${uid}`);
+    uploadBytes(imgRef, img)
+    .then(async response => {
+      console.log(response.metadata.fullPath);
+
+      const nuevaImagen = await getDownloadURL(ref(this.storage, response.metadata.fullPath))
+
+      this.imagenNueva = nuevaImagen;
+
+    })
+  }
+
+  async guardar(uid:any){
+    const imgRef:any = await ref(this.storage, `ImagenesUsuario/${uid}`);
+    let userActual = await doc(this.bbdd, "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
+
+    if(this.auth.currentUser){
+      await updateProfile(this.auth.currentUser, {
+        photoURL: this.imagenNueva
+      })
+      await updateDoc(userActual, {
+        imgUrl: this.imagenNueva
+      });
+    }
   }
 }
