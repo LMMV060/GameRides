@@ -17,6 +17,7 @@ export class PerfilComponent implements OnInit {
   usuario:any = [];
   public nombre:any = this.auth.currentUser?.displayName;
   public img:any = this.auth.currentUser?.photoURL;
+  public descripcion:any;
 
   Peticiones:any = [];
   PeticionesUsuario:any = [];
@@ -35,8 +36,8 @@ export class PerfilComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try{
-      const usuarioActual = await this.fire.getCurrentUser();
-
+      const usuarioActual = await this.fire.getUserDataReal();
+      this.descripcion = usuarioActual.descripcion;
     //this.isAdmin = true;
 
     console.log(this.auth.currentUser?.uid);

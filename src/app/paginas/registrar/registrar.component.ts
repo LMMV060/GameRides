@@ -75,7 +75,8 @@ export class RegistrarComponent implements OnInit {
             imgUrl: "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png",
             password: crypto.SHA512(this.pwd).toString(),
             isAdmin: false,
-            isDisabled: false
+            isDisabled: false,
+            descripcion: ""
           };
 
           this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png");

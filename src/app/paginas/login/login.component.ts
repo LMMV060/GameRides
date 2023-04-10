@@ -62,7 +62,8 @@ export class LoginComponent implements OnInit {
           imgUrl: this.auth.currentUser?.photoURL|| "",
           password: "",
           isAdmin: false,
-          isDisabled:true
+          isDisabled:true,
+          descripcion: ""
         }
         console.log("Estas baneado: ",usuarioBan);
 
@@ -97,7 +98,8 @@ export class LoginComponent implements OnInit {
           imgUrl: this.auth.currentUser.photoURL,
           password: "?",
           isAdmin: false,
-          isDisabled:false
+          isDisabled:false,
+          descripcion: ""
         };
 
         const query = await getDocs(collection(this.fire.basededatos(), "Usuarios"))
@@ -120,7 +122,8 @@ export class LoginComponent implements OnInit {
               imgUrl: this.auth.currentUser.photoURL,
               password: "",
               isAdmin: false,
-              isDisabled:true
+              isDisabled:true,
+              descripcion: ""
             }
             console.log("Estas baneado: ",usuarioBan);
 
@@ -133,10 +136,7 @@ export class LoginComponent implements OnInit {
             console.log("Bienvenido");
             this.router.navigateByUrl('/home');
           }
-
         }
-
-
       }
     })
     .catch(error => console.log(error));

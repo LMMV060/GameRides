@@ -4,5 +4,6 @@ export interface Usuarios {
   password:any,
   imgUrl:string,
   isAdmin: boolean,
-  isDisabled:boolean
+  isDisabled:boolean,
+  descripcion:string
 }

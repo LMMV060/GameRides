@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
+import { getStorage, ref } from '@angular/fire/storage';
+import { uploadBytes } from 'firebase/storage';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
+
 @Component({
   selector: 'app-editar-perfil',
   templateUrl: './editar-perfil.component.html',
@@ -8,24 +13,31 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 })
 export class EditarPerfilComponent {
 
-  usuario:any = [];
+
+  public nombre:any = this.auth.currentUser?.displayName;
+  public img:any = this.auth.currentUser?.photoURL;
+  public descripcion:any;
+
+  public imgAGuardar:any;
 
 
 
   constructor(
     private fire: FirebaseService,
-    private auth: Auth
+    private auth: Auth,
+    private sanitizer: DomSanitizer
   ) {
 
   }
 
   async ngOnInit() {
-
-
+    const usuario:any = await this.fire.getUserDataReal();
+    console.log(usuario);
+    this.img = usuario.imgUrl;
+    this.descripcion = usuario.descripcion;
   }
 
-  public nombre:any = this.auth.currentUser?.displayName;
-  public img:any = this.auth.currentUser?.photoURL;
+
 
   loading = true;
 
@@ -33,31 +45,32 @@ export class EditarPerfilComponent {
     this.loading = false;
   }
 
-  descripcion = '';
 
   onEditorInput(event:any) {
-    this.descripcion = event.target.innerHTML;
-    console.log(this.descripcion);
+      this.descripcion = event.target.innerHTML;
   }
 
   GuardarCambios(){
-    this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.img);
-
+    this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
+    this.fire.guardarNuevaDescripcion(this.descripcion);
     this.fire.guardar(this.auth.currentUser?.uid);
   }
 
-  seleccionarImagen() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.addEventListener('change', (event: any) => {
-      const reader = new FileReader();
-      reader.onload = (e: any) => {
-        this.img = e.target.result;
-        console.log(this.img);
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    });
-    input.click();
+  cargarImagen($event: any) {
+    const archivo = $event.target.files[0];
+    const storage = getStorage();
+    console.log(archivo);
+    this.imgAGuardar = archivo;
+
+    // Crear URL de objeto para la imagen
+    const urlImagen = URL.createObjectURL(archivo);
+
+    // Sanitizar la URL creada
+    const urlSegura: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(urlImagen);
+
+    // Establecer la variable img con la URL sanitizada
+    this.img = urlSegura;
   }
+
+
 }

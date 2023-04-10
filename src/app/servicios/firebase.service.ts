@@ -4,7 +4,7 @@ import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, u
 import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
-import { Storage, getDownloadURL, ref, uploadBytes } from '@angular/fire/storage';
+import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
 
 
 
@@ -242,8 +242,6 @@ export class FirebaseService {
       peticiones.push(doc.data());
     });
 
-
-    console.log(peticiones);
     return peticiones;
   }
 
@@ -292,7 +290,8 @@ export class FirebaseService {
         imgUrl: user.imgUrl|| "",
         password: user.password || "?",
         isAdmin: false,
-        isDisabled:true
+        isDisabled:true,
+        descripcion: ""
       }
       console.log("Baneando al usuario: ",usuarioBan);
 
@@ -367,32 +366,57 @@ export class FirebaseService {
     })
   }
 
-  imagenNueva:any;
-
   async guardarNuevaImagen(uid:any, img:any){
-    const imgRef = ref(this.storage, `ImagenesUsuario/${uid}`);
-    uploadBytes(imgRef, img)
-    .then(async response => {
-      console.log(response.metadata.fullPath);
+    const imgRef = ref(this.storage, `ImagenesUsuarioPerfil/${uid}`);
+    if(img === undefined){
+      console.log("No ha habido cambios en la imagen");
 
-      const nuevaImagen = await getDownloadURL(ref(this.storage, response.metadata.fullPath))
+    } else {
 
-      this.imagenNueva = nuevaImagen;
+      uploadBytes(imgRef, img)
+    .then(response => {
+      console.log(response);
 
-    })
+    }).catch(err => console.log(err)
+    )
+    }
+  }
+
+  descripcion:any;
+
+  async guardarNuevaDescripcion(descripcion:any){
+    if(descripcion === undefined){
+      console.log("No ha habido cambios en la descripcion");
+      this.descripcion = "Esto es una prueba relax"
+    } else {
+      this.descripcion = descripcion;
+    }
   }
 
   async guardar(uid:any){
-    const imgRef:any = await ref(this.storage, `ImagenesUsuario/${uid}`);
+    const imgRef:any = await ref(this.storage, `ImagenesUsuarioPerfil`);
     let userActual = await doc(this.bbdd, "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
 
-    if(this.auth.currentUser){
-      await updateProfile(this.auth.currentUser, {
-        photoURL: this.imagenNueva
-      })
-      await updateDoc(userActual, {
-        imgUrl: this.imagenNueva
-      });
-    }
+    getDownloadURL(ref(this.storage, 'ImagenesUsuarioPerfil/'+this.auth.currentUser?.uid))
+    .then(async (url) => {
+      if(this.auth.currentUser){
+        await updateProfile(this.auth.currentUser, {
+          photoURL: url
+        })
+        await updateDoc(userActual, {
+          imgUrl: url,
+          descripcion: this.descripcion
+        });
+
+        this.getAllPeticiones().then(peti => {
+          for(let user of peti){
+            console.log(user);
+
+          }
+
+        })
+      }
+
+    })
   }
 }

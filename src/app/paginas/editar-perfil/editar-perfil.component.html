@@ -1,15 +1,18 @@
 <div class="container">
-  <h1 class="centrado">{{nombre}}</h1>
+  <h1 class="centrado" contenteditable="true">{{nombre}}</h1>
   <button (click)="GuardarCambios()" class="derecho">Guardar</button>
 </div>
 
 <br>
 
-<div class="perfil-container" (click)="seleccionarImagen()">
+<div class="perfil-container">
   <div *ngIf="loading" class="spinner"></div>
-  <img src="{{img}}" class="imagen-perfil" (load)="onImageLoad()">
+  <img [src]="img" class="imagen-perfil" (load)="onImageLoad()">
 </div>
+<br>
 <label for="img">Select image:</label>
+<input type="file" accept=".jpg, .png, .jpeg" (change)="cargarImagen($event)">
+
 
 <br>
 
