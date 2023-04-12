@@ -13,7 +13,7 @@ import { Evento } from 'src/app/interfaces/evento';
 })
 export class PeticionesComponent implements OnInit {
   token = "d469385fa45e0c309e3c176dd5b62f70";
-
+  unixTime:any;
 
   mostrarContenido = false;
 
@@ -37,6 +37,7 @@ export class PeticionesComponent implements OnInit {
   Transportes:any = [];
 
   async ngOnInit() {
+    this.unixTime = Math.floor(new Date().getTime() / 1000);
     this.getSmashApi();
 
 
@@ -273,12 +274,24 @@ export class PeticionesComponent implements OnInit {
       .then(async data => {
         this.eventos = await data.data.tournaments.nodes;
 
-        console.log(this.eventos);
+        this.eventos = this.eventos.filter((evento:any) => evento.endAt > this.unixTime)
 
 
       })
       .catch(error => console.error(error));
 
+
+  }
+
+  async irAPerfil(nombre:any){
+
+    const usuarioActual:any = await this.fire.getUserDataReal();
+
+    if(usuarioActual.nombre === nombre){
+      this.router.navigateByUrl("/perfil");
+    } else {
+      this.router.navigateByUrl("/perfil/"+nombre);
+    }
 
   }
 }

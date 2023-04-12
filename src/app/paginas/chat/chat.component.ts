@@ -1,0 +1,65 @@
+
+import { ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
+import { FirebaseService } from 'src/app/servicios/firebase.service';
+
+import { RealtimeService } from 'src/app/servicios/realtime.service';
+@Component({
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
+})
+export class ChatComponent {
+
+  @ViewChild('messagesContainer') messagesContainer: any;
+
+
+  constructor(
+    private fire: FirebaseService,
+    private chat:RealtimeService,
+    private auth:Auth,
+  ) {
+  }
+
+  mensajes:any;
+  newMessage: string = '';
+
+
+
+
+  async ngOnInit() {
+
+
+    await this.chat.getMensajes().then((mensajes:any) => {
+      this.mensajes = mensajes;
+    });
+
+    this.scrollToBottom();
+
+
+  }
+
+
+
+  async sendMessage() {
+    if (this.newMessage.trim() !== '') {
+      this.chat.escritura(this.newMessage);
+      this.newMessage = '';
+
+      await this.chat.getMensajes().then((mensajes:any) => {
+        this.mensajes = mensajes;
+      });
+
+      this.scrollToBottom();
+    }
+  }
+
+
+  scrollToBottom() {
+    setTimeout(() => {
+      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+    }, 0);
+  }
+
+}

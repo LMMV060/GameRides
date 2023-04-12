@@ -4,6 +4,7 @@ import { getStorage, ref } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { RouteReuseStrategy, Router } from '@angular/router';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class EditarPerfilComponent {
   constructor(
     private fire: FirebaseService,
     private auth: Auth,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router:Router
   ) {
 
   }
@@ -50,10 +52,12 @@ export class EditarPerfilComponent {
       this.descripcion = event.target.innerHTML;
   }
 
-  GuardarCambios(){
-    this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
-    this.fire.guardarNuevaDescripcion(this.descripcion);
-    this.fire.guardar(this.auth.currentUser?.uid);
+  async GuardarCambios(){
+    await this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
+    await this.fire.guardarNuevaDescripcion(this.descripcion);
+    await this.fire.guardar(this.auth.currentUser?.uid);
+
+    this.router.navigateByUrl("/perfil")
   }
 
   cargarImagen($event: any) {

@@ -44,7 +44,7 @@
 
     <div *ngFor="let peticion of Peticiones">
       <div class="card" >
-        <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
+        <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)">
         <div class="card-body">
           <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
@@ -114,7 +114,7 @@
 
     <div *ngFor="let transporte of Transportes">
       <div class="card" >
-        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap">
+        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)">
         <div class="card-body">
           <img class="logo-t" *ngIf="transporte.evento"  src="{{transporte.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="transporte.evento">{{transporte.evento.name}}</h4>

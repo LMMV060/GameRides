@@ -4,6 +4,7 @@ import { Auth } from '@angular/fire/auth';
 import { collection, getDocs } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
+import { RealtimeService } from 'src/app/servicios/realtime.service';
 @Component({
   selector: 'app-perfil-ajeno',
   templateUrl: './perfil-ajeno.component.html',
@@ -25,6 +26,7 @@ export class PerfilAjenoComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
+    private chat:RealtimeService,
     ) { }
 
     datos:any = [];
@@ -40,6 +42,9 @@ export class PerfilAjenoComponent implements OnInit {
     });
 
     this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
+
+    console.log(this.usuarioActual[0]);
+
 
     this.isBan = this.usuarioActual[0].isDisabled
     const queryPeticiones = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
@@ -77,6 +82,21 @@ export class PerfilAjenoComponent implements OnInit {
   Busqueda(event:any){
 
     this.opcionSeleccionada = event.target.value;
+  }
+
+  async chatear(){
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+    });
+
+    this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
+
+    console.log(this.usuarioActual[0]);
+    const usuarioActual = await this.fire.getUserDataReal();
+
+    this.chat.chat(usuarioActual, this.usuarioActual[0]);
+
+    this.router.navigateByUrl("/mis-chats")
   }
 
 }

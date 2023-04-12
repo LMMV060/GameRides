@@ -244,4 +244,16 @@ export class DashboardComponent implements OnInit {
     const dia = ('0' + fecha.getDate()).slice(-2); // Añadir un 0 si el día es de un solo dígito
     return `${anio}-${mes}-${dia}`;
   }
+
+  async irAPerfil(nombre:any){
+
+    const usuarioActual:any = await this.fire.getUserDataReal();
+
+    if(usuarioActual.nombre === nombre){
+      this.router.navigateByUrl("/perfil");
+    } else {
+      this.router.navigateByUrl("/perfil/"+nombre);
+    }
+
+  }
 }

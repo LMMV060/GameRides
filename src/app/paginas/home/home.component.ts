@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit{
 
   torneos:any = [];
   noticias:any = [];
-  unixTime: number | undefined;
+  unixTime:any;
 
   constructor(
     private fire: FirebaseService
@@ -104,8 +104,10 @@ export class HomeComponent implements OnInit{
     })
       .then(response => response.json())
       .then(async data => {
-        console.log(data.data.tournaments.nodes)
+        //console.log(data.data.tournaments.nodes)
         this.torneos = await data.data.tournaments.nodes;
+
+        this.torneos = this.torneos.filter((torneo:any) => torneo.endAt > this.unixTime)
         console.log(this.torneos);
 
       })

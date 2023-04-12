@@ -19,6 +19,7 @@ import { NoticiasComponent } from './paginas/noticias/noticias.component';
 import { NoticiaEspecificaComponent } from './paginas/noticia-especifica/noticia-especifica.component';
 import { RecuperarContraComponent } from './paginas/recuperar-contra/recuperar-contra.component';
 import { EditarPerfilComponent } from './paginas/editar-perfil/editar-perfil.component';
+import { ChatComponent } from './paginas/chat/chat.component';
 import { DashboardGuard } from './guards/dashboard.guard';
 const rutas:Routes = [
   {
@@ -37,6 +38,10 @@ const rutas:Routes = [
   {
     path:'editar-perfil',
     component: EditarPerfilComponent,
+  },
+  {
+    path:'mis-chats',
+    component: ChatComponent,
   },
   {
     path:'peticiones',

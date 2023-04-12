@@ -22,6 +22,13 @@ import { NoticiasComponent } from './noticias/noticias.component';
 import { NoticiaEspecificaComponent } from './noticia-especifica/noticia-especifica.component';
 import { RecuperarContraComponent } from './recuperar-contra/recuperar-contra.component';
 import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
+import { ChatComponent } from './chat/chat.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -41,6 +48,7 @@ import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
     NoticiaEspecificaComponent,
     RecuperarContraComponent,
     EditarPerfilComponent,
+    ChatComponent,
   ],
   imports: [
     CommonModule,
@@ -49,7 +57,14 @@ import { EditarPerfilComponent } from './editar-perfil/editar-perfil.component';
     MatCardModule,
     MatBadgeModule,
     FormsModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    BrowserAnimationsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule,
+    MatFormFieldModule,
   ],
   exports:[
     HomeComponent,

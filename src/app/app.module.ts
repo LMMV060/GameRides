@@ -13,7 +13,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgOptimizedImage } from '@angular/common'
 import {MatCardModule} from '@angular/material/card';
 import { provideStorage,getStorage } from '@angular/fire/storage';
-
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { getDatabase } from "firebase/database";
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { provideStorage,getStorage } from '@angular/fire/storage';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
 
   ],
   exports: [

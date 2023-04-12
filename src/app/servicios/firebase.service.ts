@@ -5,6 +5,7 @@ import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
 import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
+import { getDatabase, set } from 'firebase/database';
 
 
 
@@ -419,4 +420,6 @@ export class FirebaseService {
 
     })
   }
+
+  
 }

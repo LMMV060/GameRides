@@ -21,7 +21,7 @@
 <div *ngFor="let usuario of usuariosFiltrados" >
   <div class="card">
     <button class="delete-button" (click)="eliminarUsuario(usuario)">Eliminar</button>
-    <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar">
+    <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" (click)="irAPerfil(usuario.nombre)">
     <div class="container">
       <h4><b>{{usuario.nombre}}</b></h4>
       <p>{{usuario.uid}}</p>
