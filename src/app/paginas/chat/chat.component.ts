@@ -1,5 +1,5 @@
 
-import { ElementRef, ViewChild } from '@angular/core';
+import { ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
@@ -25,15 +25,27 @@ export class ChatComponent {
   mensajes:any;
   newMessage: string = '';
 
-
+  uid = this.auth.currentUser?.uid;
 
 
   async ngOnInit() {
 
-
     await this.chat.getMensajes().then((mensajes:any) => {
       this.mensajes = mensajes;
     });
+
+    let mensajesAnteriores = [];
+
+    setInterval(async () => {
+      await this.chat.getMensajes().then((mensajes:any) => {
+        if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
+          this.mensajes = mensajes;
+          this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+        }
+        mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
+      });
+    }, 100);
+
 
     this.scrollToBottom();
 
@@ -60,6 +72,12 @@ export class ChatComponent {
     setTimeout(() => {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     }, 0);
+  }
+
+  async cargarMensajes(){
+    await this.chat.getMensajes().then((mensajes:any) => {
+      this.mensajes = mensajes;
+    });
   }
 
 }

@@ -1,6 +1,10 @@
 
 <div class="chat-container" #messagesContainer>
-  <div class="message" *ngFor="let message of mensajes">{{message.mensaje}}</div>
+  <div class="message" *ngFor="let message of mensajes" [ngClass]="{'currentUser': message.usuario === uid, 'otherUser': message.usuario !== uid}">
+    <br>
+    {{message.mensaje}}
+    <br>
+  </div>
 </div>
 
 <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escriba su mensaje aquí"/>

@@ -42,6 +42,7 @@ const rutas:Routes = [
   {
     path:'mis-chats',
     component: ChatComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
     path:'peticiones',

@@ -16,21 +16,32 @@ export class RealtimeService {
   private UsuarioPrimero:any;
   private UsuarioSegundo:any;
 
+  private SalaActual:any;
+
   chat(usuario1:any, usuario2:any) {
     this.UsuarioPrimero = usuario1;
     this.UsuarioSegundo = usuario2;
 
     let sala = ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid);
 
+    let sala2 = ref(this.db, 'Sala-' + usuario2.uid + '-' + usuario1.uid);
+
     get(sala).then((snapshot) => {
       if (snapshot.exists()) {
         console.log("Existe");
-
+        this.SalaActual = 'Sala-' + usuario1.uid + '-' + usuario2.uid;
       } else {
-        set(ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid), {
-          username1: usuario1.nombre,
-          username2: usuario2.nombre
-        });
+        get(sala2).then((snapshot) => {
+          if(snapshot.exists()){
+            console.log("Existe la segunda sala");
+            this.SalaActual = 'Sala-' + usuario2.uid + '-' + usuario1.uid;
+          } else {
+            set(ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid), {
+              username1: usuario1.nombre,
+              username2: usuario2.nombre
+            });
+          }
+        })
       }
     }).catch((error) => {
       console.error(error);
@@ -38,11 +49,12 @@ export class RealtimeService {
   }
 
   escritura(mensaje:any){
-    const fechaActual = new Date().toString();
+    const fechaActual = Math.floor(Date.now() / 1000);
 
-    set(ref(this.db, 'Sala-' + this.UsuarioPrimero.uid + '-' + this.UsuarioSegundo.uid + '/chat/' + 'mensaje-' + fechaActual), {
+    set(ref(this.db, this.SalaActual + '/chat/' + 'mensaje-' + fechaActual), {
       'mensaje': mensaje,
-      'usuario':  this.auth.currentUser?.uid
+      'usuario':  this.auth.currentUser?.uid,
+      'unix': fechaActual
     });
 
     this.getMensajes();
@@ -50,7 +62,7 @@ export class RealtimeService {
   }
 
   getMensajes(): Promise<any> {
-    let sala = ref(this.db, 'Sala-' + this.UsuarioPrimero.uid + '-' + this.UsuarioSegundo.uid);
+    let sala = ref(this.db, this.SalaActual);
 
     return get(sala).then((snapshot) => {
       if (snapshot.exists()) {
@@ -64,7 +76,7 @@ export class RealtimeService {
           }
         }
 
-        console.log('Mensajes:', mensajes);
+        //console.log('Mensajes:', mensajes);
 
         return mensajes;
 
