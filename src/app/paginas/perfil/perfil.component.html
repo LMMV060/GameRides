@@ -30,7 +30,8 @@
     <div class="card my-card" >
 
       <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
-
+      <br>
+      <button class="delete-button" (click)="editarPeticion(peticion)">Editar</button>
       <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
       <div class="card-body">
         <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">

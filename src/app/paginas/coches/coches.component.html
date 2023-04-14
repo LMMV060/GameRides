@@ -6,6 +6,9 @@
 
   <label for="alias" class="label-floating">Alias</label>
   <input required type="string" id="alias" (input)="ObtenerAlias($event)">
+
+  <label for="alias" class="label-floating">Número de plazas</label>
+  <input required type="number" id="plazas" (input)="ObtenerPlazas($event)">
 </div>
 
   <br>
@@ -16,12 +19,12 @@
 
   <h1>Mis vehiculos</h1>
 
-  <div *ngFor="let peticion of misVehiculos">
+  <div *ngFor="let coche of misVehiculos">
     <div class="card" >
       <div class="card-body">
-        <h5 class="card-title">{{peticion.alias}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{peticion.matricula}}</h6>
-
+        <h5 class="card-title">{{coche.alias}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{coche.matricula}}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">Plazas: {{coche.plazas}}</h6>
       </div>
     </div>
     <br>

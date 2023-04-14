@@ -29,6 +29,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { VisualizarOfertaComponent } from './visualizar-oferta/visualizar-oferta.component';
+import { VisualizarPeticionComponent } from './visualizar-peticion/visualizar-peticion.component';
+import { EditarPeticionComponent } from './editar-peticion/editar-peticion.component';
+import { EditarOfertaComponent } from './editar-oferta/editar-oferta.component';
+import { VisualizarEventoComponent } from './visualizar-evento/visualizar-evento.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +54,11 @@ import { MatDividerModule } from '@angular/material/divider';
     RecuperarContraComponent,
     EditarPerfilComponent,
     ChatComponent,
+    VisualizarOfertaComponent,
+    VisualizarPeticionComponent,
+    EditarPeticionComponent,
+    EditarOfertaComponent,
+    VisualizarEventoComponent,
   ],
   imports: [
     CommonModule,

@@ -4,7 +4,7 @@ import { initializeApp } from '@angular/fire/app';
 import { Auth, getAuth, updateProfile } from '@angular/fire/auth';
 import { Component, OnInit, } from '@angular/core';
 import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/firestore';
-
+import { PeticionService } from 'src/app/servicios/peticion.service';
 
 @Component({
   selector: 'app-perfil',
@@ -31,7 +31,8 @@ export class PerfilComponent implements OnInit {
   constructor(
     private fire: FirebaseService,
     private router:Router,
-    private auth: Auth
+    private auth: Auth,
+    private p:PeticionService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -110,8 +111,11 @@ export class PerfilComponent implements OnInit {
       this.PeticionesUsuario = this.PeticionesUsuario.filter((o:any) => o !== peticion);
       console.log("Objeto eliminado:", peticion);
     }
+  }
 
-
+  async editarPeticion(peticion:any){
+    this.p.setPeticion(peticion);
+    this.router.navigateByUrl('/editar-peticion');
 
   }
 

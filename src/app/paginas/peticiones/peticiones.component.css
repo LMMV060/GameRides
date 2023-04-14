@@ -90,6 +90,8 @@
       height: 100px;
       object-fit: cover;
       border-radius: 50%;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
     .select-image-option {
@@ -111,3 +113,8 @@
       max-width: 100px;
       max-height: 100px;
     }
+
+    .card-body {
+      border-top: 1px solid #ccc;
+      padding-top: 10px;
+      }

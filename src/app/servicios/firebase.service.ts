@@ -63,7 +63,7 @@ export class FirebaseService {
   }
 
   deletePeticiones(base:any){
-    console.log(base.fecha);
+    //console.log(base.fecha);
     return base.fecha;
   }
 
@@ -421,5 +421,5 @@ export class FirebaseService {
     })
   }
 
-  
+
 }

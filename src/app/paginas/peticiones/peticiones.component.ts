@@ -1,3 +1,4 @@
+import { TransporteService } from './../../servicios/transporte.service';
 import { Component, OnInit } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { collection, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
@@ -31,6 +32,7 @@ export class PeticionesComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
+    private transporte:TransporteService
   ) { }
 
   Peticiones:any = [];
@@ -106,8 +108,6 @@ export class PeticionesComponent implements OnInit {
       this.eventoSeleccionado = evento;
       console.log(evento);
       this.fecha = this.convertirUnixAFecha(evento.startAt);
-
-
 
     } else {
       console.log("no");
@@ -280,7 +280,6 @@ export class PeticionesComponent implements OnInit {
       })
       .catch(error => console.error(error));
 
-
   }
 
   async irAPerfil(nombre:any){
@@ -293,6 +292,12 @@ export class PeticionesComponent implements OnInit {
       this.router.navigateByUrl("/perfil/"+nombre);
     }
 
+  }
+
+  verDatosTransporte(transporte:any){
+    //console.log("ver transporte", transporte);
+    this.transporte.setTransporte(transporte);
+    this.router.navigateByUrl("/ofertasTransportes")
   }
 }
 

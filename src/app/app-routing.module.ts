@@ -20,7 +20,8 @@ import { NoticiaEspecificaComponent } from './paginas/noticia-especifica/noticia
 import { RecuperarContraComponent } from './paginas/recuperar-contra/recuperar-contra.component';
 import { EditarPerfilComponent } from './paginas/editar-perfil/editar-perfil.component';
 import { ChatComponent } from './paginas/chat/chat.component';
-import { DashboardGuard } from './guards/dashboard.guard';
+import { VisualizarOfertaComponent } from './paginas/visualizar-oferta/visualizar-oferta.component';
+import { EditarPeticionComponent } from './paginas/editar-peticion/editar-peticion.component';
 const rutas:Routes = [
   {
     path:'',
@@ -38,6 +39,12 @@ const rutas:Routes = [
   {
     path:'editar-perfil',
     component: EditarPerfilComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+  },
+  {
+    path:'editar-peticion',
+    component: EditarPeticionComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
     path:'mis-chats',
@@ -47,6 +54,10 @@ const rutas:Routes = [
   {
     path:'peticiones',
     component: PeticionesComponent
+  },
+  {
+    path:'ofertasTransportes',
+    component: VisualizarOfertaComponent
   },
   {
     path: 'perfil/:nombre',

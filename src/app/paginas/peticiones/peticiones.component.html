@@ -18,16 +18,12 @@
     <div *ngIf="mostrarContenido">
       <label position="floating" >Fecha de ida</label>
       <br>
-
       <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha">
-
-
       <label position="floating" >Eventos</label>
 
       <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
         <option value=null>- Seleccione un evento -</option>
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
-
           {{ evento.name}}
         </option>
 
@@ -44,8 +40,8 @@
 
     <div *ngFor="let peticion of Peticiones">
       <div class="card" >
-        <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)">
-        <div class="card-body">
+        <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)" style="cursor: pointer;">
+        <div class="card-body" style="cursor: pointer;">
           <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
           <h5 class="card-title">{{peticion.nombre}}</h5>
@@ -93,7 +89,6 @@
       <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
         <option value="">- Seleccione un evento -</option>
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
-
           {{ evento.name}}
         </option>
       </select>
@@ -104,7 +99,6 @@
       <label position="floating" >Descripción</label>
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
 
-
       <br>
     </div>
 
@@ -113,9 +107,9 @@
     <button class="mi-boton" (click)="ofrecerTransporte()">Ofrecer transporte</button>
 
     <div *ngFor="let transporte of Transportes">
-      <div class="card" >
-        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)">
-        <div class="card-body">
+      <div class="card">
+        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)" style="cursor: pointer;">
+        <div class="card-body" (click)="verDatosTransporte(transporte)" style="cursor: pointer;">
           <img class="logo-t" *ngIf="transporte.evento"  src="{{transporte.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="transporte.evento">{{transporte.evento.name}}</h4>
           <h5 class="card-title">{{transporte.nombre}}</h5>
