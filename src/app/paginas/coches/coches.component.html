@@ -20,7 +20,9 @@
   <h1>Mis vehiculos</h1>
 
   <div *ngFor="let coche of misVehiculos">
-    <div class="card" >
+    <div class="card">
+      <button>Borrar</button>
+      <button (click)="Editar(coche)">Editar</button>
       <div class="card-body">
         <h5 class="card-title">{{coche.alias}}</h5>
         <h6 class="card-subtitle mb-2 text-muted">{{coche.matricula}}</h6>

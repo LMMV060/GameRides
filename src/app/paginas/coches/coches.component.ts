@@ -4,6 +4,7 @@ import { collection, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestor
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Vehiculo } from 'src/app/interfaces/vehiculo';
+import { CocheService } from 'src/app/servicios/coche.service';
 @Component({
   selector: 'app-coches',
   templateUrl: './coches.component.html',
@@ -21,6 +22,7 @@ export class CochesComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
+    private coche:CocheService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -85,5 +87,9 @@ export class CochesComponent implements OnInit {
       } else {
       alert('La matrícula no cumple el formato "0000 ABC"');
       }
+  }
+
+  Editar(coche:any){
+    this.coche.setCoche(coche);
   }
 }

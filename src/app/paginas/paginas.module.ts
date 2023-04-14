@@ -34,6 +34,7 @@ import { VisualizarPeticionComponent } from './visualizar-peticion/visualizar-pe
 import { EditarPeticionComponent } from './editar-peticion/editar-peticion.component';
 import { EditarOfertaComponent } from './editar-oferta/editar-oferta.component';
 import { VisualizarEventoComponent } from './visualizar-evento/visualizar-evento.component';
+import { EditarCocheComponent } from './editar-coche/editar-coche.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { VisualizarEventoComponent } from './visualizar-evento/visualizar-evento
     EditarPeticionComponent,
     EditarOfertaComponent,
     VisualizarEventoComponent,
+    EditarCocheComponent,
   ],
   imports: [
     CommonModule,

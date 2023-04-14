@@ -140,4 +140,9 @@ export class PerfilComponent implements OnInit {
   irADashboard(){
     this.router.navigateByUrl("/dashboard");
   }
+
+
+
+
+
 }
