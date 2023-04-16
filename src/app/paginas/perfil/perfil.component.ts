@@ -5,6 +5,7 @@ import { Auth, getAuth, updateProfile } from '@angular/fire/auth';
 import { Component, OnInit, } from '@angular/core';
 import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/firestore';
 import { PeticionService } from 'src/app/servicios/peticion.service';
+import { TransporteService } from 'src/app/servicios/transporte.service';
 
 @Component({
   selector: 'app-perfil',
@@ -32,7 +33,8 @@ export class PerfilComponent implements OnInit {
     private fire: FirebaseService,
     private router:Router,
     private auth: Auth,
-    private p:PeticionService
+    private p:PeticionService,
+    private transporte: TransporteService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -127,6 +129,14 @@ export class PerfilComponent implements OnInit {
       this.TransportesUsuario = this.TransportesUsuario.filter((o:any) => o !== peticion);
       console.log("Objeto eliminado:", peticion);
     }
+  }
+
+  async editarOferta(oferta:any){
+    this.transporte.setTransporte(oferta);
+
+    console.log(oferta);
+
+    this.router.navigateByUrl('/editar-oferta');
   }
 
   opcionSeleccionada:any = "Pasajeros";

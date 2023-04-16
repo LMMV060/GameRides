@@ -29,11 +29,11 @@ export class VisualizarOfertaComponent {
   async ngOnInit() {
     this.datos = await this.oferta.getTransporte();
     if(this.datos === undefined){
-      const datosOferta:any = localStorage.getItem('DatosOferta');
-      this.datos = JSON.parse(datosOferta);
+      const VisualizarOferta:any = localStorage.getItem('VisualizarOferta');
+      this.datos = JSON.parse(VisualizarOferta);
 
     } else {
-      localStorage.setItem('DatosOferta', JSON.stringify(this.datos));
+      localStorage.setItem('VisualizarOferta', JSON.stringify(this.datos));
     }
 
     this.nombre = this.datos.nombre;

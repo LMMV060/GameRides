@@ -31,11 +31,11 @@ export class EditarPeticionComponent {
     this.peticionEditar = await this.p.getPeticion();
 
     if(this.peticionEditar === undefined){
-      const datosOferta:any = localStorage.getItem('DatosOferta');
+      const datosOferta:any = localStorage.getItem('DatosPeticion');
       this.peticionEditar = JSON.parse(datosOferta);
 
     } else {
-      localStorage.setItem('DatosOferta', JSON.stringify(this.peticionEditar));
+      localStorage.setItem('DatosPeticion', JSON.stringify(this.peticionEditar));
     }
     this.fechaEditar = this.peticionEditar.fecha;
     this.eventoEditarNombre = this.peticionEditar.evento.name;

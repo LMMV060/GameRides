@@ -1,1 +1,25 @@
-<p>editar-oferta works!</p>
+
+<div class="card">
+  <img class="imagenUrl" src="{{transporteAEditar.url}}" alt="perfil">
+  <div class="card-body">
+    <h5 class="card-title">{{transporteAEditar.nombre}}</h5>
+  </div>
+</div>
+
+<div>
+  <label position="floating" >Fecha de ida</label>
+  <br>
+  <input required type="date" id="date" [(ngModel)]="fecha">
+  <br>
+  <label position="floating" >Eventos</label>
+
+  <br>
+  <label position="floating" >Descripción</label>
+  <br>
+  <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcion"></textarea>
+</div>
+
+
+<button (click)="guardarEdicion(transporteAEditar.id)">Guardar</button>
+
+

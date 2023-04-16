@@ -256,7 +256,7 @@ export class FirebaseService {
     });
 
 
-    console.log(transportes);
+    //console.log(transportes);
     return transportes;
   }
 

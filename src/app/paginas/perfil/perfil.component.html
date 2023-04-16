@@ -46,18 +46,19 @@
 </div>
 
 <div *ngIf="opcionSeleccionada === 'Conductores'">
-  <div *ngFor="let peticion of TransportesUsuario">
+  <div *ngFor="let oferta of TransportesUsuario">
     <div class="card my-card" >
 
-      <button class="delete-button" (click)="eliminarOferta(peticion)">Eliminar</button>
-
-      <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
+      <button class="delete-button" (click)="eliminarOferta(oferta)">Eliminar</button>
+      <br>
+      <button class="delete-button" (click)="editarOferta(oferta)">Editar</button>
+      <img class="card-img-top" src="{{oferta.url}}"  alt="Card image cap">
       <div class="card-body">
-        <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
-          <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
-        <h5 class="card-title">{{peticion.nombre}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
-        <p class="card-text">{{peticion.descripcion}}</p>
+        <img class="logo-t" *ngIf="oferta.evento"  src="{{oferta.evento.images[0].url}}" alt="">
+          <h4 class="card-title" *ngIf="oferta.evento">{{oferta.evento.name}}</h4>
+        <h5 class="card-title">{{oferta.nombre}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{oferta.fecha}}</h6>
+        <p class="card-text">{{oferta.descripcion}}</p>
       </div>
     </div>
     <br>

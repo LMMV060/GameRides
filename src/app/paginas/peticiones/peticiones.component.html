@@ -74,7 +74,7 @@
       <select id="vehiculo" name="vehiculo" (change)="Alias($event)" >
         <ng-container *ngIf="misVehiculos.length > 0; else noVehiculos">
           <option value="">- Seleccione un coche -</option>
-          <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.alias}}">{{ vehiculo.alias }}</option>
+          <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.id}}">{{ vehiculo.alias }}</option>
         </ng-container>
         <ng-template #noVehiculos>
           <option value="">- No tiene coches registrados -</option>

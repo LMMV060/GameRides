@@ -22,6 +22,8 @@ import { EditarPerfilComponent } from './paginas/editar-perfil/editar-perfil.com
 import { ChatComponent } from './paginas/chat/chat.component';
 import { VisualizarOfertaComponent } from './paginas/visualizar-oferta/visualizar-oferta.component';
 import { EditarPeticionComponent } from './paginas/editar-peticion/editar-peticion.component';
+import { EditarOfertaComponent } from './paginas/editar-oferta/editar-oferta.component';
+import { EditarCocheComponent } from './paginas/editar-coche/editar-coche.component';
 const rutas:Routes = [
   {
     path:'',
@@ -42,8 +44,18 @@ const rutas:Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
+    path:'editar-coche',
+    component: EditarCocheComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+  },
+  {
     path:'editar-peticion',
     component: EditarPeticionComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+  },
+  {
+    path:'editar-oferta',
+    component: EditarOfertaComponent,
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {

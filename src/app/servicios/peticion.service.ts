@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import { doc, updateDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class PeticionService {
   Peticion: any;
 
   constructor(
-    private fire: FirebaseService
+    private fire: FirebaseService,
+    private router: Router
   ) { }
 
   setPeticion(Peticion: any) {
@@ -22,6 +24,8 @@ export class PeticionService {
   }
 
   async guardarNuevaPeticion(id:any, fecha:any, evento:any, descripcion:any){
+
+
     let peticionEditar = await doc(this.fire.basededatos(), "Peticiones", id);
 
     await updateDoc(peticionEditar, {

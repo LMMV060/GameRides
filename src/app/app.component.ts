@@ -24,9 +24,9 @@ export class AppComponent implements OnInit{
     this.paginas = await this.servi.getPaginas();
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
-    console.log(unixTime);
+    //console.log(unixTime);
     const fechaLimite: Date = new Date(this.convertirUnixAFecha(unixTime));
-    console.log(this.convertirUnixAFecha(unixTime));
+    //console.log(this.convertirUnixAFecha(unixTime));
 
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
     querySnapshot.forEach(async (docu) => {

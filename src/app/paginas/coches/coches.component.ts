@@ -60,14 +60,17 @@ export class CochesComponent implements OnInit {
     if (/^[0-9]{4}\s[A-Z]{3}$/.test(this.matricula)) {
       //console.log('La matrícula es correcta');
       if(this.auth.currentUser){
-        const vehiculo:Vehiculo = {
-          matricula: this.matricula,
-          alias:this.alias,
-          uid: this.auth.currentUser.uid,
-          plazas: this.plazas
-        }
+
 
         for(let i = 1; i<= 3; i++){
+          const vehiculo:Vehiculo = {
+            id: "Coche-"+ i + "-"+this.auth.currentUser.uid,
+            matricula: this.matricula,
+            alias:this.alias,
+            uid: this.auth.currentUser.uid,
+            plazas: this.plazas
+          }
+
           const docRef = doc(this.fire.basededatos(), "Coches", "Coche-"+ i + "-"+this.auth.currentUser.uid);
           const docSnap = await getDoc(docRef);
           if(docSnap.exists()){
@@ -90,6 +93,13 @@ export class CochesComponent implements OnInit {
   }
 
   Editar(coche:any){
+
     this.coche.setCoche(coche);
+
+    this.router.navigateByUrl("/editar-coche")
+  }
+
+  Borrar(id:any){
+    this.coche.borrarCoche(id);
   }
 }

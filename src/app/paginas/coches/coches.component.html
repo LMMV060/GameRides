@@ -21,7 +21,7 @@
 
   <div *ngFor="let coche of misVehiculos">
     <div class="card">
-      <button>Borrar</button>
+      <button (click)="Borrar(coche.id)">Borrar</button>
       <button (click)="Editar(coche)">Editar</button>
       <div class="card-body">
         <h5 class="card-title">{{coche.alias}}</h5>

@@ -296,8 +296,14 @@ export class PeticionesComponent implements OnInit {
 
   verDatosTransporte(transporte:any){
     //console.log("ver transporte", transporte);
-    this.transporte.setTransporte(transporte);
-    this.router.navigateByUrl("/ofertasTransportes")
+    if(transporte.uid === this.auth.currentUser?.uid){
+      this.transporte.setTransporte(transporte);
+      this.router.navigateByUrl("/editar-oferta")
+    } else{
+      this.transporte.setTransporte(transporte);
+      this.router.navigateByUrl("/ofertasTransportes")
+    }
+
   }
 }
 

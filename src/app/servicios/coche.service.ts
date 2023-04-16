@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
+import { Router } from '@angular/router';
+import { deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +11,8 @@ export class CocheService {
   Coche: any;
 
   constructor(
-    private fire: FirebaseService
+    private fire: FirebaseService,
+    private router: Router
   ) { }
 
   setCoche(Coche: any) {
@@ -18,5 +21,50 @@ export class CocheService {
 
   getCoche() {
     return this.Coche;
+  }
+
+  async guardarNuevoCoche(id:any, alias:any, matricula:any, plazas:any){
+    const ofertas = await this.fire.getAllTransportes();
+    let ofertasConElCoche:any = [];
+    let cocheEditar = await doc(this.fire.basededatos(), "Coches", id);
+
+    await updateDoc(cocheEditar, {
+      alias: alias,
+      matricula: matricula,
+      plazas: plazas
+    });
+
+    //Esta parte en verdad es innecesaria lmaoooo
+    ofertasConElCoche = ofertas.filter((oferta:any) => oferta.vehiculo === id);
+
+    ofertasConElCoche.forEach(async (oferta:any) => {
+      let transporteEditar = await doc(this.fire.basededatos(), "Transportes", oferta.id);
+
+      await updateDoc(transporteEditar, {
+        vehiculo: id
+      })
+    });
+
+    this.router.navigateByUrl("/coches")
+  }
+
+  async borrarCoche(id:any){
+    const ofertas = await this.fire.getAllTransportes();
+    let ofertasConElCoche:any = [];
+
+    let cocheBorrar = await doc(this.fire.basededatos(), "Coches", id);
+
+    if (confirm('¿Está seguro de que desea eliminar este coche? Todas las ofertas de transporte con este coche serán borradas')) {
+
+      ofertasConElCoche = ofertas.filter((oferta:any) => oferta.vehiculo === id);
+
+      ofertasConElCoche.forEach(async (oferta:any) => {
+        let transporteBorrar = await doc(this.fire.basededatos(), "Transportes", oferta.id);
+        await deleteDoc(transporteBorrar)
+      });
+
+      await deleteDoc(cocheBorrar)
+      location.reload();
+    }
   }
 }
