@@ -11,7 +11,23 @@
   <br>
   <input required type="date" id="date" [(ngModel)]="fecha">
   <br>
-  <label position="floating" >Eventos</label>
+  <label position="floating">Eventos</label>
+  <br>
+  <select name="eventos" id="eventos" (change)="logEventos($event)">
+      <option value=null>{{eventoEditarNombre}}</option>
+      <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+        {{ evento.name}}
+      </option>
+  </select>
+  <br>
+  <label position="floating">Mis coches</label>
+  <br>
+  <select name="coches" id="coches" (change)=" logCoches($event)">
+    <option value={{cocheActual.id}}>{{cocheActual.alias}}</option>
+    <option class="select-image-option" *ngFor="let coche of coches" value="{{coche.id}}">
+      {{ coche.alias}}
+    </option>
+</select>
 
   <br>
   <label position="floating" >Descripción</label>

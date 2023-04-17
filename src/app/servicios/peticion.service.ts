@@ -25,7 +25,6 @@ export class PeticionService {
 
   async guardarNuevaPeticion(id:any, fecha:any, evento:any, descripcion:any){
 
-
     let peticionEditar = await doc(this.fire.basededatos(), "Peticiones", id);
 
     await updateDoc(peticionEditar, {

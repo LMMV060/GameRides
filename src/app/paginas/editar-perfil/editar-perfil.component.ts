@@ -37,6 +37,8 @@ export class EditarPerfilComponent {
     console.log(usuario);
     this.img = usuario.imgUrl;
     this.descripcion = usuario.descripcion;
+    console.log(this.descripcion);
+
   }
 
 

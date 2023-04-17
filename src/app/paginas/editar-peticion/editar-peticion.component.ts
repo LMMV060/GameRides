@@ -57,7 +57,6 @@ export class EditarPeticionComponent {
   }
 
   guardarEdicion(id:any){
-
     this.p.guardarNuevaPeticion(id, this.fechaEditar, this.torneoEditar[0], this.descripcionEditar);
 
     this.router.navigateByUrl("/perfil")

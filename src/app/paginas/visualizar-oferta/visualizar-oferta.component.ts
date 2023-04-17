@@ -49,11 +49,6 @@ export class VisualizarOfertaComponent {
     this.usuarioActual = usuarios.filter((objeto:any) => objeto.uid === this.datos.uid);
     const usuarioActual = await this.fire.getUserDataReal();
 
-    console.log("Usuario principal", usuarioActual);
-    console.log("Otro usuario", this.usuarioActual[0]);
-
-
-
     this.chat.chat(usuarioActual, this.usuarioActual[0]);
 
     this.router.navigateByUrl("/mis-chats")

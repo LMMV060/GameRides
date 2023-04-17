@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
 import { Router } from '@angular/router';
-import { deleteDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, getDocs, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -66,5 +66,29 @@ export class CocheService {
       await deleteDoc(cocheBorrar)
       location.reload();
     }
+  }
+
+  async getCocheByID(id:any){
+    let coche:any = [];
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Coches"));
+    querySnapshot.forEach((doc) => {
+      coche.push(doc.data());
+    });
+
+    coche = coche.filter((coche:any) => coche.id === id);
+
+    return coche[0];
+  }
+
+  async getCochesByUid(uid:any){
+    let coches:any = [];
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Coches"));
+    querySnapshot.forEach((doc) => {
+      coches.push(doc.data());
+    });
+
+    coches = coches.filter((coche:any) => coche.uid === uid);
+
+    return coches;
   }
 }
