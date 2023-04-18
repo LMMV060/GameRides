@@ -7,6 +7,8 @@ export class SmashAPIService {
   token = "d469385fa45e0c309e3c176dd5b62f70";
   torneos:any = [];
 
+  eventoVisualizar:any = [];
+
   constructor() { }
 
   getTorneosByCountry(array:any){
@@ -63,7 +65,14 @@ export class SmashAPIService {
       })
       .catch(error => console.error(error));
 
+  }
 
+  setEvento(evento:any){
+    this.eventoVisualizar = evento;
+  }
+
+  getEvento(){
+    return this.eventoVisualizar;
   }
 }
 

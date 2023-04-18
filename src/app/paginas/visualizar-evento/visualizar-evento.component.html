@@ -1,1 +1,9 @@
-<p>visualizar-evento works!</p>
+<div *ngIf="evento">
+  <h1>{{evento.name}}</h1>
+  <img  *ngIf="evento.images[0]" [ngSrc]="evento.images[0].url" width="100" height="100">
+
+  <div>
+    <p>Localización: {{evento.city}}</p>
+    <p>Direccion: {{evento.venueAddress}}</p>
+  </div>
+</div>

@@ -1,5 +1,7 @@
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Component, OnInit } from '@angular/core';
+import { SmashAPIService } from 'src/app/servicios/smash-api.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -13,7 +15,9 @@ export class HomeComponent implements OnInit{
   unixTime:any;
 
   constructor(
-    private fire: FirebaseService
+    private fire: FirebaseService,
+    private smash: SmashAPIService,
+    private router:Router,
   ){
 
   }
@@ -120,4 +124,8 @@ export class HomeComponent implements OnInit{
     this.loading = false;
   }
 
+  visualizarEvento(torneo:any){
+    this.smash.setEvento(torneo);
+    this.router.navigateByUrl("/evento");
+  }
 }

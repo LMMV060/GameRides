@@ -21,6 +21,7 @@ import { RecuperarContraComponent } from './paginas/recuperar-contra/recuperar-c
 import { EditarPerfilComponent } from './paginas/editar-perfil/editar-perfil.component';
 import { ChatComponent } from './paginas/chat/chat.component';
 import { VisualizarOfertaComponent } from './paginas/visualizar-oferta/visualizar-oferta.component';
+import { VisualizarEventoComponent } from './paginas/visualizar-evento/visualizar-evento.component';
 import { EditarPeticionComponent } from './paginas/editar-peticion/editar-peticion.component';
 import { EditarOfertaComponent } from './paginas/editar-oferta/editar-oferta.component';
 import { EditarCocheComponent } from './paginas/editar-coche/editar-coche.component';
@@ -62,6 +63,10 @@ const rutas:Routes = [
     path:'mis-chats',
     component: ChatComponent,
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
+  },
+  {
+    path:'evento',
+    component: VisualizarEventoComponent
   },
   {
     path:'peticiones',

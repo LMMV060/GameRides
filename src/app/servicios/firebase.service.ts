@@ -431,7 +431,7 @@ export class FirebaseService {
     } else {
       interesados = prueba[0].interesados
       if (interesados.includes(uid)) {
-        console.log(`El usuario con id ${uid} ya está en la lista de interesados.`);
+        alert("Ya te interesa esta oferta")
       } else {
         interesados.push(uid);
       }
