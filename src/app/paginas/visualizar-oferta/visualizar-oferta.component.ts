@@ -27,6 +27,7 @@ export class VisualizarOfertaComponent {
   }
 
   async ngOnInit() {
+
     this.datos = await this.oferta.getTransporte();
     if(this.datos === undefined){
       const VisualizarOferta:any = localStorage.getItem('VisualizarOferta');
@@ -52,6 +53,10 @@ export class VisualizarOfertaComponent {
     this.chat.chat(usuarioActual, this.usuarioActual[0]);
 
     this.router.navigateByUrl("/mis-chats")
+  }
+
+  async interesado(id:any){
+    this.fire.meInteresa(id, this.auth.currentUser?.uid);
   }
 
 }

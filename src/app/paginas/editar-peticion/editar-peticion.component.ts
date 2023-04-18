@@ -17,7 +17,8 @@ export class EditarPeticionComponent {
   eventoEditarNombre:any;
   fechaEditar:any;
   descripcionEditar:any;
-  torneoEditar:any = []
+  torneoEditar:any = [];
+  precioEditar:any;
   constructor(
     private p:PeticionService,
     private router: Router
@@ -41,6 +42,7 @@ export class EditarPeticionComponent {
     this.eventoEditarNombre = this.peticionEditar.evento.name;
     this.torneoEditar.push(this.peticionEditar.evento);
     this.descripcionEditar = this.peticionEditar.descripcion;
+    this.precioEditar = this.peticionEditar.precio;
     console.log(this.peticionEditar);
   }
 
@@ -57,7 +59,7 @@ export class EditarPeticionComponent {
   }
 
   guardarEdicion(id:any){
-    this.p.guardarNuevaPeticion(id, this.fechaEditar, this.torneoEditar[0], this.descripcionEditar);
+    this.p.guardarNuevaPeticion(id, this.fechaEditar, this.torneoEditar[0], this.precioEditar,this.descripcionEditar);
 
     this.router.navigateByUrl("/perfil")
   }

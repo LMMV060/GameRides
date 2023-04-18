@@ -23,6 +23,7 @@ export class PeticionesComponent implements OnInit {
   misVehiculos:any = [];
   alias:any;
   coche:any;
+  precio:any;
   eventoSeleccionado:any;
   eventos:any = [];
   descripcion:any;
@@ -128,7 +129,7 @@ export class PeticionesComponent implements OnInit {
     console.log("Peticion");
 
 
-    if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha){
+    if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.precio){
 
       for(let i = 1; i<= 5; i++){
         const docRef = doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid);
@@ -145,7 +146,7 @@ export class PeticionesComponent implements OnInit {
             url: real.imgUrl,
             nombre:real.nombre,
             fecha: this.fecha,
-            precio:20,
+            precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
           }
@@ -171,7 +172,7 @@ export class PeticionesComponent implements OnInit {
   async ofrecerTransporte(){
     console.log("Transporte");
 
-    if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.alias != "" && this.alias){
+    if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.alias != "" && this.alias && this.precio){
 
       for(let i = 1; i<= 5; i++){
         const docRef = doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid);
@@ -190,7 +191,7 @@ export class PeticionesComponent implements OnInit {
             nombre: real.nombre,
             fecha: this.fecha,
             vehiculo: this.alias,
-            precio:20,
+            precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
           }
@@ -200,7 +201,6 @@ export class PeticionesComponent implements OnInit {
           location.reload();
           i = 21;
         }
-
       }
 
 

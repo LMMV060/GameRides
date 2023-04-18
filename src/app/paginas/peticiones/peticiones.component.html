@@ -26,8 +26,12 @@
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
           {{ evento.name}}
         </option>
-
       </select>
+
+      <br>
+      <label position="floating">Precio</label>
+      <input required type="number" id="precio" [(ngModel)]="precio">
+      <br>
 
       <label position="floating" >Descripción</label>
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
@@ -69,7 +73,7 @@
       <br>
 
 
-      <label position="floating" >Matricula</label>
+      <label position="floating" >Coche</label>
 
       <select id="vehiculo" name="vehiculo" (change)="Alias($event)" >
         <ng-container *ngIf="misVehiculos.length > 0; else noVehiculos">
@@ -94,7 +98,9 @@
       </select>
 
       <br>
-
+      <label position="floating">Precio</label>
+      <input required type="number" id="precio" [(ngModel)]="precio">
+      <br>
 
       <label position="floating" >Descripción</label>
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>

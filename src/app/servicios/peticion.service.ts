@@ -23,12 +23,13 @@ export class PeticionService {
     return this.Peticion;
   }
 
-  async guardarNuevaPeticion(id:any, fecha:any, evento:any, descripcion:any){
+  async guardarNuevaPeticion(id:any, fecha:any, evento:any, precio:any, descripcion:any){
 
     let peticionEditar = await doc(this.fire.basededatos(), "Peticiones", id);
 
     await updateDoc(peticionEditar, {
       evento: evento,
+      precio:precio,
       descripcion: descripcion,
       fecha: fecha
     });

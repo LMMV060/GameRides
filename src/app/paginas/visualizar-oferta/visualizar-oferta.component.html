@@ -1,6 +1,8 @@
-<div>
+<div *ngIf="datos" >
   <button (click)="chatear()">Chatear</button>
+  <button (click)="interesado(datos.id)">Me interesa!</button>
 
   <h3>{{ datos.nombre }}</h3>
   <p>{{ datos.descripcion }}</p>
+  <p>Precio:{{datos.precio}} €</p>
 </div>

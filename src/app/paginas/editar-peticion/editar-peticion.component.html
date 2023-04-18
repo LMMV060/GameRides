@@ -1,30 +1,35 @@
+<div *ngIf="peticionEditar" >
 
-<div class="card">
-  <img class="imagenUrl" src="{{peticionEditar.url}}" alt="perfil">
-  <div class="card-body">
-    <h5 class="card-title">{{peticionEditar.nombre}}</h5>
+  <div class="card">
+    <img class="imagenUrl" src="{{peticionEditar.url}}" alt="perfil">
+    <div class="card-body">
+      <h5 class="card-title">{{peticionEditar.nombre}}</h5>
+    </div>
   </div>
+
+  <div>
+    <label position="floating" >Fecha de ida</label>
+    <br>
+    <input required type="date" id="date" value="{{fechaEditar}}" (change)="logFechaDeIda($event)">
+    <br>
+    <label position="floating" >Eventos</label>
+    <select id="vehiculo" name="vehiculo" (change)="logEventos($event)">
+      <option value=null>{{eventoEditarNombre}}</option>
+      <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+        {{ evento.name}}
+      </option>
+    </select>
+
+    <br>
+        <label position="floating">Precio</label>
+        <input required type="number" id="precio" [(ngModel)]="precioEditar">
+    <br>
+    <label position="floating" >Descripción</label>
+    <br>
+    <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcionEditar"></textarea>
+  </div>
+
+
+  <button (click)="guardarEdicion(peticionEditar.id)">Guardar</button>
+
 </div>
-
-<div>
-  <label position="floating" >Fecha de ida</label>
-  <br>
-  <input required type="date" id="date" value="{{fechaEditar}}" (change)="logFechaDeIda($event)">
-  <br>
-  <label position="floating" >Eventos</label>
-  <select id="vehiculo" name="vehiculo" (change)="logEventos($event)">
-    <option value=null>{{eventoEditarNombre}}</option>
-    <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
-      {{ evento.name}}
-    </option>
-  </select>
-  <br>
-  <label position="floating" >Descripción</label>
-  <br>
-  <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcionEditar"></textarea>
-</div>
-
-
-<button (click)="guardarEdicion(peticionEditar.id)">Guardar</button>
-
-

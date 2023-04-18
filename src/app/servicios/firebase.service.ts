@@ -412,14 +412,38 @@ export class FirebaseService {
         this.getAllPeticiones().then(peti => {
           for(let user of peti){
             console.log(user);
-
           }
-
         })
       }
-
     })
   }
 
+
+  async meInteresa(id:any, uid:any){
+    let ofertaInteresada = await doc(this.bbdd, "Transportes", id);
+    let prueba = await this.getAllTransportes()
+    let interesados:any = [];
+
+    prueba = prueba.filter((transporte:any) => transporte.id === id);
+
+    if(prueba[0].interesados === undefined){
+      interesados.push(uid);
+    } else {
+      interesados = prueba[0].interesados
+      if (interesados.includes(uid)) {
+        console.log(`El usuario con id ${uid} ya está en la lista de interesados.`);
+      } else {
+        interesados.push(uid);
+      }
+    }
+    console.log(interesados);
+
+
+    await updateDoc(ofertaInteresada, {
+      interesados: interesados
+    });
+
+
+  }
 
 }

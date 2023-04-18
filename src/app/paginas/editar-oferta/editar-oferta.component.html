@@ -1,41 +1,48 @@
+<div *ngIf="transporteAEditar" >
 
-<div class="card">
-  <img class="imagenUrl" src="{{transporteAEditar.url}}" alt="perfil">
-  <div class="card-body">
-    <h5 class="card-title">{{transporteAEditar.nombre}}</h5>
+  <div class="card">
+    <img class="imagenUrl" src="{{transporteAEditar.url}}" alt="perfil">
+    <div class="card-body">
+      <h5 class="card-title">{{transporteAEditar.nombre}}</h5>
+    </div>
   </div>
-</div>
 
-<div>
-  <label position="floating" >Fecha de ida</label>
-  <br>
-  <input required type="date" id="date" [(ngModel)]="fecha">
-  <br>
-  <label position="floating">Eventos</label>
-  <br>
-  <select name="eventos" id="eventos" (change)="logEventos($event)">
-      <option value=null>{{eventoEditarNombre}}</option>
-      <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
-        {{ evento.name}}
+  <div>
+    <label position="floating" >Fecha de ida</label>
+    <br>
+    <input required type="date" id="date" [(ngModel)]="fecha">
+    <br>
+    <label position="floating">Eventos</label>
+    <br>
+    <select name="eventos" id="eventos" (change)="logEventos($event)">
+        <option value=null>{{eventoEditarNombre}}</option>
+        <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+          {{ evento.name}}
+        </option>
+    </select>
+    <br>
+    <div *ngIf="cocheActual" >
+
+      <label position="floating">Mis coches</label>
+    <br>
+    <select name="coches" id="coches" (change)=" logCoches($event)">
+      <option value={{cocheActual.id}}>{{cocheActual.alias}}</option>
+      <option class="select-image-option" *ngFor="let coche of coches" value="{{coche.id}}">
+        {{ coche.alias}}
       </option>
-  </select>
-  <br>
-  <label position="floating">Mis coches</label>
-  <br>
-  <select name="coches" id="coches" (change)=" logCoches($event)">
-    <option value={{cocheActual.id}}>{{cocheActual.alias}}</option>
-    <option class="select-image-option" *ngFor="let coche of coches" value="{{coche.id}}">
-      {{ coche.alias}}
-    </option>
-</select>
+    </select>
+    </div>
+    
+        <label position="floating">Precio</label>
+        <br>
+        <input required type="number" id="precio" [(ngModel)]="precioEditar">
+    <br>
+    <label position="floating" >Descripción</label>
+    <br>
+    <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcion"></textarea>
+  </div>
 
-  <br>
-  <label position="floating" >Descripción</label>
-  <br>
-  <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcion"></textarea>
+
+  <button (click)="guardarEdicion(transporteAEditar.id)">Guardar</button>
+
 </div>
-
-
-<button (click)="guardarEdicion(transporteAEditar.id)">Guardar</button>
-
-

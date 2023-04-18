@@ -22,6 +22,7 @@ export class EditarOfertaComponent {
   cocheActual:any
   cocheId:any;
   torneoEditar:any = []
+  precioEditar:any;
   constructor(
     private transporte: TransporteService,
     private coche: CocheService,
@@ -55,6 +56,7 @@ export class EditarOfertaComponent {
     this.torneoEditar.push(this.transporteAEditar.evento);
     this.fecha = this.transporteAEditar.fecha;
     this.descripcion = this.transporteAEditar.descripcion;
+    this.precioEditar = this.transporteAEditar.precio;
 
 
   }
@@ -76,7 +78,7 @@ export class EditarOfertaComponent {
 
   guardarEdicion(id:any){
 
-    this.transporte.actualizarTransporte(id, this.fecha, this.torneoEditar[0] , this.descripcion, this.cocheId);
+    this.transporte.actualizarTransporte(id, this.fecha, this.torneoEditar[0], this.precioEditar , this.descripcion, this.cocheId);
     this.router.navigateByUrl("/perfil")
   }
 

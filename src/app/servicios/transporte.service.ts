@@ -21,13 +21,14 @@ export class TransporteService {
     return this.transporte;
   }
 
-  async actualizarTransporte(id:any, fecha:any, evento:any,  descripcion:any, coche:any){
+  async actualizarTransporte(id:any, fecha:any, evento:any, precio:any, descripcion:any, coche:any){
 
     let transporteEditar = await doc(this.fire.basededatos(), "Transportes", id);
 
     await updateDoc(transporteEditar, {
       fecha: fecha,
       evento: evento,
+      precio:precio,
       descripcion: descripcion,
       vehiculo:coche
     });
