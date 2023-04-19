@@ -27,11 +27,11 @@
 
 <div *ngIf="opcionSeleccionada === 'Pasajeros'">
   <div *ngFor="let peticion of PeticionesUsuario">
-    <div class="card my-card" >
+      <button class="prueba" (click)="eliminarPeticion(peticion)">Eliminar</button>
 
-      <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
-      <br>
-      <button class="delete-button" (click)="editarPeticion(peticion)">Editar</button>
+      <button class="prueba" (click)="editarPeticion(peticion)">Editar</button>
+
+    <div class="card my-card" >
       <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap">
       <div class="card-body">
         <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
@@ -47,11 +47,12 @@
 
 <div *ngIf="opcionSeleccionada === 'Conductores'">
   <div *ngFor="let oferta of TransportesUsuario">
-    <div class="card my-card" >
+      <button class="prueba" (click)="eliminarOferta(oferta)">Eliminar</button>
 
-      <button class="delete-button" (click)="eliminarOferta(oferta)">Eliminar</button>
-      <br>
-      <button class="delete-button" (click)="editarOferta(oferta)">Editar</button>
+      <button class="prueba" (click)="editarOferta(oferta)">Editar</button>
+
+      <button class="prueba" (click)="verInteresados(oferta)">Interesados</button>
+    <div class="card my-card" >
       <img class="card-img-top" src="{{oferta.url}}"  alt="Card image cap">
       <div class="card-body">
         <img class="logo-t" *ngIf="oferta.evento"  src="{{oferta.evento.images[0].url}}" alt="">

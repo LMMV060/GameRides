@@ -52,15 +52,25 @@ img{
   border-radius: 50%;
 }
 
-
-
-
-.card .delete-button {
+div .prueba {
   display: none;
 }
 
-.card:hover .delete-button {
-  display: block;
+div:hover .prueba {
+  width: auto;
+  display:inline-block;
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.prueba:hover {
+  background-color: #0056b3;
+  cursor: pointer;
 }
 
 #segmento {

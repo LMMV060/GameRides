@@ -6,6 +6,7 @@ import { Component, OnInit, } from '@angular/core';
 import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/firestore';
 import { PeticionService } from 'src/app/servicios/peticion.service';
 import { TransporteService } from 'src/app/servicios/transporte.service';
+import { InteresadosService } from 'src/app/servicios/interesados.service';
 
 @Component({
   selector: 'app-perfil',
@@ -34,7 +35,8 @@ export class PerfilComponent implements OnInit {
     private router:Router,
     private auth: Auth,
     private p:PeticionService,
-    private transporte: TransporteService
+    private transporte: TransporteService,
+    private inter: InteresadosService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -134,15 +136,17 @@ export class PerfilComponent implements OnInit {
   async editarOferta(oferta:any){
     this.transporte.setTransporte(oferta);
 
-    console.log(oferta);
-
     this.router.navigateByUrl('/editar-oferta');
+  }
+
+  async verInteresados(oferta:any){
+    this.inter.setOferta(oferta);
+    this.router.navigateByUrl('/interesados');
   }
 
   opcionSeleccionada:any = "Pasajeros";
 
   Busqueda(event:any){
-
     console.log(event.target.value);
     this.opcionSeleccionada = event.target.value;
   }

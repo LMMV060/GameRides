@@ -142,4 +142,6 @@ export class EditarOfertaComponent {
     const day = String(fecha.getDate()).padStart(2, '0');
     return year + '-' + month + '-' + day;
   }
+
+  
 }

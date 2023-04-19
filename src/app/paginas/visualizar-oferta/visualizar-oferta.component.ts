@@ -4,6 +4,7 @@ import { collection, getDocs } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { RealtimeService } from 'src/app/servicios/realtime.service';
+import { SmashAPIService } from 'src/app/servicios/smash-api.service';
 import { TransporteService } from 'src/app/servicios/transporte.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class VisualizarOfertaComponent {
     private router:Router,
     private auth:Auth,
     private chat:RealtimeService,
+    private smash: SmashAPIService,
   ){
 
   }
@@ -56,7 +58,16 @@ export class VisualizarOfertaComponent {
   }
 
   async interesado(id:any){
-    this.fire.meInteresa(id, this.auth.currentUser?.uid);
+    if(this.auth.currentUser){
+      this.fire.meInteresa(id, this.auth.currentUser?.uid);
+    } else {
+      alert("Por favor, inicie sesión primero")
+    }
+  }
+
+  visualizarEvento(torneo:any){
+    this.smash.setEvento(torneo);
+    this.router.navigateByUrl("/evento");
   }
 
 }

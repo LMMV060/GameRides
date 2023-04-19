@@ -86,6 +86,7 @@ export class HomeComponent implements OnInit{
           registrationClosesAt
           postalCode
           primaryContact
+
         }
       }
     }`;
@@ -112,7 +113,7 @@ export class HomeComponent implements OnInit{
         this.torneos = await data.data.tournaments.nodes;
 
         this.torneos = this.torneos.filter((torneo:any) => torneo.endAt > this.unixTime)
-        console.log(this.torneos);
+        //console.log(this.torneos);
 
       })
       .catch(error => console.error(error));

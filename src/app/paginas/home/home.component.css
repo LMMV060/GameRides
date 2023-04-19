@@ -126,7 +126,12 @@ html, body {
   min-height: 100%;
   margin: 0 auto -50px;
 }
-.footer,
-.push {
-  height: 50px;
+
+.torneo{
+  flex-direction: row;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 50px;
+
+  cursor: pointer;
 }
