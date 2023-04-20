@@ -39,9 +39,6 @@ export class BuscarUsuarioComponent implements OnInit {
   }
 
   async Mostrar(){
-
-
-
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
 

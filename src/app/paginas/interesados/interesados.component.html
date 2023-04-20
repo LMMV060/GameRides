@@ -1,1 +1,31 @@
-<p>interesados works!</p>
+<div *ngIf="ofertaDeTransporte" >
+  <h3>{{ ofertaDeTransporte.nombre }}</h3>
+  <p>{{ ofertaDeTransporte.descripcion }}</p>
+  <p>Precio:{{ofertaDeTransporte.precio}} €</p>
+
+  <div class="torneo" *ngIf="ofertaDeTransporte.evento" >
+    <img  *ngIf="ofertaDeTransporte.evento.images[0]" [ngSrc]="ofertaDeTransporte.evento.images[0].url" width="100" height="100">
+    <p>
+      {{ofertaDeTransporte.evento.name}}
+      <br>
+
+    </p>
+  </div>
+
+  <br>
+  <h2> Personas interesadas: </h2>
+
+  <div *ngFor="let inter of interesadosMostrar" class="personas_interesadas">
+    <div class="botones">
+      <button (click)="aceptar(inter.uid)">Aceptar</button>
+      <button (click)="rechazar(inter.uid)">Rechazar</button>
+    </div>
+    <div class="usuario" (click)="irAPerfil(inter.uid)">
+      <img [ngSrc]="inter.imgUrl" width="100" height="100">
+      <p>
+        {{inter.nombre}}
+      </p>
+    </div>
+    <br>
+  </div>
+</div>
