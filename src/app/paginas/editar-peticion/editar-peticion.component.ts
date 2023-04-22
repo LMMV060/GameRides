@@ -39,7 +39,9 @@ export class EditarPeticionComponent {
       localStorage.setItem('DatosPeticion', JSON.stringify(this.peticionEditar));
     }
     this.fechaEditar = this.peticionEditar.fecha;
-    this.eventoEditarNombre = this.peticionEditar.evento.name;
+    if(this.peticionEditar.evento){
+      this.eventoEditarNombre = this.peticionEditar.evento.name;
+    }
     this.torneoEditar.push(this.peticionEditar.evento);
     this.descripcionEditar = this.peticionEditar.descripcion;
     this.precioEditar = this.peticionEditar.precio;

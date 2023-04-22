@@ -16,7 +16,7 @@
     <br>
     <select name="eventos" id="eventos" (change)="logEventos($event)">
         <option value=null>{{eventoEditarNombre}}</option>
-        <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
+        <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}"  >
           {{ evento.name}}
         </option>
     </select>

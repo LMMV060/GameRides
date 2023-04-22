@@ -39,8 +39,6 @@ export class EditarOfertaComponent {
 
     this.transporteAEditar = this.transporte.getTransporte();
     this.coches = await this.coche.getCochesByUid(this.auth.currentUser?.uid)
-    console.log(this.coches);
-
     if(this.transporteAEditar === undefined){
       const datosOferta:any = localStorage.getItem('DatosOferta');
       this.transporteAEditar = JSON.parse(datosOferta);
@@ -52,7 +50,9 @@ export class EditarOfertaComponent {
 
     this.cocheActual = await this.coche.getCocheByID(this.transporteAEditar.vehiculo);
     this.cocheId = this.cocheActual.id;
-    this.eventoEditarNombre = this.transporteAEditar.evento.name;
+    if(this.transporteAEditar.evento){
+      this.eventoEditarNombre = this.transporteAEditar.evento.name;
+    }
     this.torneoEditar.push(this.transporteAEditar.evento);
     this.fecha = this.transporteAEditar.fecha;
     this.descripcion = this.transporteAEditar.descripcion;
@@ -66,6 +66,8 @@ export class EditarOfertaComponent {
     this.torneoEditar = this.eventos.filter((evento:any) => evento.id == id)
     this.eventoEditarNombre = this.torneoEditar[0].name;
     this.fecha = this.convertirUnixAFecha(this.torneoEditar[0].startAt);
+
+
   }
 
 
@@ -143,5 +145,5 @@ export class EditarOfertaComponent {
     return year + '-' + month + '-' + day;
   }
 
-  
+
 }
