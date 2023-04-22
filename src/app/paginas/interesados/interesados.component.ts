@@ -37,10 +37,13 @@ export class InteresadosComponent {
     }
 
     this.interesados = this.ofertaDeTransporte.interesados;
-    this.interesados.forEach(async (objeto:any) => {
-      const dato = await this.inter.getInteresados(objeto)
-      this.interesadosMostrar.push(dato);
-    });
+    if(this.interesados){
+      this.interesados.forEach(async (objeto:any) => {
+        const dato = await this.inter.getInteresados(objeto)
+        this.interesadosMostrar.push(dato);
+      });
+    }
+
   }
 
   irAPerfil(id:any){
@@ -59,10 +62,13 @@ export class InteresadosComponent {
     localStorage.setItem('InteresadosOferta', JSON.stringify(this.ofertaDeTransporte));
     this.interesados = this.ofertaDeTransporte.interesados;
     this.interesadosMostrar = [];
-    this.interesados.forEach(async (objeto:any) => {
-      const dato = await this.inter.getInteresados(objeto)
-      this.interesadosMostrar.push(dato);
-    });
+    if(this.interesados){
+      this.interesados.forEach(async (objeto:any) => {
+        const dato = await this.inter.getInteresados(objeto)
+        this.interesadosMostrar.push(dato);
+      });
+    }
+
   }
 
   async rechazar(uid:any){
