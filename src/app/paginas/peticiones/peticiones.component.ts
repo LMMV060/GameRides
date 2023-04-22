@@ -303,7 +303,6 @@ export class PeticionesComponent implements OnInit {
       this.transporte.setTransporte(transporte);
       this.router.navigateByUrl("/ofertasTransportes")
     }
-
   }
 }
 

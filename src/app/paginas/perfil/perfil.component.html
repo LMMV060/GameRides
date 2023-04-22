@@ -20,9 +20,12 @@
 <br>
 
 <select id="segmento" name="segmento" (change)="Busqueda($event)">
+
   <option value="Pasajeros">Peticiones</option>
   <option value="Conductores">Transportes ofrecidos</option>
+  <option value="Viajes">Mis proximos viajes</option>
   <option *ngIf="isAdmin" value="Mis-Noticias">Mis noticias</option>
+
 </select>
 
 <div *ngIf="opcionSeleccionada === 'Pasajeros'">
@@ -77,5 +80,28 @@
       <!--<div class="card-body" [innerHTML]="noticia.contenido"></div>-->
     </div>
     <br>
+  </div>
+</div>
+
+<div class="row" *ngIf="opcionSeleccionada === 'Viajes'" >
+
+  <div class="row" *ngIf="ofertasAceptadas">
+    <div class="col-sm-6">
+      <h1>Ofertas de viajes aceptadas</h1>
+      <div *ngFor="let oa of ofertasAceptadas" class="aceptadas" (click)="verDatosTransporte(oa)" >
+        <h3>{{oa.evento.name}}</h3>
+        <h4>{{oa.fecha}}</h4>
+        <p>{{oa.descripcion}}</p>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <h1>Peticiones de transportes aceptadas</h1>
+      uau
+    </div>
+  </div>
+  <div *ngIf="!ofertasAceptadas" >
+
+    <p>ups</p>
   </div>
 </div>

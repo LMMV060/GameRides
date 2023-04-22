@@ -20,6 +20,7 @@ export class PerfilComponent implements OnInit {
   public nombre:any = this.auth.currentUser?.displayName;
   public img:any = this.auth.currentUser?.photoURL;
   public descripcion:any;
+  public ofertasAceptadas:any = [];
 
   Peticiones:any = [];
   PeticionesUsuario:any = [];
@@ -56,6 +57,9 @@ export class PerfilComponent implements OnInit {
       this.img = this.usuario[0].imgUrl
       this.nombre = this.usuario[0].nombre
       this.isAdmin = this.usuario[0].isAdmin;
+      this.ofertasAceptadas = this.usuario[0].ofertasAceptadas
+      console.log(this.ofertasAceptadas);
+
       if(this.auth.currentUser){
         updateProfile(this.auth.currentUser, {
           displayName: this.usuario[0].nombre,
@@ -155,8 +159,9 @@ export class PerfilComponent implements OnInit {
     this.router.navigateByUrl("/dashboard");
   }
 
-
-
-
-
+  verDatosTransporte(transporte:any){
+    //console.log("ver transporte", transporte);
+      this.transporte.setTransporte(transporte);
+      this.router.navigateByUrl("/ofertasTransportes")
+  }
 }
