@@ -1,1 +1,35 @@
-<p>visualizar-peticion works!</p>
+<div *ngIf="datos" >
+  <button (click)="chatear()">Chatear</button>
+  <button (click)="interesado(datos.id)">Me interesa!</button>
+
+  <h3>{{ datos.nombre }}</h3>
+  <p>{{ datos.descripcion }}</p>
+  <p>Precio:{{datos.precio}} €</p>
+
+  <div class="torneo" (click)="visualizarEvento(datos.evento)" *ngIf="datos.evento" >
+    <img  *ngIf="datos.evento.images[0]" [ngSrc]="datos.evento.images[0].url" width="100" height="100">
+    <p>
+      {{datos.evento.name}}
+      <br>
+      El registro cierra a:
+    </p>
+  </div>
+
+  <div class="aviso" *ngIf="datos.interesados" >
+    <div *ngIf="datos.interesados.length >= 2" >
+      <p>Actualmente hay {{datos.interesados.length}} personas interesadas</p>
+    </div>
+
+    <div *ngIf="datos.interesados.length == 1">
+      <p>Actualmente hay {{datos.interesados.length}} persona interesada</p>
+    </div>
+
+    <div *ngIf="datos.interesados.length == 0">
+      <p>Actualmente no hay ninguna persona interesada, se el primero!</p>
+    </div>
+  </div>
+
+  <div *ngIf="!datos.interesados">
+      <p>Actualmente no hay ninguna persona interesada, se el primero!</p>
+  </div>
+</div>

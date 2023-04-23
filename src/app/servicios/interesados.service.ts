@@ -10,7 +10,6 @@ export class InteresadosService {
   interesados:any = [];
   oferta:any;
 
-  Peticion:any
   constructor(
     private fire:FirebaseService,
   ) { }
@@ -119,7 +118,7 @@ export class InteresadosService {
     prueba = await this.fire.getAllTransportes()
 
     prueba = prueba.filter((transporte:any) => transporte.id === idOferta);
-    
+
     //Al usuario aceptado se le da el transporte aceptado para recordarselo en su perfil
     let actualizaUsuario:any = [];
     actualizaUsuario = await this.fire.getAllUsers();

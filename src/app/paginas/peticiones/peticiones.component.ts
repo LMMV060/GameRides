@@ -7,6 +7,7 @@ import { Peticion } from 'src/app/interfaces/peticion';
 import { Ofertas } from 'src/app/interfaces/ofertas';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Evento } from 'src/app/interfaces/evento';
+import { PeticionService } from 'src/app/servicios/peticion.service';
 @Component({
   selector: 'app-peticiones',
   templateUrl: './peticiones.component.html',
@@ -33,7 +34,8 @@ export class PeticionesComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
-    private transporte:TransporteService
+    private transporte:TransporteService,
+    private peticion: PeticionService
   ) { }
 
   Peticiones:any = [];
@@ -302,6 +304,16 @@ export class PeticionesComponent implements OnInit {
     } else{
       this.transporte.setTransporte(transporte);
       this.router.navigateByUrl("/ofertasTransportes")
+    }
+  }
+
+  verDatosPeticion(peticion:any){
+    if(peticion.uid === this.auth.currentUser?.uid){
+      this.peticion.setPeticion(peticion);
+      this.router.navigateByUrl("/editar-peticion")
+    } else{
+      this.peticion.setPeticion(peticion);
+      this.router.navigateByUrl("/solicitudesPeticiones")
     }
   }
 }

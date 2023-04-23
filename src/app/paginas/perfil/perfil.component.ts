@@ -7,6 +7,7 @@ import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/fires
 import { PeticionService } from 'src/app/servicios/peticion.service';
 import { TransporteService } from 'src/app/servicios/transporte.service';
 import { InteresadosService } from 'src/app/servicios/interesados.service';
+import { InteresadosPeticionService } from 'src/app/servicios/interesados-peticion.service';
 
 @Component({
   selector: 'app-perfil',
@@ -37,7 +38,8 @@ export class PerfilComponent implements OnInit {
     private auth: Auth,
     private p:PeticionService,
     private transporte: TransporteService,
-    private inter: InteresadosService
+    private inter: InteresadosService,
+    private interP: InteresadosPeticionService
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -145,7 +147,12 @@ export class PerfilComponent implements OnInit {
 
   async verInteresados(oferta:any){
     this.inter.setOferta(oferta);
-    this.router.navigateByUrl('/interesados');
+    this.router.navigateByUrl('/interesadosOferta');
+  }
+
+  verInteresadosPeticion(peticion:any){
+    this.interP.setPeticion(peticion);
+    this.router.navigateByUrl('/interesadosPeticion');
   }
 
   opcionSeleccionada:any = "Pasajeros";

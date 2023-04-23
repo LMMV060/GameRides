@@ -419,7 +419,7 @@ export class FirebaseService {
   }
 
 
-  async meInteresa(id:any, uid:any){
+  async meInteresaTransporte(id:any, uid:any){
     let ofertaInteresada = await doc(this.bbdd, "Transportes", id);
     let prueba = await this.getAllTransportes()
     let interesados:any = [];
@@ -467,7 +467,55 @@ export class FirebaseService {
       interesados: interesados
     });
 
+  }
 
+  async meInteresaPeticion(id:any, uid:any){
+    let peticionInteresada = await doc(this.bbdd, "Peticiones", id);
+    let prueba = await this.getAllPeticiones()
+    let interesados:any = [];
+    let rechazados:any = [];
+    let aceptados:any = [];
+
+    prueba = prueba.filter((transporte:any) => transporte.id === id);
+
+    if(prueba[0].interesados === undefined){
+      interesados.push(uid);
+    } else {
+      //Obtiene si ya esta interesado
+      interesados = prueba[0].interesados
+
+      //Obtiene los rechazados
+      if(prueba[0].rechazados === undefined){
+        rechazados = [];
+      } else {
+        rechazados = prueba[0].rechazados
+      }
+      //Obtiene los aceptados
+      if(prueba[0].aceptados === undefined){
+        aceptados = [];
+      } else {
+        aceptados = prueba[0].aceptados;
+      }
+
+      //Comprueba el estado
+      if (interesados.includes(uid)) {
+        alert("Ya te interesa esta peticion")
+      } else {
+        if(rechazados.includes(uid)){
+          alert("Te han rechazado")
+        } else {
+          if(aceptados.includes(uid)){
+            alert("Ya estas aceptado, dale un buen viaje!")
+          } else {
+            alert("Te interesa esta petición de transporte, ahora debes esperar a que te acepten o rechacen")
+            interesados.push(uid);
+          }
+        }
+      }
+    }
+    await updateDoc(peticionInteresada, {
+      interesados: interesados
+    });
   }
 
 }

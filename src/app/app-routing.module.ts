@@ -1,3 +1,4 @@
+import { VisualizarPeticionComponent } from './paginas/visualizar-peticion/visualizar-peticion.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './paginas/home/home.component';
@@ -26,6 +27,7 @@ import { EditarPeticionComponent } from './paginas/editar-peticion/editar-petici
 import { EditarOfertaComponent } from './paginas/editar-oferta/editar-oferta.component';
 import { EditarCocheComponent } from './paginas/editar-coche/editar-coche.component';
 import { InteresadosComponent } from './paginas/interesados/interesados.component';
+import { InteresadosPeticionComponent } from './paginas/interesados-peticion/interesados-peticion.component';
 const rutas:Routes = [
   {
     path:'',
@@ -66,8 +68,13 @@ const rutas:Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
-    path:'interesados',
+    path:'interesadosOferta',
     component: InteresadosComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
+  },
+  {
+    path:'interesadosPeticion',
+    component: InteresadosPeticionComponent,
     ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
@@ -81,6 +88,10 @@ const rutas:Routes = [
   {
     path:'ofertasTransportes',
     component: VisualizarOfertaComponent
+  },
+  {
+    path:'solicitudesPeticiones',
+    component: VisualizarPeticionComponent
   },
   {
     path: 'perfil/:nombre',

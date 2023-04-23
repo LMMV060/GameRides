@@ -45,7 +45,7 @@
     <div *ngFor="let peticion of Peticiones">
       <div class="card" >
         <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)" style="cursor: pointer;">
-        <div class="card-body" style="cursor: pointer;">
+        <div class="card-body" style="cursor: pointer;"  (click)="verDatosPeticion(peticion)">
           <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
           <h5 class="card-title">{{peticion.nombre}}</h5>

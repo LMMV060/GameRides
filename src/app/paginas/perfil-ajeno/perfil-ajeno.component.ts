@@ -5,6 +5,8 @@ import { collection, getDocs } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { RealtimeService } from 'src/app/servicios/realtime.service';
+import { TransporteService } from 'src/app/servicios/transporte.service';
+import { PeticionService } from 'src/app/servicios/peticion.service';
 @Component({
   selector: 'app-perfil-ajeno',
   templateUrl: './perfil-ajeno.component.html',
@@ -27,6 +29,8 @@ export class PerfilAjenoComponent implements OnInit {
     private router:Router,
     private auth:Auth,
     private chat:RealtimeService,
+    private transporte:TransporteService,
+    private peticion:PeticionService
     ) { }
 
     datos:any = [];
@@ -99,4 +103,16 @@ export class PerfilAjenoComponent implements OnInit {
     this.router.navigateByUrl("/mis-chats")
   }
 
+  verDatosTransporte(transporte:any){
+    //console.log("ver transporte", transporte);
+
+      this.transporte.setTransporte(transporte);
+      this.router.navigateByUrl("/ofertasTransportes")
+
+  }
+
+  verDatosPeticion(peticion:any){
+      this.peticion.setPeticion(peticion);
+      this.router.navigateByUrl("/solicitudesPeticiones")
+  }
 }
