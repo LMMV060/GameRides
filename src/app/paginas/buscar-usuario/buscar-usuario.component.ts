@@ -34,24 +34,17 @@ export class BuscarUsuarioComponent implements OnInit {
     }else {
       this.datosFiltrados = this.datos;
     }
-    console.log(text)
-    console.log(this.datosFiltrados)
   }
 
   async Mostrar(){
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
 
-      console.log(doc.data());
       this.datos.push(doc.data());
 
     });
 
     this.datosFiltrados = this.datos;
-
-
-    console.log(this.datos);
-
 
   }
 
@@ -60,7 +53,6 @@ export class BuscarUsuarioComponent implements OnInit {
       this.router.navigateByUrl("/perfil")
     } else {
       let usuarioClick:any = this.datos.find((item: { uid: any; }) => item.uid === id);
-      console.log(usuarioClick);
       localStorage.setItem('UsuarioAjeno',usuarioClick.uid)
 
       this.router.navigate(["/perfil", usuarioClick.nombre])

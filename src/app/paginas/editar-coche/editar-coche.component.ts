@@ -40,7 +40,6 @@ export class EditarCocheComponent {
   async guardarCambiosCoche(){
 
     if(/^[0-9]{4}\s[A-Z]{3}$/.test(this.matricula)){
-      //console.log(this.alias, this.matricula, this.plazas);
 
       this.coche.guardarNuevoCoche(this.cocheAEditar.id, this.alias, this.matricula, this.plazas);
     } else {

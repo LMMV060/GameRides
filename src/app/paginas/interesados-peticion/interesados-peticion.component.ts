@@ -27,14 +27,12 @@ export class InteresadosPeticionComponent {
     if(this.peticion === undefined){
       const datosPeticion:any = localStorage.getItem('InteresadosPeticion');
       this.peticion = JSON.parse(datosPeticion);
+      let prueba:any = await this.interP.actualizarPeticion(this.peticion.id)
 
-      //this.peticion = prueba;
-
+      this.peticion = prueba;
     } else {
       localStorage.setItem('InteresadosPeticion', JSON.stringify(this.peticion));
     }
-
-    console.log(this.peticion);
 
     this.interesados = this.peticion.interesados;
     if(this.interesados){
@@ -44,21 +42,50 @@ export class InteresadosPeticionComponent {
       });
     }
 
+
   }
 
   irAPerfil(id:any){
     let usuarioClick:any = this.interesadosMostrar.find((item: { uid: any; }) => item.uid === id);
-    console.log(usuarioClick);
     localStorage.setItem('UsuarioAjeno',usuarioClick.uid)
 
     this.router.navigate(["/perfil", usuarioClick.nombre])
   }
 
   async aceptar(uid:any){
+    await this.interP.aceptar(uid, this.peticion.id).then(async () => {
+      let prueba:any = await this.interP.actualizarPeticion(this.peticion.id);
+      this.peticion = prueba;
+      localStorage.setItem('InteresadosPeticion', JSON.stringify(this.peticion));
+      this.interesados = this.peticion.interesados;
+      this.interesadosMostrar = [];
+      if(this.interesados){
+        this.interesados.forEach(async (objeto:any) => {
+          const dato = await this.interP.getInteresados(objeto)
+          this.interesadosMostrar.push(dato);
+        });
+      }
 
+      alert("Conductor aceptado")
+    })
   }
 
   async rechazar(uid:any){
+    await this.interP.rechazar(uid, this.peticion.id) .then(async () => {
+      let prueba:any = await this.interP.actualizarPeticion(this.peticion.id);
+      this.peticion = prueba;
+      localStorage.setItem('InteresadosPeticion', JSON.stringify(this.peticion));
+      this.interesados = this.peticion.interesados;
+      this.interesadosMostrar = [];
+      if(this.interesados){
+        this.interesados.forEach(async (objeto:any) => {
+          const dato = await this.interP.getInteresados(objeto)
+          this.interesadosMostrar.push(dato);
+        });
+      }
+
+      alert("Conductor rechazado")
+    })
 
   }
 }

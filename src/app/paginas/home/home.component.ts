@@ -24,12 +24,10 @@ export class HomeComponent implements OnInit{
 
   async ngOnInit() {
     this.unixTime = Math.floor(new Date().getTime() / 1000);
-    console.log(this.unixTime);
 
     this.noticias = await this.fire.getAllNoticias();
 
     this.noticias.sort((a:any, b:any) => b.fecha_creacion - a.fecha_creacion);
-    console.log("Noticias:",this.noticias);
 
 
 
@@ -109,11 +107,9 @@ export class HomeComponent implements OnInit{
     })
       .then(response => response.json())
       .then(async data => {
-        //console.log(data.data.tournaments.nodes)
         this.torneos = await data.data.tournaments.nodes;
 
         this.torneos = this.torneos.filter((torneo:any) => torneo.endAt > this.unixTime)
-        //console.log(this.torneos);
 
       })
       .catch(error => console.error(error));

@@ -57,7 +57,7 @@ export class VisualizarOfertaComponent {
 
   async interesado(id:any){
     if(this.auth.currentUser){
-      this.fire.meInteresaTransporte(id, this.auth.currentUser?.uid);
+      await this.fire.meInteresaTransporte(id, this.auth.currentUser?.uid);
     } else {
       alert("Por favor, inicie sesión primero")
     }

@@ -30,7 +30,6 @@ export class CochesComponent implements OnInit {
 
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Coches"));
     querySnapshot.forEach((doc) => {
-      //console.log(doc.data());
       this.VehiculosTotales.push(doc.data());
     });
 
@@ -40,25 +39,22 @@ export class CochesComponent implements OnInit {
 
   ObtenerMatricula(event:any){
     const mat = event.target.value;
-    //console.log('Matricula:', mat);
     this.matricula = mat;
   }
 
   ObtenerAlias(event:any){
     const alias = event.target.value;
-    //console.log('Alias:', alias);
     this.alias = alias;
   }
 
   ObtenerPlazas(event:any){
     const plazas = event.target.value;
-    //console.log('Alias:', alias);
     this.plazas = plazas;
   }
 
   async SubirCoche(){
     if (/^[0-9]{4}\s[A-Z]{3}$/.test(this.matricula)) {
-      //console.log('La matrícula es correcta');
+
       if(this.auth.currentUser){
 
 
@@ -75,11 +71,11 @@ export class CochesComponent implements OnInit {
           const docSnap = await getDoc(docRef);
           if(docSnap.exists()){
             if(i == 3){
-              console.log("Numero máximo de vehiculos alcanzadas");
+              alert("Numero máximo de vehiculos alcanzadas");
             }
           } else {
             const response = await setDoc(doc(this.fire.basededatos(), "Coches", "Coche-"+ i + "-"+this.auth.currentUser.uid), vehiculo)
-            //console.log("Coche creado");
+
             location.reload();
             i = 21;
           }

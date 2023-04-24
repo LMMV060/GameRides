@@ -45,11 +45,9 @@ export class EditarPeticionComponent {
     this.torneoEditar.push(this.peticionEditar.evento);
     this.descripcionEditar = this.peticionEditar.descripcion;
     this.precioEditar = this.peticionEditar.precio;
-    console.log(this.peticionEditar);
   }
 
   logFechaDeIda(event:any){
-    //console.log('Fecha de ida:', event.target.value);
     this.fechaEditar = event.target.value;
   }
 

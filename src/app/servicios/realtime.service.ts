@@ -28,12 +28,10 @@ export class RealtimeService {
 
     get(sala).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log("Existe");
         this.SalaActual = 'Sala-' + usuario1.uid + '-' + usuario2.uid;
       } else {
         get(sala2).then((snapshot) => {
           if(snapshot.exists()){
-            console.log("Existe la segunda sala");
             this.SalaActual = 'Sala-' + usuario2.uid + '-' + usuario1.uid;
           } else {
             set(ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid), {
@@ -75,13 +73,9 @@ export class RealtimeService {
             mensajes.push(mensajeData);
           }
         }
-
-        //console.log('Mensajes:', mensajes);
-
         return mensajes;
 
       } else {
-        console.log('Error: la variable "sala" no existe en la base de datos');
         return null;
       }
     }).catch((error) => {

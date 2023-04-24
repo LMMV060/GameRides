@@ -29,29 +29,19 @@ export class AjustesComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser = await this.fire.getUserDataReal();
-    console.log(this.currentUser.password);
 
     if(this.currentUser.password === "?"){
       this.cuentaGoogle = true;
     }
-    if (crypto.SHA512('123456').toString() === this.currentUser.password) {
-      console.log('Las claves coinciden');
-    } else {
-      console.log('Las claves no coinciden');
-    }
-
   }
 
   async mostrarMensaje(item: { nombre: string; }) {
     if (item.nombre === 'Cambiar email') {
       this.mensaje = item.nombre;
-      console.log(this.mensaje);
     } else if (item.nombre === 'Cambiar contraseña') {
       this.mensaje = item.nombre;
-      console.log(this.mensaje);
     } else if (item.nombre === 'Borrar cuenta'){
       this.mensaje = item.nombre
-      console.log(this.mensaje);
     }
   }
 

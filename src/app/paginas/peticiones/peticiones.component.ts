@@ -47,27 +47,20 @@ export class PeticionesComponent implements OnInit {
 
 
     //Comprobación de fecha actual
-    console.log(this.fecha);
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
-    console.log(unixTime);
-
-    console.log(this.convertirUnixAFecha(unixTime));
 
     //Vehiculos y alias
 
     const vehiculos = await getDocs(collection(this.fire.basededatos(), "Coches"));
     vehiculos.forEach((doc) => {
 
-      console.log(doc.data());
       this.VehiculosTotales.push(doc.data());
 
 
     });
 
     this.VehiculosTotales.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.misVehiculos.push(objeto));
-
-    //console.log(this.misVehiculos[0].alias);
 
     //this.alias = this.misVehiculos[0].alias;
 
@@ -94,14 +87,10 @@ export class PeticionesComponent implements OnInit {
   opcionSeleccionada:any = "Conductores";
 
   Busqueda(event:any){
-
-    console.log(event.target.value);
     this.opcionSeleccionada = event.target.value;
   }
 
   Evento(event:any){
-
-    console.log(event.target.value);
     this.eventoSeleccionado = parseInt(event.target.value);
 
 
@@ -109,11 +98,9 @@ export class PeticionesComponent implements OnInit {
 
     if(evento){
       this.eventoSeleccionado = evento;
-      console.log(evento);
       this.fecha = this.convertirUnixAFecha(evento.startAt);
 
     } else {
-      console.log("no");
 
     }
 
@@ -121,15 +108,11 @@ export class PeticionesComponent implements OnInit {
   }
 
   Alias(event:any){
-
-    console.log(event.target.value);
     this.alias = event.target.value;
     this.coche = this.fire.getCocheData(this.alias);
   }
 
   async realizarPeticion(){
-    console.log("Peticion");
-
 
     if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.precio){
 
@@ -138,7 +121,7 @@ export class PeticionesComponent implements OnInit {
         const docSnap = await getDoc(docRef);
         if(docSnap.exists()){
           if(i == 5){
-            console.log("Numero máximo de peticiones alcanzadas");
+            alert("Numero máximo de peticiones alcanzadas");
           }
         } else {
           const real:any = await this.fire.getUserDataReal();
@@ -154,7 +137,7 @@ export class PeticionesComponent implements OnInit {
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid), pet)
-          console.log("Peticion creada");
+          alert("Peticion de transporte creada");
           location.reload();
           i = 21;
         }
@@ -163,7 +146,7 @@ export class PeticionesComponent implements OnInit {
 
 
     } else {
-      console.log("Operacion no permitida");
+      alert("Faltan datos necesarios");
 
     }
 
@@ -172,7 +155,6 @@ export class PeticionesComponent implements OnInit {
   }
 
   async ofrecerTransporte(){
-    console.log("Transporte");
 
     if(this.auth.currentUser && this.auth.currentUser.photoURL && this.auth.currentUser.displayName && this.fecha && this.alias != "" && this.alias && this.precio){
 
@@ -181,7 +163,7 @@ export class PeticionesComponent implements OnInit {
         const docSnap = await getDoc(docRef);
         if(docSnap.exists()){
           if(i == 5){
-            console.log("Numero máximo de transportes alcanzadas");
+            alert("Numero máximo de transportes alcanzadas");
           }
         } else {
           const real:any = await this.fire.getUserDataReal();
@@ -199,7 +181,7 @@ export class PeticionesComponent implements OnInit {
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid), pet)
-          console.log("Transporte creada");
+          alert("Has creado la oferta de transporte");
           location.reload();
           i = 21;
         }
@@ -207,8 +189,7 @@ export class PeticionesComponent implements OnInit {
 
 
     } else {
-      console.log("Operacion no permitida");
-
+      alert("Faltan datos necesarios");
     }
 
   }
@@ -225,7 +206,6 @@ export class PeticionesComponent implements OnInit {
 
   ObtenerFecha(event:any){
     const fecha = event.target.value;
-    console.log('Valor del input:', fecha);
     this.fecha = fecha;
   }
 
@@ -297,7 +277,6 @@ export class PeticionesComponent implements OnInit {
   }
 
   verDatosTransporte(transporte:any){
-    //console.log("ver transporte", transporte);
     if(transporte.uid === this.auth.currentUser?.uid){
       this.transporte.setTransporte(transporte);
       this.router.navigateByUrl("/editar-oferta")

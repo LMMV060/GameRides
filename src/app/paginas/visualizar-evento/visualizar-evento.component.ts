@@ -25,7 +25,6 @@ export class VisualizarEventoComponent {
       localStorage.setItem('EventoVisualizacion', JSON.stringify(this.evento));
     }
 
-    console.log(this.evento);
 
   }
 }

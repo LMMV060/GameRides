@@ -63,7 +63,6 @@ export class FirebaseService {
   }
 
   deletePeticiones(base:any){
-    //console.log(base.fecha);
     return base.fecha;
   }
 
@@ -79,7 +78,6 @@ export class FirebaseService {
     this.VehiculosTotales.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.misVehiculos.push(objeto));
 
     this.misVehiculos.filter((object:any) => object.alias == matricula).forEach((objeto: any) => {
-      console.log(objeto);
 
       return objeto;
       });
@@ -97,7 +95,6 @@ export class FirebaseService {
 
     usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
 
-    console.log(usuarioActual[0].nombre);
     return usuarioActual[0];
   }
   async getCurrentUser(){
@@ -112,7 +109,6 @@ export class FirebaseService {
 
     usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
 
-    console.log(usuarioActual[0]);
     return usuarioActual[0].isAdmin;
 
   }
@@ -129,7 +125,6 @@ export class FirebaseService {
 
         this.router.navigateByUrl("/home");
       }) .catch(async (error) => {
-        console.log(error.code)
 
         if(error.code === 'invalid-argument'){
           alert('No se ha dado ninguna nueva contraseña');
@@ -149,7 +144,6 @@ export class FirebaseService {
 
         this.router.navigateByUrl("/home");
       }) .catch(async (error) => {
-            console.log(error);
 
           if(error.code === 'auth/invalid-email'){
             alert('El nuevo email no tiene el formato necesario')
@@ -171,12 +165,10 @@ export class FirebaseService {
     for(let i = 1; i <= 3;i++){
       await deleteDoc(doc(this.basededatos(), "Coches", "Coche-"+i+"-" + uid));
     }
-    console.log("Coches borrados");
 
     //Borrarlo de la lista negra
 
     await deleteDoc(doc(this.basededatos(), "Lista_Negra", "Ban-" + uid));
-    console.log("Baneado borrado");
 
     //Borrar todas las noticias
 
@@ -184,7 +176,6 @@ export class FirebaseService {
       await deleteDoc(doc(this.basededatos(), "Noticias", "Noticia-"+i+"-" + uid));
     }
 
-    console.log("Noticias borradas");
 
     //Borrar peticiones de transporte
 
@@ -192,7 +183,6 @@ export class FirebaseService {
       await deleteDoc(doc(this.basededatos(), "Peticiones", "Peticion-"+i+"-" + uid));
     }
 
-    console.log("Peticiones borradas");
 
     //Borrar ofertas de transporte
 
@@ -200,14 +190,13 @@ export class FirebaseService {
       await deleteDoc(doc(this.basededatos(), "Transportes", "Transporte-"+i+"-" + uid));
     }
 
-    console.log("Ofertas borradas");
 
     //Borrar usuario
 
     await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + uid));
     if(this.auth.currentUser){
       deleteUser(this.auth.currentUser).then(async () => {
-        console.log("Usuario borrado");
+
       })
     }
 
@@ -256,7 +245,6 @@ export class FirebaseService {
     });
 
 
-    //console.log(transportes);
     return transportes;
   }
 
@@ -277,7 +265,7 @@ export class FirebaseService {
     const usuario = doc(this.basededatos(), "Usuarios", "Usuario-"+user.uid);
 
     if(user.uid === this.auth.currentUser?.uid){
-      console.log("My brother in christ te quieres banear a ti mismo?");
+      alert("My brother/sister in christ te quieres banear a ti mismo?");
 
     } else {
       //await deleteDoc(doc(this.basededatos(), "Usuarios", user.uid));
@@ -294,7 +282,6 @@ export class FirebaseService {
         isDisabled:true,
         descripcion: ""
       }
-      console.log("Baneando al usuario: ",usuarioBan);
 
       const ban = await setDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+user.uid), usuarioBan)
     }
@@ -304,11 +291,11 @@ export class FirebaseService {
   async borrarTransporte(Transporte:any){
     await deleteDoc(doc(this.basededatos(), "Transportes", Transporte.id))
     .then(()=> {
-      alert("Transporte borrado, porfavor, actualiza")
+      alert("Transporte borrado");
+      location.reload();
     })
     .catch(err => {
       console.log(err);
-
     })
 
   }
@@ -334,7 +321,7 @@ export class FirebaseService {
       await updateDoc(user, {
         isDisabled: false
       });
-      console.log("teperD0no");
+      alert("Usuario desbaneado")
     })
     .catch(err => {
       console.log(err);
@@ -362,7 +349,7 @@ export class FirebaseService {
 
   async enviarRecuperacionContra(email:any){
     sendPasswordResetEmail(this.auth, email).then(()=> {
-      console.log("Correo enviado");
+      alert("Correo enviado");
 
     })
   }
@@ -370,16 +357,12 @@ export class FirebaseService {
   async guardarNuevaImagen(uid:any, img:any){
     const imgRef = ref(this.storage, `ImagenesUsuarioPerfil/${uid}`);
     if(img === undefined){
-      console.log("No ha habido cambios en la imagen");
 
     } else {
-
       uploadBytes(imgRef, img)
     .then(response => {
-      console.log(response);
 
-    }).catch(err => console.log(err)
-    )
+    }).catch(err => console.log(err))
     }
   }
 
@@ -387,8 +370,7 @@ export class FirebaseService {
 
   async guardarNuevaDescripcion(descripcion:any){
     if(descripcion === undefined){
-      console.log("No ha habido cambios en la descripcion");
-      this.descripcion = "Esto es una prueba relax"
+      this.descripcion = ""
     } else {
       this.descripcion = descripcion;
     }
@@ -411,7 +393,7 @@ export class FirebaseService {
 
         this.getAllPeticiones().then(peti => {
           for(let user of peti){
-            console.log(user);
+
           }
         })
       }

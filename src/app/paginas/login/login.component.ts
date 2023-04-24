@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.auth.currentUser){
-      console.log("Login");
+      
     } else {
       this.router.navigateByUrl('/home');
     }
@@ -33,13 +33,11 @@ export class LoginComponent implements OnInit {
 
   ObtenerEmail(event:any){
     const email = event.target.value;
-    console.log('Valor del input:', email);
     this.email = email;
   }
 
   ObtenerPWD(event:any){
     const pwd = event.target.value;
-    console.log('PWD:', pwd);
     this.pwd = pwd;
   }
 
@@ -65,16 +63,13 @@ export class LoginComponent implements OnInit {
           isDisabled:true,
           descripcion: ""
         }
-        console.log("Estas baneado: ",usuarioBan);
+        alert("Estas baneado");
 
         const ban = await setDoc(doc(this.fire.basededatos(), "Lista_Negra", "Ban-"+this.auth.currentUser?.uid), usuarioBan)
         //const borrarUsuario = await deleteDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser));
 
         this.auth.signOut();
       } else {
-        console.log(response);
-        console.log("Usuario con el email: " + this.email);
-        console.log("Logeado con la contraseña "+ this.pwd);
         this.router.navigateByUrl('/home');
       }
 
@@ -89,7 +84,6 @@ export class LoginComponent implements OnInit {
 
     this.fire.loginWithGoogle()
     .then(async response => {
-      console.log(response);
 
       if(this.auth.currentUser && this.auth.currentUser.displayName && this.auth.currentUser.photoURL){
         const usuario:Usuarios= {
@@ -113,7 +107,6 @@ export class LoginComponent implements OnInit {
         if(filtro == undefined){
           const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario);
           this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.auth.currentUser.photoURL);
-          console.log("Usuario creado");
         } else {
           if(filtro.isDisabled){
             const usuarioBan:Usuarios = {
@@ -125,7 +118,7 @@ export class LoginComponent implements OnInit {
               isDisabled:true,
               descripcion: ""
             }
-            console.log("Estas baneado: ",usuarioBan);
+            alert("Estas baneado");
 
             const ban = await setDoc(doc(this.fire.basededatos(), "Lista_Negra", "Ban-"+this.auth.currentUser.uid), usuarioBan)
             const borrarUsuario = await deleteDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser));
@@ -133,7 +126,6 @@ export class LoginComponent implements OnInit {
             this.auth.signOut();
 
           } else {
-            console.log("Bienvenido");
             this.router.navigateByUrl('/home');
           }
         }

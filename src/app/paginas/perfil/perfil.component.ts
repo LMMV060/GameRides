@@ -3,7 +3,7 @@ import { FirebaseService } from './../../servicios/firebase.service';
 import { initializeApp } from '@angular/fire/app';
 import { Auth, getAuth, updateProfile } from '@angular/fire/auth';
 import { Component, OnInit, } from '@angular/core';
-import { collection, deleteDoc, doc, getDoc, getDocs } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { PeticionService } from 'src/app/servicios/peticion.service';
 import { TransporteService } from 'src/app/servicios/transporte.service';
 import { InteresadosService } from 'src/app/servicios/interesados.service';
@@ -21,7 +21,12 @@ export class PerfilComponent implements OnInit {
   public nombre:any = this.auth.currentUser?.displayName;
   public img:any = this.auth.currentUser?.photoURL;
   public descripcion:any;
+
   public ofertasAceptadas:any = [];
+  public ofertasAceptadasMostrar:any = [];
+
+  public peticionesAceptadas:any = [];
+  public peticionesAceptadasMostrar:any = [];
 
   Peticiones:any = [];
   PeticionesUsuario:any = [];
@@ -38,6 +43,7 @@ export class PerfilComponent implements OnInit {
     private auth: Auth,
     private p:PeticionService,
     private transporte: TransporteService,
+    private peticion: PeticionService,
     private inter: InteresadosService,
     private interP: InteresadosPeticionService
   ) { }
@@ -48,19 +54,16 @@ export class PerfilComponent implements OnInit {
       this.descripcion = usuarioActual.descripcion;
     //this.isAdmin = true;
 
-    console.log(this.auth.currentUser?.uid);
-
     const docRef = doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
       this.usuario.push(docSnap.data())
       this.img = this.usuario[0].imgUrl
       this.nombre = this.usuario[0].nombre
       this.isAdmin = this.usuario[0].isAdmin;
       this.ofertasAceptadas = this.usuario[0].ofertasAceptadas
-      console.log(this.ofertasAceptadas);
+      this.peticionesAceptadas = this.usuario[0].peticionesAceptadas
 
       if(this.auth.currentUser){
         updateProfile(this.auth.currentUser, {
@@ -91,16 +94,38 @@ export class PerfilComponent implements OnInit {
 
     this.Noticias.filter((objeto:any) => objeto.uid == this.auth.currentUser?.uid).forEach((objeto: any) => this.NoticiasUsuario.push(objeto));
 
+    //Por si el otro usuario hace un cambio en la oferta, esto lo comprueba y actualiza
+    for(let i = 0; i < this.ofertasAceptadas.length; i++){
+      const datos = await this.transporte.getTransporteByID(this.ofertasAceptadas[i].id)
+      if(datos){
+        this.ofertasAceptadasMostrar.push(datos);
+      }
+    }
+    let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
+
+    await updateDoc(userRef, {
+      ofertasAceptadas: this.ofertasAceptadasMostrar
+    });
+
+    //Por si el otro usuario hace un cambio en la peticion, esto lo comprueba y actualiza
+    for(let i = 0; i < this.ofertasAceptadas.length; i++){
+      const datos = await this.peticion.getPeticionByID(this.peticionesAceptadas[i].id)
+      if(datos){
+        this.peticionesAceptadasMostrar.push(datos);
+      }
+    }
+
+    let petRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
+
+    await updateDoc(petRef, {
+      peticionesAceptadas: this.peticionesAceptadasMostrar
+    });
 
     } catch(err){
       console.log(err);
-
     }
 
-
   }
-
-
 
   Editar(){
     this.router.navigateByUrl('editar-perfil');
@@ -119,7 +144,7 @@ export class PerfilComponent implements OnInit {
       await deleteDoc(doc(this.fire.basededatos(), "Peticiones", peticion.id));
 
       this.PeticionesUsuario = this.PeticionesUsuario.filter((o:any) => o !== peticion);
-      console.log("Objeto eliminado:", peticion);
+      alert("Peticion eliminada");
     }
   }
 
@@ -135,7 +160,7 @@ export class PerfilComponent implements OnInit {
       await deleteDoc(doc(this.fire.basededatos(), "Transportes", peticion.id));
 
       this.TransportesUsuario = this.TransportesUsuario.filter((o:any) => o !== peticion);
-      console.log("Objeto eliminado:", peticion);
+      alert("Oferta eliminada");
     }
   }
 
@@ -158,7 +183,6 @@ export class PerfilComponent implements OnInit {
   opcionSeleccionada:any = "Pasajeros";
 
   Busqueda(event:any){
-    console.log(event.target.value);
     this.opcionSeleccionada = event.target.value;
   }
 
@@ -167,8 +191,12 @@ export class PerfilComponent implements OnInit {
   }
 
   verDatosTransporte(transporte:any){
-    //console.log("ver transporte", transporte);
       this.transporte.setTransporte(transporte);
       this.router.navigateByUrl("/ofertasTransportes")
+  }
+
+  verDatosPeticion(peticion:any){
+    this.peticion.setPeticion(peticion);
+    this.router.navigateByUrl("/solicitudesPeticiones")
   }
 }

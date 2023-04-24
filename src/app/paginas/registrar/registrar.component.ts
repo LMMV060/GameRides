@@ -29,19 +29,16 @@ export class RegistrarComponent implements OnInit {
 
   ObtenerEmail(event:any){
     const email = event.target.value;
-    console.log('Valor del input:', email);
     this.email = email;
   }
 
   ObtenerPWD(event:any){
     const pwd = event.target.value;
-    console.log('PWD:', pwd);
     this.pwd = pwd;
   }
 
   ObtenerNombre(event:any){
     const nombre = event.target.value;
-    console.log('Nombre:', nombre);
     this.nombre = nombre;
   }
 
@@ -57,7 +54,6 @@ export class RegistrarComponent implements OnInit {
     datos.forEach((doc:any) => {
 
       if(doc.nombre == this.nombre){
-        console.log("No");
         this.creaUsuario = false;
       } else {
       }
@@ -82,12 +78,12 @@ export class RegistrarComponent implements OnInit {
           this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png");
 
           const response = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)
-          console.log("Usuario creado");
+          alert("Usuario registrado");
           this.router.navigate(["/home"]);
         }
       })
     } else {
-      console.log("Usuario con nombre " + this.nombre + " ya registrado");
+      alert("Usuario con nombre " + this.nombre + " ya registrado");
 
     }
 

@@ -27,7 +27,6 @@ export class NoticiasComponent {
     this.noticias.sort((a:any, b:any) => b.fecha_creacion - a.fecha_creacion);
 
     this.noticias.forEach((element:any) => {
-      console.log(this.convertirUnixAFecha(element.fecha_creacion));
 
     });
   }

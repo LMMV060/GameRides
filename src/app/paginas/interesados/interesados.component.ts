@@ -48,7 +48,6 @@ export class InteresadosComponent {
 
   irAPerfil(id:any){
     let usuarioClick:any = this.interesadosMostrar.find((item: { uid: any; }) => item.uid === id);
-    console.log(usuarioClick);
     localStorage.setItem('UsuarioAjeno',usuarioClick.uid)
 
     this.router.navigate(["/perfil", usuarioClick.nombre])

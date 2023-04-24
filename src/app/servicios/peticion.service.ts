@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase.service';
-import { doc, updateDoc } from '@angular/fire/firestore';
+import { collection, doc, getDocs, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -34,5 +34,18 @@ export class PeticionService {
       fecha: fecha
     });
 
+  }
+
+  async getPeticionByID(id:any){
+    let datos:any = [];
+    const transporteRef = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
+    transporteRef.forEach((doc) => {
+
+      datos.push(doc.data());
+    });
+
+    datos = datos.filter((objeto:any) => objeto.id === id);
+
+    return datos[0];
   }
 }

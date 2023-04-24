@@ -59,8 +59,6 @@ export class SmashAPIService {
         this.torneos = await data.data.tournaments.nodes;
 
         array = await data.data.tournaments.nodes;
-        console.log(array);
-
 
       })
       .catch(error => console.error(error));

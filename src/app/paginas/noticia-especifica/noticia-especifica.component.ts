@@ -26,9 +26,9 @@ export class NoticiaEspecificaComponent {
     this.noticiaEspecifica = this.noticias.filter((noticia:any) => noticia.titulo === this.nombre);
 
     if (this.noticiaEspecifica.length > 0) {
-      console.log('La noticia seleccionada es:', this.noticiaEspecifica[0]);
+      //console.log('La noticia seleccionada es:', this.noticiaEspecifica[0]);
     } else {
-      console.log('Error: no se encontró ninguna noticia con el título');
+      //console.log('Error: no se encontró ninguna noticia con el título');
     }
 
 

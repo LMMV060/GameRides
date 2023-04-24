@@ -37,8 +37,7 @@ export class PerfilAjenoComponent implements OnInit {
 
   async ngOnInit() {
     this.nombre = this.route.snapshot.paramMap.get('nombre') || "";
-    console.log(this.nombre);
-
+    
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
 
@@ -46,8 +45,6 @@ export class PerfilAjenoComponent implements OnInit {
     });
 
     this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
-
-    console.log(this.usuarioActual[0]);
 
 
     this.isBan = this.usuarioActual[0].isDisabled
@@ -95,7 +92,6 @@ export class PerfilAjenoComponent implements OnInit {
 
     this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
 
-    console.log(this.usuarioActual[0]);
     const usuarioActual = await this.fire.getUserDataReal();
 
     this.chat.chat(usuarioActual, this.usuarioActual[0]);
@@ -104,7 +100,6 @@ export class PerfilAjenoComponent implements OnInit {
   }
 
   verDatosTransporte(transporte:any){
-    //console.log("ver transporte", transporte);
 
       this.transporte.setTransporte(transporte);
       this.router.navigateByUrl("/ofertasTransportes")

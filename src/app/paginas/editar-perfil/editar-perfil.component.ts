@@ -34,10 +34,8 @@ export class EditarPerfilComponent {
 
   async ngOnInit() {
     const usuario:any = await this.fire.getUserDataReal();
-    console.log(usuario);
     this.img = usuario.imgUrl;
     this.descripcion = usuario.descripcion;
-    console.log(this.descripcion);
 
   }
 
@@ -65,7 +63,6 @@ export class EditarPerfilComponent {
   cargarImagen($event: any) {
     const archivo = $event.target.files[0];
     const storage = getStorage();
-    console.log(archivo);
     this.imgAGuardar = archivo;
 
     // Crear URL de objeto para la imagen

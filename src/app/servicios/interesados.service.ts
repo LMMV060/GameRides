@@ -20,8 +20,6 @@ export class InteresadosService {
   }
 
   getOferta() {
-    //console.log(this.oferta);
-    //console.log(this.interesados);
     return this.oferta;
   }
 
@@ -52,7 +50,6 @@ export class InteresadosService {
       }
     });
 
-    console.log("Rechazando al usuario: " + usuario.nombre);
    await updateDoc(ofertaInteresada, {
       interesados:arrayRemove(usuario.uid)
     });
@@ -96,7 +93,6 @@ export class InteresadosService {
     prueba = prueba.filter((transporte:any) => transporte.id === idOferta);
     let aceptados:any = [];
     //Acepta al usuario como que esta aceptado
-    console.log("Aceptando al usuario: " + usuario.nombre);
     await updateDoc(ofertaInteresada, {
       interesados:arrayRemove(usuario.uid)
     });
@@ -141,8 +137,6 @@ export class InteresadosService {
     await updateDoc(usuarioRef, {
       ofertasAceptadas: ofertasA
     })
-    console.log(actualizaUsuario[0].uid);
-
 
   }
 

@@ -44,13 +44,11 @@ export class DashboardComponent implements OnInit {
     this.transportesFiltrados = await this.fire.getAllTransportes();
     this.lista_negra = await this.fire.getAllBans();
     this.lista_negra_filtrada = await this.fire.getAllBans();
-    console.log(this.peticiones);
 
     try{
       const admin = await this.fire.getCurrentUser();
 
       if(admin){
-        console.log("Bienvenido");
 
       } else {
         this.router.navigateByUrl("/error")
@@ -67,24 +65,17 @@ export class DashboardComponent implements OnInit {
 
   Busqueda(event:any){
 
-    console.log(event.target.value);
     this.opcionSeleccionada = event.target.value;
   }
 
   ObtenerNombre(event:any){
     const text = event.target.value;
 
-    console.log(text)
   }
 
   async eliminarUsuario(usuario:any){
     this.fire.inhabilitar(usuario);
-    /*if (confirm('¿Está seguro de que desea eliminar esta petición?')) {
 
-      await deleteDoc(doc(this.fire.basededatos(), "Usuarios", usuario.uid));
-
-      console.log("Objeto eliminado:", usuario);
-    }*/
   }
 
   async eliminarTransporte(Transporte:any){
@@ -109,7 +100,6 @@ export class DashboardComponent implements OnInit {
     }else {
       this.usuariosFiltrados = this.usuarios;
     }
-    console.log(text)
   }
 
   ObtenerNombreTransporte(event:any){
@@ -121,7 +111,6 @@ export class DashboardComponent implements OnInit {
     }else {
       this.transportesFiltrados = this.transportes;
     }
-    console.log(text)
   }
 
   ObtenerNombrePeticiones(event:any){
@@ -133,7 +122,6 @@ export class DashboardComponent implements OnInit {
     }else {
       this.peticionesFiltradas = this.peticiones;
     }
-    console.log(text)
   }
 
   ObtenerNombreBan(event:any){
@@ -145,14 +133,13 @@ export class DashboardComponent implements OnInit {
     }else {
       this.lista_negra_filtrada = this.lista_negra;
     }
-    console.log(text)
   }
 
   contenidoEditor = '';
 
   onEditorInput(event:any) {
     this.contenidoEditor = event.target.innerHTML;
-    console.log(this.contenidoEditor);
+    //console.log(this.contenidoEditor);
   }
 
   titulo:any = "";
@@ -175,8 +162,6 @@ export class DashboardComponent implements OnInit {
   insertarImagen() {
     const imagen = '<img src="' + this.rutaImagen + ' style="width: 50px;"">'; // agregar la ruta de la imagen
     this.contenidoEditor += imagen;
-
-    console.log(this.contenidoEditor);
 
   }
 
@@ -205,7 +190,7 @@ export class DashboardComponent implements OnInit {
 
   async guardarNoticia(){
     if(this.titulo === "" || this.subtitulo === "" || this.contenidoEditor === ''){
-      console.log("error");
+      alert("No se pudo crear la noticia, faltán atributos");
 
     } else {
       for(let i = 1; i<= 30; i++){
@@ -213,7 +198,7 @@ export class DashboardComponent implements OnInit {
         const docSnap = await getDoc(docRef);
         if(docSnap.exists()){
           if(i == 30){
-            console.log("Numero máximo de noticias alcanzadas");
+            alert("Numero máximo de noticias alcanzadas");
           }
         } else {
           let usuarioActual:any = await this.fire.getUserDataReal();
@@ -228,7 +213,7 @@ export class DashboardComponent implements OnInit {
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
-          console.log("Noticia creada");
+          alert("Noticia creada");
           location.reload();
           i = 31;
 

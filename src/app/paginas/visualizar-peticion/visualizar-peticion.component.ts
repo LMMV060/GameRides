@@ -39,7 +39,6 @@ export class VisualizarPeticionComponent {
       localStorage.setItem('VisualizaPeticion', JSON.stringify(this.datos));
     }
 
-    console.log(this.datos);
   }
 
   visualizarEvento(torneo:any){
@@ -62,7 +61,7 @@ export class VisualizarPeticionComponent {
 
   async interesado(id:any){
     if(this.auth.currentUser){
-      this.fire.meInteresaPeticion(id, this.auth.currentUser?.uid);
+      await this.fire.meInteresaPeticion(id, this.auth.currentUser?.uid);
     } else {
       alert("Por favor, inicie sesión primero")
     }

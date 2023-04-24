@@ -12,10 +12,8 @@
   </div>
 
   <br>
-  <h2> Personas interesadas: </h2>
-
+  <h2> Conductores interesados: </h2>
   <div *ngIf="interesadosMostrar" >
-
     <div *ngFor="let inter of interesadosMostrar" class="personas_interesadas">
       <div class="botones">
         <button (click)="aceptar(inter.uid)">Aceptar</button>
