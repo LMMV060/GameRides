@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { CocheService } from 'src/app/servicios/coche.service';
+import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { InteresadosService } from 'src/app/servicios/interesados.service';
 
 @Component({
@@ -11,19 +13,28 @@ import { InteresadosService } from 'src/app/servicios/interesados.service';
 export class InteresadosComponent {
 
   ofertaDeTransporte:any;
+
   interesados:any;
   interesadosMostrar:any = [];
+
+  aceptados:any = [];
+  aceptadosMostrar:any = [];
+
+  vehiculo:any;
 
   constructor(
     private inter: InteresadosService,
     private router:Router,
     private auth: Auth,
+    private coche: CocheService,
+    private fire:FirebaseService
   ){
 
   }
 
   async ngOnInit(){
     this.ofertaDeTransporte = await this.inter.getOferta();
+
 
     if(this.ofertaDeTransporte === undefined){
       const datosOferta:any = localStorage.getItem('InteresadosOferta');
@@ -44,6 +55,18 @@ export class InteresadosComponent {
       });
     }
 
+    this.aceptados = this.ofertaDeTransporte.aceptados;
+
+    this.aceptados.forEach(async (uid:any) => {
+      let dato = await this.inter.getAceptados(uid);
+      this.aceptadosMostrar.push(dato);
+    });
+
+    this.vehiculo = await this.coche.getCocheByID(this.ofertaDeTransporte.vehiculo)
+
+
+
+
   }
 
   irAPerfil(id:any){
@@ -53,8 +76,19 @@ export class InteresadosComponent {
     this.router.navigate(["/perfil", usuarioClick.nombre])
   }
 
+  async irAPerfilAceptado(uid:any){
+    let usuarioClick:any = await this.fire.getUserByUID(uid);
+
+    localStorage.setItem('UsuarioAjeno',usuarioClick.uid)
+
+    this.router.navigate(["/perfil", usuarioClick.nombre])
+  }
+
   async aceptar(uid:any){
-    await this.inter.aceptar(uid, this.ofertaDeTransporte.id);
+    if(this.ofertaDeTransporte.aceptados.length +1 >= this.vehiculo.plazas) {
+      alert("Actualmente tienes " + (this.ofertaDeTransporte.aceptados.length +1) + " de " + this.vehiculo.plazas + " plazas llenas, si quieres aceptar a este usuario, rechaza uno de los aceptados o aumenta el número de plazas de tu vehículo")
+    } else {
+      await this.inter.aceptar(uid, this.ofertaDeTransporte.id);
     let prueba:any = await this.inter.actualizarOferta(this.ofertaDeTransporte.id);
 
     this.ofertaDeTransporte = prueba;
@@ -67,6 +101,17 @@ export class InteresadosComponent {
         this.interesadosMostrar.push(dato);
       });
     }
+
+    this.aceptados = this.ofertaDeTransporte.aceptados;
+    this.aceptadosMostrar = [];
+    if(this.aceptados) {
+    this.aceptados.forEach(async (uid:any) => {
+      let dato = await this.inter.getAceptados(uid);
+      this.aceptadosMostrar.push(dato);
+    });
+    }
+    }
+
 
   }
 
@@ -83,6 +128,10 @@ export class InteresadosComponent {
       const dato = await this.inter.getInteresados(objeto)
       this.interesadosMostrar.push(dato);
     });
+  }
+
+  async quitar(uid:any){
+    this.inter.eliminarAceptado(uid, this.ofertaDeTransporte.id)
   }
 
 }

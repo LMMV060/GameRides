@@ -154,4 +154,75 @@ export class InteresadosService {
 
   }
 
+  async getAceptados(uid:any){
+    let usuario:any;
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+      let datos:any = doc.data();
+      if(datos.uid === uid){
+        usuario = datos
+      }
+    });
+
+    return usuario;
+
+  }
+
+  async eliminarAceptado(uid:any, idOferta:any){
+    let ofertaInteresada = await doc(this.fire.basededatos(), "Transportes", idOferta);
+    let ofertaABorrar:any;
+
+    let usuario:any
+
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+      const data:any = doc.data();
+      if (data.uid === uid) { // Filtra los datos según el uid
+        usuario = data;
+      }
+    });
+
+    const ofertaRef = await getDocs(collection(this.fire.basededatos(), "Transportes"));
+    ofertaRef.forEach((doc) => {
+      const data:any = doc.data();
+      if (data.id === idOferta) { // Filtra los datos según el uid
+        ofertaABorrar = data;
+      }
+    });
+
+    if(confirm('¿Está seguro que desea eliminar a este conductor de su petición? El usuario será marcado como rechazado')){
+      await updateDoc(ofertaInteresada, {
+        aceptados:arrayRemove(usuario.uid)
+      });
+
+      let prueba = await this.fire.getAllTransportes();
+      prueba = prueba.filter((transporte:any) => transporte.id === idOferta);
+      let rechazados:any = [];
+
+      if(prueba[0].rechazados === undefined){
+        rechazados.push(uid);
+      } else {
+        rechazados = prueba[0].rechazados
+        if(rechazados.includes(uid)){
+
+        } else {
+          rechazados.push(uid)
+        }
+      }
+      await updateDoc(ofertaInteresada, {
+        rechazados: rechazados
+      });
+
+      let actualizaUsuario = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+usuario.uid);
+
+      await updateDoc(actualizaUsuario, {
+          ofertasAceptadas: arrayRemove(ofertaABorrar)
+      })
+      location.reload();
+
+    }
+
+
+  }
+
 }

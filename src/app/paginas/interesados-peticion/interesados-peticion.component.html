@@ -12,8 +12,25 @@
   </div>
 
   <br>
-  <h2> Conductores interesados: </h2>
+  <div *ngIf="conductorAceptado" >
+    <h2>Tu conductor: </h2>
+    <div class="usuario" class="personas_interesadas">
+      <div class="botones">
+        <button (click)="quitar(conductorAceptado.uid)">Quitar</button>
+      </div>
+      <div class="usuario" (click)="irAPerfilConductor(conductorAceptado.uid)">
+        <img [ngSrc]="conductorAceptado.imgUrl" width="100" height="100">
+      <p>
+        {{conductorAceptado.nombre}}
+      </p>
+      </div>
+
+    </div>
+  </div>
+
   <div *ngIf="interesadosMostrar" >
+  <h2> Conductores interesados: </h2>
+
     <div *ngFor="let inter of interesadosMostrar" class="personas_interesadas">
       <div class="botones">
         <button (click)="aceptar(inter.uid)">Aceptar</button>
@@ -29,5 +46,7 @@
     </div>
 
   </div>
+
+
 
 </div>

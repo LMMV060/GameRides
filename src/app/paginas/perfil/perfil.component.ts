@@ -122,7 +122,7 @@ export class PerfilComponent implements OnInit {
     });
 
     } catch(err){
-      console.log(err);
+      
     }
 
   }

@@ -143,12 +143,90 @@ export class InteresadosPeticionService {
     querySnapshot.forEach((doc) => {
       let datos:any = doc.data();
       if(datos.id === idPeticion){
-        console.log(datos);
 
         peticionInteresada = datos
       }
     });
     return peticionInteresada;
+  }
 
+  async getConductor(id:any){
+    let uid:any;
+    let usuario:any;
+
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
+    querySnapshot.forEach((doc) => {
+      let datos:any = doc.data();
+      if(datos.id === id){
+        if(datos.aceptados){
+          uid = datos.aceptados[0]
+        }
+      }
+    });
+
+    const usuarioRef = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    usuarioRef.forEach((doc) => {
+      let datos:any = doc.data();
+      if(datos.uid === uid){
+        usuario = datos
+      }
+    });
+
+    return usuario;
+  }
+
+  async borrarConductor(uid:any, idPeticion:any){
+    let peticionInteresada = await doc(this.fire.basededatos(), "Peticiones", idPeticion);
+    let peticionABorrar:any;
+
+    let usuario:any
+
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+      const data:any = doc.data();
+      if (data.uid === uid) { // Filtra los datos según el uid
+        usuario = data;
+      }
+    });
+
+    const peticionRef = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
+    peticionRef.forEach((doc) => {
+      const data:any = doc.data();
+      if (data.id === idPeticion) { // Filtra los datos según el uid
+        peticionABorrar = data;
+      }
+    });
+
+    if(confirm('¿Está seguro que desea eliminar a este conductor de su petición? El usuario será marcado como rechazado')){
+      await updateDoc(peticionInteresada, {
+        aceptados:arrayRemove(usuario.uid)
+      });
+
+      let prueba = await this.fire.getAllPeticiones();
+
+    prueba = prueba.filter((transporte:any) => transporte.id === idPeticion);
+    let rechazados:any = [];
+
+    if(prueba[0].rechazados === undefined){
+      rechazados.push(uid);
+    } else {
+      rechazados = prueba[0].rechazados
+      if(rechazados.includes(uid)){
+
+      } else {
+        rechazados.push(uid)
+      }
+    }
+    await updateDoc(peticionInteresada, {
+      rechazados: rechazados
+    });
+
+      let actualizaUsuario = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+usuario.uid);
+
+      await updateDoc(actualizaUsuario, {
+          peticionesAceptadas: arrayRemove(peticionABorrar)
+      })
+      location.reload();
+    }
   }
 }

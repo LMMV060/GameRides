@@ -110,7 +110,21 @@ export class FirebaseService {
     usuarioActual = datos.filter((objeto:any) => objeto.uid === this.auth.currentUser?.uid);
 
     return usuarioActual[0].isAdmin;
+  }
 
+  async getUserByUID(uid:any){
+    const datos:any = [];
+    let userUID:any;
+
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+
+      datos.push(doc.data());
+    });
+
+    userUID = datos.filter((objeto:any) => objeto.uid === uid);
+
+    return userUID[0];
   }
 
   async updatePwd(uid:any, nuevoPwd:any){

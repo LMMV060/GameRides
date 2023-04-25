@@ -12,6 +12,23 @@
   </div>
 
   <br>
+  <div *ngIf="aceptadosMostrar" >
+    <h2>Personas aceptadas</h2>
+    <div class="usuario" class="personas_interesadas" *ngFor="let aceptado of aceptadosMostrar">
+      <div class="botones">
+        <button (click)="quitar(aceptado.uid)">Quitar</button>
+      </div>
+      <div class="usuario" (click)="irAPerfilAceptado(aceptado.uid)">
+        <img [ngSrc]="aceptado.imgUrl" width="100" height="100">
+      <p>
+        {{aceptado.nombre}}
+      </p>
+      </div>
+
+    </div>
+
+  </div>
+
   <h2> Personas interesadas: </h2>
 
   <div *ngIf="interesadosMostrar" >
