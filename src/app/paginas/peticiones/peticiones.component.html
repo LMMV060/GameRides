@@ -15,6 +15,7 @@
       Da la información de la peticion
     </button>
 
+    <br>
     <div *ngIf="mostrarContenido">
       <label position="floating" >Fecha de ida</label>
       <br>
@@ -35,14 +36,15 @@
 
       <label position="floating" >Descripción</label>
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
+      <br>
+
+      <button class="mi-boton" (click)="realizarPeticion()">Pedir peticion</button>
+      <br>
     </div>
 
 
-    <br>
-
-    <button class="mi-boton" (click)="realizarPeticion()">Pedir peticion</button>
-
     <div *ngFor="let peticion of Peticiones">
+      <br>
       <div class="card" >
         <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)" style="cursor: pointer;">
         <div class="card-body" style="cursor: pointer;"  (click)="verDatosPeticion(peticion)">
@@ -106,11 +108,13 @@
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450" placeholder="Da una pequeña descripción"></textarea>
 
       <br>
+      <button class="mi-boton" (click)="ofrecerTransporte()">Ofrecer transporte</button>
     </div>
 
     <br>
 
-    <button class="mi-boton" (click)="ofrecerTransporte()">Ofrecer transporte</button>
+
+    <br>
 
     <div *ngFor="let transporte of Transportes">
       <div class="card">

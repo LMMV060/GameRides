@@ -21,6 +21,7 @@ export class PerfilAjenoComponent implements OnInit {
   Transportes:any = [];
   TransportesUsuario:any = [];
   isBan:boolean = false;
+  calificacion:any;
 
   cargaPerfil:boolean = false;
   constructor(
@@ -37,7 +38,7 @@ export class PerfilAjenoComponent implements OnInit {
 
   async ngOnInit() {
     this.nombre = this.route.snapshot.paramMap.get('nombre') || "";
-    
+
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
 
@@ -109,5 +110,11 @@ export class PerfilAjenoComponent implements OnInit {
   verDatosPeticion(peticion:any){
       this.peticion.setPeticion(peticion);
       this.router.navigateByUrl("/solicitudesPeticiones")
+  }
+
+  async ObtenerCalificacion(event:any){
+    this.calificacion = event.target.value
+    await this.fire.calificar(this.calificacion, this.usuarioActual[0].uid, this.auth.currentUser?.uid)
+
   }
 }

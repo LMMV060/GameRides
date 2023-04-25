@@ -125,4 +125,8 @@ export class HomeComponent implements OnInit{
     this.smash.setEvento(torneo);
     this.router.navigateByUrl("/evento");
   }
+
+  irANoticia(titulo:string){
+    this.router.navigateByUrl("noticias/"+titulo)
+  }
 }

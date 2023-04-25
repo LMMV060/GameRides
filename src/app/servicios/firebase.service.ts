@@ -5,7 +5,6 @@ import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
 import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
-import { getDatabase, set } from 'firebase/database';
 
 
 
@@ -512,6 +511,47 @@ export class FirebaseService {
     await updateDoc(peticionInteresada, {
       interesados: interesados
     });
+  }
+
+  async calificar(calificacion:any, uidUsuarioCalificado:any, currentUserUID:any){
+    let userRef = await doc(this.bbdd, "Usuarios", "Usuario-"+uidUsuarioCalificado);
+    let usuario = await this.getUserByUID(uidUsuarioCalificado);
+    
+    let nuevo:boolean = false;
+
+    let opiniones:any = [];
+
+    let opinion:any = {
+      calificacion: calificacion,
+      uid: currentUserUID
+    }
+
+    let datos:any = await usuario.opiniones;
+
+    if(datos){
+      opiniones = datos
+
+      for(let i = 0; i < opiniones.length; i++){
+        if(opiniones[i].uid == currentUserUID){
+          opiniones[i].calificacion = calificacion;
+          nuevo = false;
+          break;
+        } else {
+          nuevo = true;
+        }
+      }
+      if(nuevo){
+        opiniones.push(opinion);
+      }
+    } else {
+      opiniones.push(opinion)
+    }
+
+    await updateDoc(userRef, {
+      opiniones: opiniones
+    });
+
+
   }
 
 }

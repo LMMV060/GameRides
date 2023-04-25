@@ -16,12 +16,12 @@
   </div>
   <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
     <h1>Noticias</h1>
-    <div *ngFor="let noticia of noticias" >
+    <div *ngFor="let noticia of noticias" (click)="irANoticia(noticia.titulo)" style="cursor: pointer;">
       <div class="card my-card" >
         <h4 class="card-title" >{{noticia.titulo}}</h4>
         <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
         <h6 class="card-subtitle mb-2 text-muted">{{noticia.subtitulo}}</h6>
-        <div class="card-body" [innerHTML]="noticia.contenido"></div>
+        <div class="card-body"></div>
       </div>
       <br>
     </div>
