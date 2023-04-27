@@ -33,30 +33,37 @@ export class EditarOfertaComponent {
   }
 
   async ngOnInit(){
+    try{
 
-    this.unixTime = Math.floor(new Date().getTime() / 1000);
-    this.getSmashApi();
+      this.unixTime = Math.floor(new Date().getTime() / 1000);
+      this.getSmashApi();
 
-    this.transporteAEditar = this.transporte.getTransporte();
-    this.coches = await this.coche.getCochesByUid(this.auth.currentUser?.uid)
-    if(this.transporteAEditar === undefined){
-      const datosOferta:any = localStorage.getItem('DatosOferta');
-      this.transporteAEditar = JSON.parse(datosOferta);
+      this.transporteAEditar = this.transporte.getTransporte();
+      this.coches = await this.coche.getCochesByUid(this.auth.currentUser?.uid)
+      if(this.transporteAEditar === undefined){
+        const datosOferta:any = localStorage.getItem('DatosOferta');
+        this.transporteAEditar = JSON.parse(datosOferta);
 
-    } else {
-      localStorage.setItem('DatosOferta', JSON.stringify(this.transporteAEditar));
+      } else {
+        localStorage.setItem('DatosOferta', JSON.stringify(this.transporteAEditar));
 
+      }
+
+      this.cocheActual = await this.coche.getCocheByID(this.transporteAEditar.vehiculo);
+      this.cocheId = this.cocheActual.id;
+      if(this.transporteAEditar.evento){
+        this.eventoEditarNombre = this.transporteAEditar.evento.name;
+      }
+      this.torneoEditar.push(this.transporteAEditar.evento);
+      this.fecha = this.transporteAEditar.fecha;
+      this.descripcion = this.transporteAEditar.descripcion;
+      this.precioEditar = this.transporteAEditar.precio;
+
+    } catch(err){
+      this.router.navigateByUrl("/error")
     }
 
-    this.cocheActual = await this.coche.getCocheByID(this.transporteAEditar.vehiculo);
-    this.cocheId = this.cocheActual.id;
-    if(this.transporteAEditar.evento){
-      this.eventoEditarNombre = this.transporteAEditar.evento.name;
-    }
-    this.torneoEditar.push(this.transporteAEditar.evento);
-    this.fecha = this.transporteAEditar.fecha;
-    this.descripcion = this.transporteAEditar.descripcion;
-    this.precioEditar = this.transporteAEditar.precio;
+
 
 
   }

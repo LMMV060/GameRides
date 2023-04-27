@@ -27,7 +27,9 @@ export class EditarPeticionComponent {
 
   }
   async ngOnInit() {
-    this.unixTime = Math.floor(new Date().getTime() / 1000);
+    try{
+
+      this.unixTime = Math.floor(new Date().getTime() / 1000);
     this.getSmashApi();
     this.peticionEditar = await this.p.getPeticion();
 
@@ -45,6 +47,11 @@ export class EditarPeticionComponent {
     this.torneoEditar.push(this.peticionEditar.evento);
     this.descripcionEditar = this.peticionEditar.descripcion;
     this.precioEditar = this.peticionEditar.precio;
+
+    } catch(err){
+      this.router.navigateByUrl("/error")
+    }
+
   }
 
   logFechaDeIda(event:any){

@@ -516,7 +516,7 @@ export class FirebaseService {
   async calificar(calificacion:any, uidUsuarioCalificado:any, currentUserUID:any){
     let userRef = await doc(this.bbdd, "Usuarios", "Usuario-"+uidUsuarioCalificado);
     let usuario = await this.getUserByUID(uidUsuarioCalificado);
-    
+
     let nuevo:boolean = false;
 
     let opiniones:any = [];
@@ -551,6 +551,17 @@ export class FirebaseService {
       opiniones: opiniones
     });
 
+
+    const sumaCalificaciones = opiniones.reduce(function(total:any, voto:any) {
+      return total + parseInt(voto.calificacion, 10);
+    }, 0);
+
+    const totalUsuarios = opiniones.length;
+    const calificacionMedia = sumaCalificaciones / totalUsuarios;
+
+    await updateDoc(userRef, {
+      calificacionMedia: calificacionMedia
+    });
 
   }
 

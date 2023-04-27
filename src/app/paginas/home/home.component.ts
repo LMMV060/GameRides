@@ -1,7 +1,7 @@
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Component, OnInit } from '@angular/core';
 import { SmashAPIService } from 'src/app/servicios/smash-api.service';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -23,6 +23,14 @@ export class HomeComponent implements OnInit{
   }
 
   async ngOnInit() {
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && event.urlAfterRedirects === '/home') {
+        location.reload();
+      }
+    });
+
+    
     this.unixTime = Math.floor(new Date().getTime() / 1000);
 
     this.noticias = await this.fire.getAllNoticias();

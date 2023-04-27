@@ -33,9 +33,16 @@ export class EditarPerfilComponent {
   }
 
   async ngOnInit() {
-    const usuario:any = await this.fire.getUserDataReal();
-    this.img = usuario.imgUrl;
-    this.descripcion = usuario.descripcion;
+    try {
+
+      const usuario:any = await this.fire.getUserDataReal();
+      this.img = usuario.imgUrl;
+      this.descripcion = usuario.descripcion;
+
+    } catch(err){
+      this.router.navigateByUrl("/error")
+    }
+
 
   }
 

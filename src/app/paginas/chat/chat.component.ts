@@ -48,11 +48,7 @@ export class ChatComponent {
 
 
     this.scrollToBottom();
-
-
   }
-
-
 
   async sendMessage() {
     if (this.newMessage.trim() !== '') {

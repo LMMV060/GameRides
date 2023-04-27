@@ -23,7 +23,21 @@ export class AppComponent implements OnInit{
 
   async ngOnInit() {
     this.user = await this.fire.getUserDataReal();
-    this.paginas = await this.servi.getPaginas();
+    this.paginas = await this.servi.getPaginas()
+    if (!this.auth.currentUser) {
+      // Busca la página con nombre "Perfil" en el arreglo
+      const paginaPerfil = this.paginas.find((pagina:any) => pagina.nombre === 'Perfil');
+      if (paginaPerfil) {
+        // Si se encontró la página, cambia su nombre a "Iniciar sesión"
+        paginaPerfil.nombre = 'Iniciar sesión';
+      }
+
+      const paginaCerrarSesion = this.paginas.find((pagina:any) => pagina.nombre === 'Cerrar sesión');
+      if (paginaCerrarSesion) {
+        // Si se encontró la página, la elimina del arreglo
+        this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaCerrarSesion);
+      }
+    }
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
     //El momento "hoy"
@@ -43,6 +57,7 @@ export class AppComponent implements OnInit{
     });
 
     //Borra peticiones del usuario si se ha pasado la fecha limite
+    
     if(this.user.peticionesAceptadas){
       for(let i = 0; i < this.user.peticionesAceptadas.length;i++){
         let fechaAceptada = new Date(this.user.peticionesAceptadas[i].fecha);

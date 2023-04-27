@@ -25,14 +25,15 @@ export class LogoutComponent implements OnInit {
       if (confirm('¿Desea cerrar la sesión?')) {
         this.fire.logout()
       .then(() => {
+        localStorage.clear();
         this.router.navigateByUrl('/home')
+        location.reload();
       })
       .catch(error => console.log(error));
       } else {
         this.router.navigateByUrl('/home')
       }
     } else {
-      alert("Ninguna sesión iniciada")
       this.router.navigateByUrl('/home')
     }
 

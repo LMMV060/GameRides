@@ -23,7 +23,8 @@ export class EditarCocheComponent {
   }
 
   async ngOnInit() {
-    this.cocheAEditar = this.coche.getCoche();
+    try{
+      this.cocheAEditar = this.coche.getCoche();
 
     if(this.cocheAEditar === undefined){
       const datosOferta:any = localStorage.getItem('DatosCoche');
@@ -34,6 +35,11 @@ export class EditarCocheComponent {
     this.matricula = this.cocheAEditar.matricula;
     this.alias = this.cocheAEditar.alias;
     this.plazas = this.cocheAEditar.plazas;
+    } catch(err){
+      this.router.navigateByUrl("/error")
+
+    }
+
   }
 
 

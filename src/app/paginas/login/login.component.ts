@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(!this.auth.currentUser){
-      
+
     } else {
       this.router.navigateByUrl('/home');
     }
@@ -81,7 +81,6 @@ export class LoginComponent implements OnInit {
   }
 
   async LoginWithGoogle(){
-
     this.fire.loginWithGoogle()
     .then(async response => {
 

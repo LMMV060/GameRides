@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { FirebaseService } from './../../servicios/firebase.service';
 import { initializeApp } from '@angular/fire/app';
 import { Auth, getAuth, updateProfile } from '@angular/fire/auth';
@@ -49,6 +49,7 @@ export class PerfilComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
+
     try{
       const usuarioActual = await this.fire.getUserDataReal();
       this.descripcion = usuarioActual.descripcion;
@@ -122,7 +123,7 @@ export class PerfilComponent implements OnInit {
     });
 
     } catch(err){
-      
+
     }
 
   }
