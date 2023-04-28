@@ -21,8 +21,8 @@ export class BuscarUsuarioComponent implements OnInit {
     private auth:Auth,
   ) { }
 
-  ngOnInit(): void {
-    this.Mostrar();
+  async ngOnInit() {
+    await this.Mostrar();
   }
 
   ObtenerNombre(event:any){
@@ -46,6 +46,8 @@ export class BuscarUsuarioComponent implements OnInit {
 
     this.datosFiltrados = this.datos;
 
+    await this.ordenarUsuarios();
+
   }
 
   async irAPerfil(id:string){
@@ -59,4 +61,31 @@ export class BuscarUsuarioComponent implements OnInit {
     }
   }
 
+  ordenarUsuarios() {
+    this.datosFiltrados.sort((usuario1:any, usuario2:any) => {
+
+      // Comparar calificaciones medias
+      const calificacion1 = usuario1.calificacionMedia;
+      const calificacion2 = usuario2.calificacionMedia;
+      if (calificacion2 && calificacion1 !== calificacion2) {
+        return calificacion2 - calificacion1; // Orden descendente por calificación media
+      }
+
+      // Si las calificaciones son iguales o uno de los usuarios no tiene calificación, comparar por orden alfabético
+      const nombre1Min = usuario1.nombre.toLowerCase();
+      const nombre2Min = usuario2.nombre.toLowerCase();
+      return nombre1Min.localeCompare(nombre2Min);
+
+    }).sort((usuario1:any, usuario2:any) => {
+
+      // Mover usuarios sin calificación al final del array
+      const tieneCalificacion1 = usuario1.calificacionMedia !== undefined;
+      const tieneCalificacion2 = usuario2.calificacionMedia !== undefined;
+      if (tieneCalificacion1 === tieneCalificacion2) {
+        return 0; // Ambos tienen o no tienen calificación
+      }
+      return tieneCalificacion1 ? -1 : 1; // Mover usuarios sin calificación al final
+
+    });
+  }
 }

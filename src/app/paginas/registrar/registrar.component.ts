@@ -6,6 +6,8 @@ import { collection, doc, getDocs, setDoc } from '@angular/fire/firestore';
 import { Auth } from '@angular/fire/auth';
 import { Firestore } from '@angular/fire/firestore';
 import * as crypto from 'crypto-js';
+import { Location } from '@angular/common';
+import { EncriptadoService } from 'src/app/servicios/encriptado.service';
 
 
 @Component({
@@ -19,6 +21,8 @@ export class RegistrarComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
+    private location: Location,
+    private crypt:EncriptadoService
   ) { }
   email:string = "";
   pwd:string = "";
@@ -69,7 +73,7 @@ export class RegistrarComponent implements OnInit {
             uid:this.auth.currentUser.uid,
             nombre: this.nombre,
             imgUrl: "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png",
-            password: crypto.SHA512(this.pwd).toString(),
+            password: this.crypt.encryptData(this.pwd),
             isAdmin: false,
             isDisabled: false,
             descripcion: ""
@@ -79,7 +83,10 @@ export class RegistrarComponent implements OnInit {
 
           const response = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario)
           alert("Usuario registrado");
-          this.router.navigate(["/home"]);
+          this.router.navigateByUrl('/home').then(() => {
+            this.location.go('/home');
+            window.location.reload();
+          });
         }
       })
     } else {

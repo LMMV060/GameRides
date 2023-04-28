@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
+import { Auth, deleteUser } from '@angular/fire/auth';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import * as crypto from 'crypto-js';
 import { Router } from '@angular/router';
+import { deleteDoc, doc } from '@angular/fire/firestore';
+import { EncriptadoService } from 'src/app/servicios/encriptado.service';
 
 @Component({
   selector: 'app-ajustes',
@@ -24,12 +26,12 @@ export class AjustesComponent implements OnInit {
   constructor(
     private auth: Auth,
     private fire: FirebaseService,
-    private router: Router
+    private router: Router,
+    private encry: EncriptadoService
   ) { }
 
   async ngOnInit() {
     this.currentUser = await this.fire.getUserDataReal();
-
     if(this.currentUser.password === "?"){
       this.cuentaGoogle = true;
     }
@@ -54,7 +56,7 @@ export class AjustesComponent implements OnInit {
   cambiarEmail(){
     if(this.auth.currentUser?.email === this.emailActual){
       if(this.emailNuevo === this.emailConfirmar){
-        if (crypto.SHA512(this.pwdEmail).toString() === this.currentUser.password) {
+        if (this.encry.decryptData(this.pwdEmail) === this.encry.decryptData(this.currentUser.password)) {
           //Comienda a cambiar el email
           this.fire.updateEmail(this.auth.currentUser?.uid,this.emailNuevo);
         } else {
@@ -73,7 +75,7 @@ export class AjustesComponent implements OnInit {
   pwdNuevo:any;
   pwdConfirmar:any;
   cambiarPwd(){
-    if (crypto.SHA512(this.pwdActual).toString() === this.currentUser.password) {
+    if (this.encry.decryptData(this.pwdActual) === this.encry.decryptData(this.currentUser.password)) {
       if(this.pwdNuevo === this.pwdConfirmar){
         if(this.pwdNuevo === "" || !this.pwdNuevo){
           alert("Cambio de contraseña vacia")
@@ -95,9 +97,9 @@ export class AjustesComponent implements OnInit {
   pwdBorrar:any;
 
   async borrarCuenta(){
-
     if(this.auth.currentUser?.email == this.emailBorrar){
-      if (crypto.SHA512(this.pwdBorrar).toString() === this.currentUser.password) {
+
+      if (this.encry.decryptData(this.pwdBorrar) === this.encry.decryptData(this.currentUser.password)) {
         //empieza a borrar
         await this.fire.deleteAllFromUser(this.currentUser.uid);
 

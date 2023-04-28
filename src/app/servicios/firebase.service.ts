@@ -5,6 +5,7 @@ import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
 import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
+import { EncriptadoService } from './encriptado.service';
 
 
 
@@ -21,7 +22,8 @@ export class FirebaseService {
     private auth: Auth,
     private bbdd:Firestore,
     private router: Router,
-    private storage:Storage
+    private storage:Storage,
+    private crypt: EncriptadoService
     ) { }
 
   register(email:any, pwd:any, nombre:any){
@@ -131,7 +133,7 @@ export class FirebaseService {
       let userActual = doc(this.bbdd, "Usuarios", "Usuario-"+this.auth.currentUser.uid);
       updatePassword(this.auth.currentUser, nuevoPwd).then(async () => {
         await updateDoc(userActual, {
-          password: crypto.SHA512(nuevoPwd).toString()
+          password: this.crypt.encryptData(nuevoPwd)
         });
 
         alert("Contraseña cambiada");
@@ -205,11 +207,12 @@ export class FirebaseService {
 
 
     //Borrar usuario
-
-    await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + uid));
     if(this.auth.currentUser){
-      deleteUser(this.auth.currentUser).then(async () => {
-
+      await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + this.auth.currentUser?.uid));
+      await this.auth.currentUser.delete().then(function () {
+        location.reload()
+      }).catch(function (error) {
+        console.error({error})
       })
     }
 

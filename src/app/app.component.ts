@@ -37,6 +37,12 @@ export class AppComponent implements OnInit{
         // Si se encontró la página, la elimina del arreglo
         this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaCerrarSesion);
       }
+
+      const paginaAjustes = this.paginas.find((pagina:any) => pagina.nombre === 'Ajustes');
+      if (paginaAjustes) {
+        // Si se encontró la página, la elimina del arreglo
+        this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaAjustes);
+      }
     }
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
@@ -57,7 +63,7 @@ export class AppComponent implements OnInit{
     });
 
     //Borra peticiones del usuario si se ha pasado la fecha limite
-    
+
     if(this.user.peticionesAceptadas){
       for(let i = 0; i < this.user.peticionesAceptadas.length;i++){
         let fechaAceptada = new Date(this.user.peticionesAceptadas[i].fecha);

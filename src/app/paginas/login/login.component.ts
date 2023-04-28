@@ -2,10 +2,14 @@ import { FirebaseService } from './../../servicios/firebase.service';
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { initializeApp } from 'firebase/app';
 import { Router } from '@angular/router';
-import { Auth, deleteUser } from '@angular/fire/auth';
+import { Auth, deleteUser, updatePassword } from '@angular/fire/auth';
 import { doc, setDoc, getDoc, deleteDoc } from '@angular/fire/firestore';
 import { Usuarios } from 'src/app/interfaces/usuarios';
 import { collection, getDocFromCache, getDocs } from 'firebase/firestore';
+import { Location } from '@angular/common';
+import * as crypto from 'crypto-js';
+import { AES } from 'crypto-js';
+import { EncriptadoService } from 'src/app/servicios/encriptado.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +22,8 @@ export class LoginComponent implements OnInit {
     private fire:FirebaseService,
     private router:Router,
     private auth:Auth,
+    private location:Location,
+    private encry: EncriptadoService
     ) { }
   email:string = "";
   pwd:string = "";
@@ -71,6 +77,7 @@ export class LoginComponent implements OnInit {
         this.auth.signOut();
       } else {
         this.router.navigateByUrl('/home');
+
       }
 
 
@@ -103,9 +110,13 @@ export class LoginComponent implements OnInit {
           }
         })
 
-        if(filtro == undefined){
+        if(filtro === undefined){
           const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario);
           this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.auth.currentUser.photoURL);
+          this.router.navigateByUrl('/home').then(() => {
+            this.location.go('/home');
+            window.location.reload();
+          });
         } else {
           if(filtro.isDisabled){
             const usuarioBan:Usuarios = {
@@ -125,11 +136,22 @@ export class LoginComponent implements OnInit {
             this.auth.signOut();
 
           } else {
-            this.router.navigateByUrl('/home');
+            var pass = await this.encry.decryptData(filtro.password);
+
+            updatePassword(this.auth.currentUser,pass).then(() => {
+                this.router.navigateByUrl('/home').then(() => {
+                this.location.go('/home');
+                window.location.reload();
+              });
+            })
+
+
           }
         }
       }
     })
     .catch(error => console.log(error));
   }
+
+
 }
