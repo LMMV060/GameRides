@@ -585,7 +585,7 @@ export class FirebaseService {
     return calificacionUsuario;
   }
 
-  async reportar(uidUsuarioReportado:any){
+  async reportar(uidUsuarioReportado:any, descripcion:any){
     let usuario = await this.getUserByUID(uidUsuarioReportado);
     let reportes = await this.getAllReportes();
     const tiempoEnMilisegundos = new Date().getTime();
@@ -596,7 +596,7 @@ export class FirebaseService {
       uid: uidUsuarioReportado,
       tiempo: tiempoEnMilisegundos,
       usuarioQueReporta: this.auth.currentUser?.uid,
-      asunto: "Lol",
+      asunto: descripcion,
       id: "Reporte-" + uidUsuarioReportado + "-" + tiempoEnMilisegundos
     }
 
@@ -612,7 +612,8 @@ export class FirebaseService {
     if (!yaReportado) {
       const response = await setDoc(doc(this.basededatos(), "Reportes", "Reporte-" + uidUsuarioReportado + "-" + tiempoEnMilisegundos), prueba)
       .then(() => {
-        alert("Usuario reportado, nuestros admins verán la actitud del usuario")
+        alert("Usuario reportado, nuestros admins verán la actitud del usuario");
+        location.reload();
       })
     }
 

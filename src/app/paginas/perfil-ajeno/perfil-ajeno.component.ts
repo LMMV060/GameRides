@@ -24,6 +24,9 @@ export class PerfilAjenoComponent implements OnInit {
   calificacion:any;
 
   cargaPerfil:boolean = false;
+  mostrarContenido = false;
+
+  descripcionRep:any;
   constructor(
     private route: ActivatedRoute,
     private fire:FirebaseService,
@@ -121,6 +124,6 @@ export class PerfilAjenoComponent implements OnInit {
   }
 
   reportar(){
-    this.fire.reportar(this.usuarioActual[0].uid)
+    this.fire.reportar(this.usuarioActual[0].uid, this.descripcionRep)
   }
 }
