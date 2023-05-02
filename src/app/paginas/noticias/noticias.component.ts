@@ -9,11 +9,8 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 })
 export class NoticiasComponent {
   noticias:any = [];
-  itemsPorPagina = 2; // Número de objetos por página
-  paginaActual = 0; // Índice de la página actual
-  primerItem:any;
-  ultimoItem:any;
-
+  currentNoticiaIndex = 0;
+  noticiasPerPage = 2;
 
   constructor(
     private fire: FirebaseService,
@@ -24,10 +21,10 @@ export class NoticiasComponent {
 
   async ngOnInit() {
     this.noticias = await this.fire.getAllNoticias();
-    this.noticias.sort((a:any, b:any) => b.fecha_creacion - a.fecha_creacion);
-
-    this.noticias.forEach((element:any) => {
-
+    this.noticias.sort((a:any, b:any) => {
+      const fechaA = new Date(a.fecha_creacion);
+      const fechaB = new Date(b.fecha_creacion);
+      return fechaB.getTime() - fechaA.getTime();
     });
   }
 
@@ -39,21 +36,28 @@ export class NoticiasComponent {
     return `${anio}-${mes}-${dia}`;
   }
 
-  avanzarPagina() {
-    this.paginaActual++;
-    this.primerItem = this.paginaActual * this.itemsPorPagina;
-    this.ultimoItem = this.primerItem + this.itemsPorPagina;
-  }
-
-  retrocederPagina() {
-    this.paginaActual--;
-    this.primerItem = this.paginaActual * this.itemsPorPagina;
-    this.ultimoItem = this.primerItem + this.itemsPorPagina;
-  }
-
-
   irANoticia(titulo:string){
     this.router.navigateByUrl("noticias/"+titulo)
+  }
+
+  canGoBack() {
+    return this.currentNoticiaIndex > 0;
+  }
+
+  canGoForward() {
+    return this.currentNoticiaIndex + this.noticiasPerPage < this.noticias.length;
+  }
+
+  onBack(): void {
+    if (this.canGoBack()) {
+      this.currentNoticiaIndex -= this.noticiasPerPage;
+    }
+  }
+
+  onForward(): void {
+    if (this.canGoForward()) {
+      this.currentNoticiaIndex += this.noticiasPerPage;
+    }
   }
 
 }

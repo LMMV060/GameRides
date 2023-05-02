@@ -30,13 +30,16 @@ export class HomeComponent implements OnInit{
       }
     });
 
-    
+
     this.unixTime = Math.floor(new Date().getTime() / 1000);
 
     this.noticias = await this.fire.getAllNoticias();
 
-    this.noticias.sort((a:any, b:any) => b.fecha_creacion - a.fecha_creacion);
-
+    this.noticias.sort((a:any, b:any) => {
+      const fechaA = new Date(a.fecha_creacion);
+      const fechaB = new Date(b.fecha_creacion);
+      return fechaB.getTime() - fechaA.getTime();
+    });
 
 
     // const query = `query SocalTournaments($perPage: Int, $coordinates: String!, $radius: String!) {

@@ -1,5 +1,5 @@
 
-<div *ngFor="let noticia of noticias" >
+<div *ngFor="let noticia of noticias.slice(currentNoticiaIndex, currentNoticiaIndex + noticiasPerPage)" >
   <div class="card my-card" (click)="irANoticia(noticia.titulo)">
     <h4 class="card-title" >{{noticia.titulo}}</h4>
     <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
@@ -10,6 +10,5 @@
   <br>
 </div>
 
-<button (click)="retrocederPagina()" [disabled]="paginaActual === 0">Anterior</button>
-<button (click)="avanzarPagina()" [disabled]="ultimoItem >= noticias.length">Siguiente</button>
-
+<button (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
+<button (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>

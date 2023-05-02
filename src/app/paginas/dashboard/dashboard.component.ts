@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   transportesFiltrados:any = [];
   lista_negra:any = [];
   lista_negra_filtrada:any = [];
+  reportes:any = [];
   isAdmin:boolean = false;
 
   emojis:any = [];
@@ -44,6 +45,7 @@ export class DashboardComponent implements OnInit {
     this.transportesFiltrados = await this.fire.getAllTransportes();
     this.lista_negra = await this.fire.getAllBans();
     this.lista_negra_filtrada = await this.fire.getAllBans();
+    this.cargarReportes();
 
     try{
       const admin = await this.fire.getCurrentUser();
@@ -240,5 +242,14 @@ export class DashboardComponent implements OnInit {
       this.router.navigateByUrl("/perfil/"+nombre);
     }
 
+  }
+
+  async cargarReportes() {
+    this.reportes = await this.fire.getAllReportes();
+    for (let i = 0; i < this.reportes.length; i++) {
+      const uid = this.reportes[i].uid;
+      const usuario = await this.fire.getUserByUID(uid)
+      this.reportes[i].usuario = usuario;
+    }
   }
 }

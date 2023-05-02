@@ -1,11 +1,14 @@
 <br>
 
 <div class="topnav">
+  <button (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
+  <button (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>
+  <br>
   <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
 </div>
 <br>
 
-<div *ngFor="let data of datosFiltrados" (click)="irAPerfil(data.uid)">
+<div *ngFor="let data of datosFiltrados.slice(currentUsersIndx, currentUsersIndx + usersPerPage)" (click)="irAPerfil(data.uid)">
 <div *ngIf="data.isDisabled" >
 
 </div>

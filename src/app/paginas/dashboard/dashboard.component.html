@@ -9,6 +9,7 @@
   <option value="Usuarios">Usuarios</option>
   <option value="Transportes">Transportes</option>
   <option value="Peticiones">Peticiones</option>
+  <option value="Reportes">Reportes</option>
   <option value="Lista_Negra">Lista Negra</option>
   <option value="Noticias">Noticias</option>
 </select>
@@ -40,7 +41,7 @@
 <div *ngFor="let transporte of transportesFiltrados" >
   <div class="card">
     <button class="delete-button" (click)="eliminarTransporte(transporte)">Eliminar</button>
-    <img class="imagen-perfil"src={{transporte.url}} alt="Avatar">
+    <img class="imagen-perfil"src={{transporte.url}} alt="Avatar" (click)="irAPerfil(transporte.nombre)">
     <div class="container">
       <h4><b>{{transporte.nombre}}</b></h4>
       <p>{{transporte.evento?.name}}</p>
@@ -58,7 +59,7 @@
 <div *ngFor="let peticion of peticionesFiltradas" >
   <div class="card">
     <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
-    <img class="imagen-perfil"src={{peticion.url}} alt="Avatar">
+    <img class="imagen-perfil"src={{peticion.url}} alt="Avatar" (click)="irAPerfil(peticion.nombre)">
     <div class="container">
       <h4><b>{{peticion.nombre}}</b></h4>
       <p>{{peticion.evento?.name}}</p>
@@ -77,7 +78,7 @@
   <div *ngFor="let usuario of lista_negra_filtrada" >
     <div class="card">
       <button class="delete-button" (click)="perdonarUsuario(usuario)">Desbanear</button>
-      <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" >
+      <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" (click)="irAPerfil(usuario.nombre)">
       <div class="container">
         <h4><b>{{usuario.nombre}}</b></h4>
         <p>{{usuario.uid}}</p>
@@ -161,4 +162,26 @@
 
 
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</div>
+
+<div *ngIf="opcionSeleccionada === 'Reportes'" >
+  <br>
+  <h1>Reportes</h1>
+  <br>
+  <div *ngFor="let r of reportes">
+    <div class="card">
+
+      <div *ngIf="r.usuario" (click)="irAPerfil(r.usuario.nombre)">
+        <h2>{{r.usuario.nombre}}</h2>
+        <br>
+        <img class="imagen-perfil"src={{r.usuario.imgUrl}} alt="Avatar">
+        <br>
+
+      </div>
+      <hr>
+      {{r.asunto}}
+
+    </div>
+    <br>
+  </div>
 </div>

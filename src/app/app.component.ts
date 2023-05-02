@@ -112,6 +112,22 @@ export class AppComponent implements OnInit{
       }
     });
 
+    //Comprueba los reportes de los usuarios (< 3 dias)
+
+    const DURACION_LIMITE = 259200000; //3 dias
+
+    let reportes = await this.fire.getAllReportes();
+
+    for (const reporte of reportes) {
+      const tiempo = reporte.tiempo;
+      const ahora = Date.now();
+      const milisegundosPasados = ahora - tiempo;
+
+      if (milisegundosPasados >= DURACION_LIMITE) {
+        await deleteDoc(doc(this.fire.basededatos(), "Reportes", reporte.id));
+      }
+    }
+
   }
 
   convertirUnixAFecha(unix:number) {

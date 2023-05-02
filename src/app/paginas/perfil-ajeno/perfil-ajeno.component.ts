@@ -77,6 +77,8 @@ export class PerfilAjenoComponent implements OnInit {
       }
     }
 
+    this.calificacion = await this.fire.obtenerCalificacion(this.usuarioActual[0].uid, this.auth.currentUser?.uid)
+
   }
 
   opcionSeleccionada:any = "Pasajeros";
@@ -116,5 +118,9 @@ export class PerfilAjenoComponent implements OnInit {
     this.calificacion = event.target.value
     await this.fire.calificar(this.calificacion, this.usuarioActual[0].uid, this.auth.currentUser?.uid)
 
+  }
+
+  reportar(){
+    this.fire.reportar(this.usuarioActual[0].uid)
   }
 }

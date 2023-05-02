@@ -15,6 +15,9 @@ export class BuscarUsuarioComponent implements OnInit {
   datos:any = [];
   datosFiltrados:any = [];
 
+  currentUsersIndx = 0;
+  usersPerPage = 3;
+
   constructor(
     private fire:FirebaseService,
     private router:Router,
@@ -88,4 +91,26 @@ export class BuscarUsuarioComponent implements OnInit {
 
     });
   }
+
+  canGoBack() {
+    return this.currentUsersIndx > 0;
+  }
+
+  canGoForward() {
+    return this.currentUsersIndx + this.usersPerPage < this.datosFiltrados.length;
+  }
+
+  onBack(): void {
+    if (this.canGoBack()) {
+      this.currentUsersIndx -= this.usersPerPage;
+    }
+  }
+
+  onForward(): void {
+    if (this.canGoForward()) {
+      this.currentUsersIndx += this.usersPerPage;
+    }
+  }
+
+
 }

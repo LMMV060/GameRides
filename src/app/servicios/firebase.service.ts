@@ -568,4 +568,66 @@ export class FirebaseService {
 
   }
 
+  async obtenerCalificacion(uidUsuarioCalificado:any, uidActual:any){
+    let usuario = await this.getUserByUID(uidUsuarioCalificado);
+    let opinionUsuario1:any;
+    let calificacionUsuario:any;
+
+    // Suponiendo que usuario.opiniones es un array de objetos
+      const opiniones = usuario.opiniones;
+      if(opiniones || opiniones != undefined){
+        opinionUsuario1 = opiniones.find((opinion:any) => opinion.uid === uidActual);
+        calificacionUsuario  = opinionUsuario1.calificacion;
+      } else {
+        calificacionUsuario = 0;
+      }
+
+    return calificacionUsuario;
+  }
+
+  async reportar(uidUsuarioReportado:any){
+    let usuario = await this.getUserByUID(uidUsuarioReportado);
+    let reportes = await this.getAllReportes();
+    const tiempoEnMilisegundos = new Date().getTime();
+    let yaReportado = false;
+
+
+    const prueba:any= {
+      uid: uidUsuarioReportado,
+      tiempo: tiempoEnMilisegundos,
+      usuarioQueReporta: this.auth.currentUser?.uid,
+      asunto: "Lol",
+      id: "Reporte-" + uidUsuarioReportado + "-" + tiempoEnMilisegundos
+    }
+
+    for (let i = 0; i < reportes.length; i++) {
+      const objetoActual = reportes[i];
+      if (objetoActual.uid === uidUsuarioReportado && objetoActual.usuarioQueReporta === this.auth.currentUser?.uid) {
+        alert('Podrás realizar otro reporte a este usuario en 3 días');
+        yaReportado = true;
+        break;
+      }
+    }
+
+    if (!yaReportado) {
+      const response = await setDoc(doc(this.basededatos(), "Reportes", "Reporte-" + uidUsuarioReportado + "-" + tiempoEnMilisegundos), prueba)
+      .then(() => {
+        alert("Usuario reportado, nuestros admins verán la actitud del usuario")
+      })
+    }
+
+
+  }
+
+  async getAllReportes(){
+    let reports:any = [];
+    const querySnapshot = await getDocs(collection(this.basededatos(), "Reportes"));
+    querySnapshot.forEach((doc) => {
+      reports.push(doc.data());
+    });
+
+
+    return reports;
+  }
+
 }
