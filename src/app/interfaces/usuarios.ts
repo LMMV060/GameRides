@@ -5,5 +5,6 @@ export interface Usuarios {
   imgUrl:string,
   isAdmin: boolean,
   isDisabled:boolean,
-  descripcion:string
+  descripcion:string,
+  email:any
 }

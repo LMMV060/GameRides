@@ -134,6 +134,7 @@ export class PeticionesComponent implements OnInit {
             precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
+            email: this.auth.currentUser?.email
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid), pet)
@@ -178,6 +179,7 @@ export class PeticionesComponent implements OnInit {
             precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
+            email: this.auth.currentUser?.email
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid), pet)

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
 import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
 import { EncriptadoService } from './encriptado.service';
+import { EmailService } from './email.service';
 
 
 
@@ -23,7 +24,9 @@ export class FirebaseService {
     private bbdd:Firestore,
     private router: Router,
     private storage:Storage,
-    private crypt: EncriptadoService
+    private crypt: EncriptadoService,
+    private email: EmailService
+
     ) { }
 
   register(email:any, pwd:any, nombre:any){
@@ -293,10 +296,11 @@ export class FirebaseService {
         uid: user.uid || "",
         nombre: user.nombre || "",
         imgUrl: user.imgUrl|| "",
-        password: user.password || "?",
+        password: user.password || "??????",
         isAdmin: false,
         isDisabled:true,
-        descripcion: ""
+        descripcion: "",
+        email: this.auth.currentUser?.email || ""
       }
 
       const ban = await setDoc(doc(this.basededatos(), "Lista_Negra", "Ban-"+user.uid), usuarioBan)
@@ -455,6 +459,7 @@ export class FirebaseService {
           if(aceptados.includes(uid)){
             alert("Ya estas aceptado, ten un buen viaje!")
           } else {
+            await this.email.enviarEmailInteresado(prueba[0].email);
             alert("Te interesa esta oferta de transporte, ahora debes esperar a que te acepten o rechacen la plaza")
             interesados.push(uid);
           }

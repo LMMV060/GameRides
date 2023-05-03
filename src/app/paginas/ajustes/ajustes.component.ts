@@ -32,7 +32,7 @@ export class AjustesComponent implements OnInit {
 
   async ngOnInit() {
     this.currentUser = await this.fire.getUserDataReal();
-    if(this.currentUser.password === "?"){
+    if(this.currentUser.password === "??????"){
       this.cuentaGoogle = true;
     }
   }
@@ -101,6 +101,10 @@ export class AjustesComponent implements OnInit {
 
       if (this.encry.decryptData(this.pwdBorrar) === this.encry.decryptData(this.currentUser.password)) {
         //empieza a borrar
+        console.log(this.encry.decryptData(this.pwdBorrar));
+        console.log(this.encry.decryptData(this.currentUser.password));
+
+
         await this.fire.deleteAllFromUser(this.currentUser.uid);
 
         this.router.navigateByUrl("/home")

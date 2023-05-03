@@ -8,6 +8,8 @@ import { PeticionService } from 'src/app/servicios/peticion.service';
 import { TransporteService } from 'src/app/servicios/transporte.service';
 import { InteresadosService } from 'src/app/servicios/interesados.service';
 import { InteresadosPeticionService } from 'src/app/servicios/interesados-peticion.service';
+//import '../../../assets/pruebaEmail.js'
+
 
 @Component({
   selector: 'app-perfil',
@@ -51,6 +53,7 @@ export class PerfilComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     try{
+
       const usuarioActual = await this.fire.getUserDataReal();
       this.descripcion = usuarioActual.descripcion;
     //this.isAdmin = true;

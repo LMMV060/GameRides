@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { get, getDatabase, ref, set } from "firebase/database";
 import { Chat } from 'src/app/interfaces/chat';
+import { EmailService } from './email.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,6 +10,7 @@ export class RealtimeService {
   //https://firebase.google.com/docs/database/web/read-and-write?hl=es-419
   constructor(
     private auth:Auth,
+    private mail: EmailService
   ) { }
 
   private db = getDatabase();
@@ -21,6 +23,7 @@ export class RealtimeService {
   chat(usuario1:any, usuario2:any) {
     this.UsuarioPrimero = usuario1;
     this.UsuarioSegundo = usuario2;
+
 
     let sala = ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid);
 
@@ -46,7 +49,7 @@ export class RealtimeService {
     });
   }
 
-  escritura(mensaje:any){
+  async escritura(mensaje:any){
     const fechaActual = Math.floor(Date.now() / 1000);
 
     set(ref(this.db, this.SalaActual + '/chat/' + 'mensaje-' + fechaActual), {
@@ -55,7 +58,15 @@ export class RealtimeService {
       'unix': fechaActual
     });
 
-    this.getMensajes();
+    await this.getMensajes();
+
+    if(this.UsuarioPrimero.uid === this.auth.currentUser?.uid){
+      this.mail.enviarEmailChat(this.UsuarioSegundo.email, mensaje, this.auth.currentUser?.displayName);
+    }
+
+    if(this.UsuarioSegundo.uid === this.auth.currentUser?.uid){
+      this.mail.enviarEmailChat(this.UsuarioPrimero.email, mensaje, this.auth.currentUser?.displayName);
+    }
 
   }
 

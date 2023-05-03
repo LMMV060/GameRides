@@ -40,6 +40,7 @@ export class VisualizarOfertaComponent {
     }
 
     this.nombre = this.datos.nombre;
+
   }
 
   async chatear(){
@@ -57,7 +58,7 @@ export class VisualizarOfertaComponent {
 
   async interesado(id:any){
     if(this.auth.currentUser){
-      await this.fire.meInteresaTransporte(id, this.auth.currentUser?.uid);
+      await this.fire.meInteresaTransporte(id, this.auth.currentUser?.uid)
     } else {
       alert("Por favor, inicie sesión primero")
     }

@@ -7,5 +7,6 @@ export interface Ofertas {
   precio:number,
   descripcion:string,
   vehiculo:any,
-  evento?: string
+  evento?: string,
+  email:any
 }

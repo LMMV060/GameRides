@@ -6,5 +6,6 @@ export interface Peticion {
   fecha:string,
   precio:number,
   descripcion:string,
-  evento?: string
+  evento?: string,
+  email:any
 }

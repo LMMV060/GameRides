@@ -76,7 +76,8 @@ export class RegistrarComponent implements OnInit {
             password: this.crypt.encryptData(this.pwd),
             isAdmin: false,
             isDisabled: false,
-            descripcion: ""
+            descripcion: "",
+            email: this.auth.currentUser?.email
           };
 
           this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png");

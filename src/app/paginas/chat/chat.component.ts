@@ -2,6 +2,7 @@
 import { ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
+import { EmailService } from 'src/app/servicios/email.service';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 
 import { RealtimeService } from 'src/app/servicios/realtime.service';
@@ -19,6 +20,7 @@ export class ChatComponent {
     private fire: FirebaseService,
     private chat:RealtimeService,
     private auth:Auth,
+    
   ) {
   }
 
