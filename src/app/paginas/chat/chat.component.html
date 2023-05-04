@@ -1,10 +1,23 @@
 
-<div class="chat-container" #messagesContainer>
-  <div class="message" *ngFor="let message of mensajes" [ngClass]="{'currentUser': message.usuario === uid, 'otherUser': message.usuario !== uid}">
-    <br>
-    {{message.mensaje}}
-    <br>
+<div class="otherUsers">
+  <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;">
+    <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap" >
+    {{usuario.nombre}}
   </div>
 </div>
 
-<input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escriba su mensaje aquí"/>
+<div class="chat" *ngIf="comprobador" >
+  <div class="chat-container" #messagesContainer>
+    <div class="message" *ngFor="let message of mensajes" [ngClass]="{'currentUser': message.usuario === uid, 'otherUser': message.usuario !== uid}">
+      {{ formatDate(message.unix) }}
+      <br>
+      {{message.mensaje}}
+      <br>
+    </div>
+  </div>
+
+  <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escriba su mensaje aquí"/>
+</div>
+
+
+

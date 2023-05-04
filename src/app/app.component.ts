@@ -43,6 +43,12 @@ export class AppComponent implements OnInit{
         // Si se encontró la página, la elimina del arreglo
         this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaAjustes);
       }
+
+      const paginaChat = this.paginas.find((pagina:any) => pagina.nombre === 'Mis chats');
+      if (paginaChat) {
+        // Si se encontró la página, la elimina del arreglo
+        this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaChat);
+      }
     }
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
@@ -63,23 +69,26 @@ export class AppComponent implements OnInit{
     });
 
     //Borra peticiones del usuario si se ha pasado la fecha limite
+    if(this.auth.currentUser){
+      if(this.user.peticionesAceptadas){
+        for(let i = 0; i < this.user.peticionesAceptadas.length;i++){
+          let fechaAceptada = new Date(this.user.peticionesAceptadas[i].fecha);
+          if (fechaAceptada.getTime() >= fechaLimite.getTime()) {
+            //Guardar
+          } else {
+            let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
 
-    if(this.user.peticionesAceptadas){
-      for(let i = 0; i < this.user.peticionesAceptadas.length;i++){
-        let fechaAceptada = new Date(this.user.peticionesAceptadas[i].fecha);
-        if (fechaAceptada.getTime() >= fechaLimite.getTime()) {
-          //Guardar
-        } else {
-          let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
-
-          if(this.auth.currentUser){
-            await updateDoc(userRef, {
-              peticionesAceptadas: arrayRemove(this.user.peticionesAceptadas[i])
-            })
+            if(this.auth.currentUser){
+              await updateDoc(userRef, {
+                peticionesAceptadas: arrayRemove(this.user.peticionesAceptadas[i])
+              })
+            }
           }
         }
       }
     }
+
+
 
     //Borra Ofertas
 
@@ -93,19 +102,20 @@ export class AppComponent implements OnInit{
       }
 
       //Borra las ofertas de los usuarios que hubieran aceptado una oferta en la que se ha pasado la fecha
-
-      if(this.user.ofertasAceptadas){
-        for(let i = 0; i < this.user.ofertasAceptadas.length; i++) {
-          let fechaAceptada = new Date(this.user.ofertasAceptadas[i].fecha);
-          if (fechaAceptada.getTime() >= fechaLimite.getTime()) {
-            //Guardar
-          } else {
-            //Borrar
-            let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
-            if(this.auth.currentUser){
-              await updateDoc(userRef, {
-                ofertasAceptadas:arrayRemove(this.user.ofertasAceptadas[i])
-              });
+      if(this.auth.currentUser){
+        if(this.user.ofertasAceptadas){
+          for(let i = 0; i < this.user.ofertasAceptadas.length; i++) {
+            let fechaAceptada = new Date(this.user.ofertasAceptadas[i].fecha);
+            if (fechaAceptada.getTime() >= fechaLimite.getTime()) {
+              //Guardar
+            } else {
+              //Borrar
+              let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
+              if(this.auth.currentUser){
+                await updateDoc(userRef, {
+                  ofertasAceptadas:arrayRemove(this.user.ofertasAceptadas[i])
+                });
+              }
             }
           }
         }

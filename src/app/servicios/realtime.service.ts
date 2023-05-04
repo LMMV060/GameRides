@@ -3,6 +3,9 @@ import { Auth } from '@angular/fire/auth';
 import { get, getDatabase, ref, set } from "firebase/database";
 import { Chat } from 'src/app/interfaces/chat';
 import { EmailService } from './email.service';
+import { FirebaseService } from './firebase.service';
+import { doc, updateDoc } from '@angular/fire/firestore';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,37 +13,48 @@ export class RealtimeService {
   //https://firebase.google.com/docs/database/web/read-and-write?hl=es-419
   constructor(
     private auth:Auth,
-    private mail: EmailService
+    private mail: EmailService,
+    private fire:FirebaseService
   ) { }
 
   private db = getDatabase();
 
-  private UsuarioPrimero:any;
-  private UsuarioSegundo:any;
+  public UsuarioPrimero:any;
+  public UsuarioSegundo:any;
 
   private SalaActual:any;
+  private usuario:any;
 
-  chat(usuario1:any, usuario2:any) {
+  async chat(usuario1:any, usuario2:any) {
     this.UsuarioPrimero = usuario1;
     this.UsuarioSegundo = usuario2;
 
+    await localStorage.setItem("Usuario1Chat",  JSON.stringify(usuario1))
+    await localStorage.setItem("Usuario2Chat", JSON.stringify(usuario2))
 
-    let sala = ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid);
+    let sala = ref(this.db, 'Sala-' + this.UsuarioPrimero.uid + '-' + this.UsuarioSegundo.uid);
 
-    let sala2 = ref(this.db, 'Sala-' + usuario2.uid + '-' + usuario1.uid);
+    let sala2 = ref(this.db, 'Sala-' + this.UsuarioSegundo.uid + '-' + this.UsuarioPrimero.uid);
 
-    get(sala).then((snapshot) => {
+    get(sala).then(async (snapshot) => {
       if (snapshot.exists()) {
         this.SalaActual = 'Sala-' + usuario1.uid + '-' + usuario2.uid;
+        await localStorage.setItem("SalaActual", this.SalaActual)
+        this.setOtrosChats(usuario2.uid)
       } else {
-        get(sala2).then((snapshot) => {
+        get(sala2).then(async (snapshot) => {
           if(snapshot.exists()){
             this.SalaActual = 'Sala-' + usuario2.uid + '-' + usuario1.uid;
+            await localStorage.setItem("SalaActual", this.SalaActual)
+             this.setOtrosChats(usuario2.uid)
           } else {
             set(ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid), {
               username1: usuario1.nombre,
               username2: usuario2.nombre
             });
+
+            await localStorage.setItem("SalaActual", 'Sala-' + usuario1.uid + '-' + usuario2.uid)
+             this.setOtrosChats(usuario2.uid);
           }
         })
       }
@@ -93,6 +107,58 @@ export class RealtimeService {
       console.error(error);
       return null;
     });
+  }
+
+  async getSalaActual(){
+    try {
+      let a = localStorage.getItem("SalaActual");
+      return a;
+    } catch (e) {
+      console.error("Error al parsear JSON: ", e);
+      return null;
+    }
+  }
+
+  async setOtrosChats(uid:any){
+    let otros1:any = [];
+
+    this.usuario = await this.fire.getUserDataReal();
+    let userRef1 = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.usuario.uid);
+    let userRef2 = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+uid);
+
+    let otroUsuario = await this.fire.getUserByUID(uid);
+    let otros2:any = [];
+
+    if(this.usuario.otrosChats == undefined){
+      otros1.push(uid)
+    } else {
+      otros1 = this.usuario.otrosChats
+      if(otros1.includes(uid)){
+
+      } else {
+        otros1.push(uid)
+      }
+    }
+
+    await updateDoc(userRef1, {
+      otrosChats: otros1
+    });
+
+    if(otroUsuario.otrosChats == undefined){
+      otros2.push(uid)
+    } else {
+      otros2 = otroUsuario.otrosChats
+      if(otros2.includes(this.usuario.uid)){
+
+      } else {
+        otros2.push(this.usuario.uid)
+      }
+    }
+
+    await updateDoc(userRef2, {
+      otrosChats: otros2
+    });
+
   }
 
 }

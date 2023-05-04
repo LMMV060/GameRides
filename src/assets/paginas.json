@@ -30,6 +30,12 @@
     "icono": "man-outline"
   },
   {
+    "nombre":"Mis chats",
+    "ruta":"/mis-chats",
+    "color": "tertiary",
+    "icono": "car-outline"
+  },
+  {
     "nombre":"Buscar usuario",
     "ruta":"/usuarios",
     "color": "tertiary",

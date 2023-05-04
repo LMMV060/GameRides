@@ -57,15 +57,14 @@ export class InteresadosComponent {
 
     this.aceptados = this.ofertaDeTransporte.aceptados;
 
-    this.aceptados.forEach(async (uid:any) => {
-      let dato = await this.inter.getAceptados(uid);
-      this.aceptadosMostrar.push(dato);
-    });
+    if(this.aceptados){
+      this.aceptados.forEach(async (uid:any) => {
+        let dato = await this.inter.getAceptados(uid);
+        this.aceptadosMostrar.push(dato);
+      });
+    }
 
     this.vehiculo = await this.coche.getCocheByID(this.ofertaDeTransporte.vehiculo)
-
-
-
 
   }
 
@@ -85,7 +84,7 @@ export class InteresadosComponent {
   }
 
   async aceptar(uid:any){
-    if(this.ofertaDeTransporte.aceptados.length +1 >= this.vehiculo.plazas) {
+    if(this.ofertaDeTransporte.aceptados != undefined && this.ofertaDeTransporte.aceptados.length +1 >= this.vehiculo.plazas) {
       alert("Actualmente tienes " + (this.ofertaDeTransporte.aceptados.length +1) + " de " + this.vehiculo.plazas + " plazas llenas, si quieres aceptar a este usuario, rechaza uno de los aceptados o aumenta el número de plazas de tu vehículo")
     } else {
       await this.inter.aceptar(uid, this.ofertaDeTransporte.id);

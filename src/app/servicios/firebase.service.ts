@@ -580,9 +580,12 @@ export class FirebaseService {
 
     // Suponiendo que usuario.opiniones es un array de objetos
       const opiniones = usuario.opiniones;
-      if(opiniones || opiniones != undefined){
+      if(opiniones && opiniones != undefined){
         opinionUsuario1 = opiniones.find((opinion:any) => opinion.uid === uidActual);
-        calificacionUsuario  = opinionUsuario1.calificacion;
+        if(opinionUsuario1){
+          calificacionUsuario  = opinionUsuario1.calificacion;
+        }
+
       } else {
         calificacionUsuario = 0;
       }

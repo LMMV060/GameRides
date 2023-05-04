@@ -4,6 +4,7 @@
   max-height: 400px;
   max-width: 100%;
   overflow-y: scroll;
+
 }
 
 input[type="text"] {
@@ -36,4 +37,22 @@ input[type="text"] {
   background-color: #ccc;
   color: #fff;
   text-align: left;
+}
+
+.otherUsers {
+  float: left;
+}
+
+.chat{
+  overflow: hidden;
+}
+
+
+.card-img-top {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
