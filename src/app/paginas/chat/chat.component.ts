@@ -39,6 +39,8 @@ export class ChatComponent {
 
   comprobador:any;
 
+  cargar:boolean = true;
+
 
   async ngOnInit() {
 
@@ -82,6 +84,9 @@ export class ChatComponent {
       });
       this.scrollToBottom();
     }
+
+
+
   }
 
 
@@ -95,8 +100,10 @@ export class ChatComponent {
   }
 
   async cargarMensajes(){
+
     await this.chat.getMensajes().then((mensajes:any) => {
       this.mensajes = mensajes;
+
     });
   }
 
@@ -109,12 +116,29 @@ export class ChatComponent {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear().toString();
 
-    return `[ ${hours} : ${minutes} : ${seconds} ] ${day} / ${month} / ${year}`;
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
   }
 
-  chatear(Usuario:any){
-    this.comprobador = Usuario;
+  usuario:any;
+  async chatear(Usuario:any){
+    this.cargar = false;
 
-    this.chat.chat(this.user, Usuario);
+    await this.chat.chat(this.user, Usuario)
+    .then(async () => {
+      this.comprobador = Usuario;
+      await this.cargarMensajes()
+      this.toggleMenu();
+      this.usuario = Usuario
+      this.cargar = true;
+    })
+
   }
+
+  menuVisible = false;
+
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+  }
+
+
 }

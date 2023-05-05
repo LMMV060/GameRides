@@ -6,6 +6,7 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { RouteReuseStrategy, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { collection, getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -61,14 +62,39 @@ export class EditarPerfilComponent {
   }
 
   async GuardarCambios(){
-    await this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
-    await this.fire.guardarNuevaDescripcion(this.descripcion);
-    await this.fire.guardar(this.auth.currentUser?.uid).then(() => {
-      this.router.navigateByUrl('/perfil').then(async () => {
+    let comprobador:any = true;
 
-      });
+    let datos:any = [];
+    const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
+    querySnapshot.forEach((doc) => {
+      datos.push(doc.data());
+    });
+    let user = await this.fire.getUserDataReal()
+
+    datos.forEach(async (doc:any) => {
+      if(doc.nombre == this.nombre){
+
+        if(this.nombre === user.nombre){
+          comprobador = true;
+        } else {
+          comprobador = false;
+        }
+
+      }
     })
 
+    if(comprobador){
+      await this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
+      await this.fire.guardarNuevaDescripcion(this.descripcion);
+      await this.fire.guardarNuevoNombre(this.nombre);
+      await this.fire.guardar(this.auth.currentUser?.uid).then(() => {
+        this.router.navigateByUrl('/perfil').then(async () => {
+
+        });
+      })
+    } else {
+      alert("Este nombre ya está en uso")
+    }
 
   }
 
@@ -86,6 +112,4 @@ export class EditarPerfilComponent {
     // Establecer la variable img con la URL sanitizada
     this.img = urlSegura;
   }
-
-
 }

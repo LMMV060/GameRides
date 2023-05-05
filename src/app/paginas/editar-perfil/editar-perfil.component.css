@@ -53,8 +53,6 @@ img{
 }
 
 
-
-
 .card .delete-button {
   display: none;
 }
@@ -131,8 +129,45 @@ img{
   margin-left: auto;
 }
 
+#editor {
+  border: 1px solid #ccc;
+  padding: 10px;
+  font-size: 16px;
+  min-height: 200px;
+}
 
 
+/* Eliminar el texto "Ningún archivo seleccionado" */
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+input[type="file"]:before {
+  content: 'Cambiar imagen';
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  outline: none;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 4px;
+
+}
+
+.upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+
+textarea {
+  display: block;
+  margin: auto;
+}
 
 #editor {
   border: 1px solid #ccc;

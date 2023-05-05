@@ -65,11 +65,14 @@ export class RealtimeService {
 
   async escritura(mensaje:any){
     const fechaActual = Math.floor(Date.now() / 1000);
+    let user = await this.fire.getUserDataReal();
+    this.SalaActual = await localStorage.getItem("SalaActual")
 
     set(ref(this.db, this.SalaActual + '/chat/' + 'mensaje-' + fechaActual), {
       'mensaje': mensaje,
       'usuario':  this.auth.currentUser?.uid,
-      'unix': fechaActual
+      'unix': fechaActual,
+      'url': user.imgUrl
     });
 
     await this.getMensajes();

@@ -1,18 +1,105 @@
-
+<div class="loading" *ngIf="!cargar" >Loading&#8230;</div>
 <div class="otherUsers">
-  <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;">
-    <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap" >
-    {{usuario.nombre}}
-  </div>
+
+    <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.75rem;">
+      <div class="menu">
+        <button (click)="toggleMenu()" style="text-align: center;">Mostrar Usuarios</button>
+        <ul class="menu-list" *ngIf="menuVisible">
+          <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;" class="usuario">
+            <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 40px; height: 40px;">
+            {{usuario.nombre}}
+          </div>
+        </ul>
+      </div>
+      <br>
+    </span>
+    <span class="d-none d-sm-inline d-md-none">
+      <div class="menu">
+        <button (click)="toggleMenu()" class="mostrar">Mostrar Usuarios</button>
+        <ul class="menu-list" *ngIf="menuVisible">
+          <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;" class="usuario">
+            <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 60px; height: 60px;">
+            {{usuario.nombre}}
+          </div>
+        </ul>
+      </div>
+      <br>
+    </span>
+    <span class="d-none d-md-inline d-lg-none">
+      <div class="menu">
+        <button (click)="toggleMenu()">Mostrar Usuarios</button>
+        <ul class="menu-list" *ngIf="menuVisible">
+          <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;" class="usuario">
+            <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 80px; height: 80px;">
+            {{usuario.nombre}}
+          </div>
+        </ul>
+      </div>
+      <br>
+    </span>
+    <span class="d-none d-lg-inline d-sm-none" style="font-size: 1rem;">
+      <div class="menu">
+        <button (click)="toggleMenu()">Mostrar Usuarios</button>
+        <ul class="menu-list" *ngIf="menuVisible">
+          <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;" class="usuario">
+            <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 90px; height: 90px;">
+            {{usuario.nombre}}
+          </div>
+        </ul>
+      </div>
+      <br>
+    </span>
 </div>
 
 <div class="chat" *ngIf="comprobador" >
+  <br>
+  <div style="text-align: center;" *ngIf="usuario" >
+    Estas hablando con el usuario {{usuario.nombre}}
+  </div>
+  <br>
   <div class="chat-container" #messagesContainer>
     <div class="message" *ngFor="let message of mensajes" [ngClass]="{'currentUser': message.usuario === uid, 'otherUser': message.usuario !== uid}">
-      {{ formatDate(message.unix) }}
-      <br>
-      {{message.mensaje}}
-      <br>
+      <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.7rem;">
+        <div class="message-content">
+          <img class="card-img-top" src="{{message.url}}"  alt="Card image cap"  style="width: 40px; height: 40px;">
+          {{ formatDate(message.unix) }}
+          <br>
+          {{message.mensaje}}
+          <br>
+        </div>
+
+      </span>
+
+      <span class="d-none d-sm-inline d-md-none" style="font-size: 0.7rem;">
+        <div class="message-content">
+          <img class="card-img-top" src="{{message.url}}"  alt="Card image cap"  style="width: 50px; height: 50px;">
+          {{ formatDate(message.unix) }}
+          <br>
+          {{message.mensaje}}
+          <br>
+        </div>
+      </span>
+
+      <span class="d-none d-md-inline d-lg-none" style="font-size: 0.8rem;">
+        <div class="message-content">
+          <img class="card-img-top" src="{{message.url}}"  alt="Card image cap"  style="width: 60px; height: 60px;">
+          {{ formatDate(message.unix) }}
+          <br>
+          {{message.mensaje}}
+          <br>
+        </div>
+
+      </span>
+
+      <span class="d-none d-lg-inline d-sm-none" style="font-size: 1rem;">
+        <div class="message-content">
+          <img class="card-img-top" src="{{message.url}}"  alt="Card image cap"  style="width: 70px; height: 70px;">
+          {{ formatDate(message.unix) }}
+          <br>
+          {{message.mensaje}}
+          <br>
+        </div>
+      </span>
     </div>
   </div>
 

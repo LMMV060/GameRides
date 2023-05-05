@@ -396,6 +396,66 @@ export class FirebaseService {
     }
   }
 
+  nombre:any;
+
+  async guardarNuevoNombre(nombre:any){
+    const usuario = await this.getUserDataReal();
+    let userRef = await doc(this.bbdd, "Usuarios", "Usuario-"+usuario.uid);
+
+    if(nombre === undefined){
+      this.nombre = ""
+    } else {
+      this.nombre = nombre;
+    }
+
+    //Actualiza el nombre del propio usuario
+    if(this.auth.currentUser){
+      await updateProfile(this.auth.currentUser, {
+        displayName: nombre
+      })
+    }
+
+    await updateDoc(userRef, {
+      nombre: nombre,
+    });
+
+    //Actualiza el nombre de las peticiones
+    this.getAllPeticiones().then(async peti => {
+      for(let p of peti){
+        let petRef = await doc(this.bbdd, "Peticiones", p.id);
+        if(p.uid === usuario.uid){
+          await updateDoc(petRef, {
+            nombre: nombre,
+          });
+        }
+      }
+    })
+
+    //Actualiza el nombre de las ofertas
+    this.getAllTransportes().then(async ofer => {
+      for(let o of ofer){
+        let ofRef = await doc(this.bbdd, "Transportes", o.id);
+        if(o.uid === usuario.uid){
+          await updateDoc(ofRef, {
+            nombre: nombre,
+          });
+        }
+      }
+    })
+
+    this.getAllNoticias().then(async not => {
+      for(let n of not){
+        let notRef = await doc(this.bbdd, "Noticias", n.id);
+        if(n.uid === usuario.uid){
+          await updateDoc(notRef, {
+            nombre_user: nombre,
+          });
+        }
+      }
+    })
+  }
+
+
   async guardar(uid:any){
     const imgRef:any = await ref(this.storage, `ImagenesUsuarioPerfil`);
     let userActual = await doc(this.bbdd, "Usuarios", "Usuario-"+this.auth.currentUser?.uid);
@@ -410,12 +470,6 @@ export class FirebaseService {
           imgUrl: url,
           descripcion: this.descripcion
         });
-
-        this.getAllPeticiones().then(peti => {
-          for(let user of peti){
-
-          }
-        })
       }
     })
   }

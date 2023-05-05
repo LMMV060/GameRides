@@ -1,7 +1,16 @@
 <div class="container">
-  <h1 class="centrado" contenteditable="true">{{nombre}}</h1>
+  <input type="text" [(ngModel)]="nombre" class="centrado" maxlength="20">
+
   <button (click)="GuardarCambios()" class="derecho">Guardar</button>
 </div>
+
+<br>
+<br>
+
+<div class="upload-container">
+  <input type="file" accept=".jpg, .png, .jpeg" (change)="cargarImagen($event)">
+</div>
+
 
 <br>
 
@@ -10,10 +19,9 @@
   <img [src]="img" class="imagen-perfil" (load)="onImageLoad()">
 </div>
 <br>
-<label for="img">Select image:</label>
-<input type="file" accept=".jpg, .png, .jpeg" (change)="cargarImagen($event)">
-
 
 <br>
+
+<h2>Modifica la descripción</h2>
 
 <textarea rows="10" cols="50" maxlength="450" [(ngModel)]="descripcion"></textarea>
