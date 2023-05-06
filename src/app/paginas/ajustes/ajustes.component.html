@@ -6,13 +6,35 @@
 <br>
 <div class="contenedor">
 <div style="padding: 20px;" class="menu">
-    <div *ngFor="let item of ajustes" (click)="mostrarMensaje(item)" style="max-width: 300px; cursor: pointer;">
-      {{item.nombre}}
+    <div *ngFor="let item of ajustes" (click)="mostrarMensaje(item)" style="max-width: 300px; cursor: pointer; text-align: center; background-color: beige;">
+      <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.6rem;">
+        <br>
+        <strong>{{item.nombre}}</strong>
+        <br>
+      </span>
+
+      <span class="d-none d-sm-inline d-md-none" style="font-size: 0.7rem;">
+        <br>
+        <strong>{{item.nombre}}</strong>
+        <br>
+      </span>
+
+      <span class="d-none d-md-inline d-lg-none" style="font-size: 0.8rem;">
+        <br>
+        <strong>{{item.nombre}}</strong>
+        <br>
+      </span>
+
+      <span class="d-none d-lg-inline d-sm-none" style="font-size: 1rem;">
+        <br>
+        <strong>{{item.nombre}}</strong>
+        <br>
+      </span>
+
     </div>
 </div>
 
 <div class="seleccion">
-
   <ng-container *ngIf="mensaje === 'Cambiar email'">
     <div *ngIf="cuentaGoogle">
       <br>
