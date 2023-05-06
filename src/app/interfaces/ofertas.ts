@@ -8,5 +8,7 @@ export interface Ofertas {
   descripcion:string,
   vehiculo:any,
   evento?: string,
-  email:any
+  email:any,
+  tituloAlternativo?:string,
+  descripcionAlternativa?:string
 }

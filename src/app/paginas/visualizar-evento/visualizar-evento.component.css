@@ -1,0 +1,32 @@
+/* Estilos para el contenedor principal */
+.evento-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Estilos para el título */
+.evento-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+/* Estilos para la imagen */
+.evento-image {
+  display: block;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Estilos para el contenedor de información */
+.evento-info {
+  margin-top: 20px;
+  font-size: 1.2em;
+}
+
+/* Estilos para los párrafos de información */
+.evento-info p {
+  margin: 5px 0;
+}

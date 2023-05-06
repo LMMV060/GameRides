@@ -118,3 +118,89 @@
       border-top: 1px solid #ccc;
       padding-top: 10px;
       }
+
+
+/* Estilos para el botón */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+  background-color: #0069d9;
+}
+
+/* Estilos para los select */
+select {
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f2f2f2;
+}
+/*Estilos para el input de texto*/
+input[type=text] {
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/*Estilos para el input de fecha*/
+input[type=date] {
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/* Estilos para el input de número */
+input[type=number] {
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/* Estilos para el textarea */
+textarea {
+  font-size: 1em;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/* Estilos para el botón de ofrecer transporte */
+.mi-boton {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.mi-boton:hover {
+  background-color: #218838;
+}
+

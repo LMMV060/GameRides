@@ -15,10 +15,21 @@
     <label position="floating" >Eventos</label>
     <select id="vehiculo" name="vehiculo" (change)="logEventos($event)">
       <option value=null>{{eventoEditarNombre}}</option>
+      <option value=null>-Selecciona un evento-</option>
       <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
         {{ evento.name}}
       </option>
     </select>
+
+    <div *ngIf="!eventoEditarNombre" >
+      <label class="mi-label" position="floating">Nombre del evento</label>
+      <br>
+      <input type="text" placeholder="Nombre del evento al que quieres ir" [(ngModel)]="tituloAlternativo">
+      <br>
+      <label class="mi-label" position="floating">Descripción del evento</label>
+      <br>
+      <textarea rows="10" cols="50" maxlength="700" placeholder="Da una descripción del evento" [(ngModel)]="descripcionAlternativa"></textarea>
+    </div>
 
     <br>
         <label position="floating">Precio</label>

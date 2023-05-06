@@ -1,8 +1,11 @@
-<div *ngIf="evento">
-  <h1>{{evento.name}}</h1>
-  <img  *ngIf="evento.images[0]" [ngSrc]="evento.images[0].url" width="100" height="100">
-  <div>
+<div class="evento-container" *ngIf="evento">
+  <h1 class="evento-title">{{evento.name}}</h1>
+  <img class="evento-image" *ngIf="evento.images[0]" [ngSrc]="evento.images[0].url" width="100" height="100">
+  <div class="evento-info">
     <p>Localización: {{evento.city}}</p>
     <p>Direccion: {{evento.venueAddress}}</p>
+    <p>Contacto: {{evento.primaryContact}}</p>
+    <p>El registro cierra a: {{formatDate(evento.registrationClosesAt)}}</p>
   </div>
 </div>
+

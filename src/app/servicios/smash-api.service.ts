@@ -72,5 +72,56 @@ export class SmashAPIService {
   getEvento(){
     return this.eventoVisualizar;
   }
+
+  getTorneoByName(){
+    const query = `query TournamentsByCountry($name: String!, $perPage: Int!) {
+      tournaments(query: {
+        perPage: $perPage
+        filter: {
+          name: $name
+        }
+      }) {
+        nodes {
+          id
+          name
+          countryCode
+          venueAddress
+          images{
+            url
+          }
+          startAt
+          endAt
+          timezone
+          city
+          registrationClosesAt
+          postalCode
+          primaryContact
+        }
+      }
+    }`;
+
+    const variables = {
+      name: `weekly`,
+      perPage: 1
+    };
+
+    fetch('https://api.start.gg/gql/alpha', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.token}`
+      },
+      body: JSON.stringify({
+        query,
+        variables
+      })
+    })
+      .then(response => response.json())
+      .then(async data => {
+        console.log(data.data.tournaments.nodes);
+      })
+      .catch(error => console.error(error));
+
+  }
 }
 

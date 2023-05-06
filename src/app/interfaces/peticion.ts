@@ -7,5 +7,7 @@ export interface Peticion {
   precio:number,
   descripcion:string,
   evento?: string,
-  email:any
+  email:any,
+  tituloAlternativo?:string,
+  descripcionAlternativa?:string
 }

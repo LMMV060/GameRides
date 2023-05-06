@@ -90,7 +90,8 @@
     <div class="col-sm-6">
       <h1>Ofertas de viajes aceptadas</h1>
       <div *ngFor="let oa of ofertasAceptadasMostrar" class="aceptadas" (click)="verDatosTransporte(oa)" >
-        <h3>{{oa.evento.name}}</h3>
+        <h3 *ngIf="oa.evento" >{{oa.evento.name}}</h3>
+        <h3 *ngIf="oa.tituloAlternativo">{{oa.tituloAlternativo}}</h3>
         <h4>{{oa.fecha}}</h4>
         <p>{{oa.descripcion}}</p>
       </div>
@@ -99,7 +100,8 @@
     <div class="col-sm-6">
       <h1>Peticiones de transportes aceptadas</h1>
       <div *ngFor="let pa of peticionesAceptadasMostrar" class="aceptadas" (click)="verDatosPeticion(pa)" >
-        <h3>{{pa.evento.name}}</h3>
+        <h3 *ngIf="pa.evento">{{pa.evento.name}}</h3>
+        <h3 *ngIf="pa.tituloAlternativo">{{pa.tituloAlternativo}}</h3>
         <h4>{{pa.fecha}}</h4>
         <p>{{pa.descripcion}}</p>
       </div>

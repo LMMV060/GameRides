@@ -38,6 +38,18 @@
       <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450"></textarea>
       <br>
 
+      <div *ngIf="!eventoSeleccionado" >
+        <h2>Aviso: Si un evento no aparece en la sección para elegir evento, porfavor, rellene lo siguiente: </h2>
+        <label class="mi-label" position="floating">Nombre del evento</label>
+        <input type="text" placeholder="Nombre del evento al que quieres ir" [(ngModel)]="tituloAlternativo">
+
+        <br>
+        <label class="mi-label" position="floating">Descripción del evento</label>
+        <textarea rows="10" cols="50" maxlength="700" placeholder="Da una descripción del evento" [(ngModel)]="descripcionAlternativa"></textarea>
+      </div>
+
+      <br>
+
       <button class="mi-boton" (click)="realizarPeticion()">Pedir peticion</button>
       <br>
     </div>
@@ -50,6 +62,7 @@
         <div class="card-body" style="cursor: pointer;"  (click)="verDatosPeticion(peticion)">
           <img class="logo-t" *ngIf="peticion.evento"  src="{{peticion.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="peticion.evento">{{peticion.evento.name}}</h4>
+          <h4 class="card-title" *ngIf="peticion.tituloAlternativo" >{{peticion.tituloAlternativo}}</h4>
           <h5 class="card-title">{{peticion.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{peticion.fecha}}</h6>
 
@@ -62,22 +75,20 @@
 
   </div>
   <div *ngIf="opcionSeleccionada === 'Conductores'">
-    <button type="button" class="btn btn-primary" (click)="mostrarContenido = !mostrarContenido">
+    <button type="button" class="btn btn-primary mi-boton-toggle" (click)="mostrarContenido = !mostrarContenido">
       Da la información de la peticion
     </button>
 
-    <div *ngIf="mostrarContenido">
-      <label position="floating" >Fecha de ida</label>
+    <div *ngIf="mostrarContenido" class="mi-contenedor">
+      <label class="mi-label" position="floating">Fecha de ida</label>
+
+      <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha" class="mi-input">
+
       <br>
 
-      <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha">
+      <label class="mi-label" position="floating">Coche</label>
 
-      <br>
-
-
-      <label position="floating" >Coche</label>
-
-      <select id="vehiculo" name="vehiculo" (change)="Alias($event)" >
+      <select id="vehiculo" name="vehiculo" (change)="Alias($event)" class="mi-select">
         <ng-container *ngIf="misVehiculos.length > 0; else noVehiculos">
           <option value="">- Seleccione un coche -</option>
           <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.id}}">{{ vehiculo.alias }}</option>
@@ -90,30 +101,39 @@
 
       <br>
 
-      <label position="floating" >Eventos</label>
+      <label class="mi-label" position="floating">Eventos</label>
 
-      <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
-        <option value="">- Seleccione un evento -</option>
+      <select id="evento" name="evento" (change)="Evento($event)" class="mi-select">
+        <option value=null>- Seleccione un evento -</option>
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
           {{ evento.name}}
         </option>
       </select>
 
       <br>
-      <label position="floating">Precio</label>
-      <input required type="number" id="precio" [(ngModel)]="precio" placeholder="Indique el precio">
+
+      <label class="mi-label" position="floating">Precio</label>
+      <input required type="number" id="precio" [(ngModel)]="precio" placeholder="Indique el precio" class="mi-input">
       <br>
 
-      <label position="floating" >Descripción</label>
-      <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="450" placeholder="Da una pequeña descripción"></textarea>
+      <label class="mi-label" position="floating">Descripción corta</label>
+      <textarea [(ngModel)]="descripcion" rows="10" cols="50" maxlength="250" placeholder="Da una pequeña descripción" class="mi-textarea"></textarea>
 
       <br>
-      <button class="mi-boton" (click)="ofrecerTransporte()">Ofrecer transporte</button>
+      <div *ngIf="!eventoSeleccionado" >
+        <h2>Aviso: Si un evento no aparece en la sección para elegir evento, porfavor, rellene lo siguiente: </h2>
+        <label class="mi-label" position="floating">Nombre del evento</label>
+        <input type="text" placeholder="Nombre del evento al que quieres ir" [(ngModel)]="tituloAlternativo">
+
+        <br>
+        <label class="mi-label" position="floating">Descripción del evento</label>
+        <textarea rows="10" cols="50" maxlength="700" placeholder="Da una descripción del evento" [(ngModel)]="descripcionAlternativa"></textarea>
+      </div>
+
+      <br>
+      <button class="btn btn-success mi-boton-ofrecer" (click)="ofrecerTransporte()">Ofrecer transporte</button>
     </div>
-
     <br>
-
-
     <br>
 
     <div *ngFor="let transporte of Transportes">
@@ -122,6 +142,7 @@
         <div class="card-body" (click)="verDatosTransporte(transporte)" style="cursor: pointer;">
           <img class="logo-t" *ngIf="transporte.evento"  src="{{transporte.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="transporte.evento">{{transporte.evento.name}}</h4>
+          <h4 class="card-title" *ngIf="transporte.tituloAlternativo">{{transporte.tituloAlternativo}}</h4>
           <h5 class="card-title">{{transporte.nombre}}</h5>
           <h6 class="card-subtitle mb-2 text-muted">{{transporte.fecha}}</h6>
           <p class="card-text">{{transporte.descripcion}}</p>

@@ -44,7 +44,8 @@
     <img class="imagen-perfil"src={{transporte.url}} alt="Avatar" (click)="irAPerfil(transporte.nombre)">
     <div class="container">
       <h4><b>{{transporte.nombre}}</b></h4>
-      <p>{{transporte.evento?.name}}</p>
+      <p *ngIf="transporte.evento" >{{transporte.evento?.name}}</p>
+      <p *ngIf="transporte.tituloAlternativo" >{{transporte.tituloAlternativo}}</p>
     </div>
   </div>
   <br>
@@ -62,7 +63,8 @@
     <img class="imagen-perfil"src={{peticion.url}} alt="Avatar" (click)="irAPerfil(peticion.nombre)">
     <div class="container">
       <h4><b>{{peticion.nombre}}</b></h4>
-      <p>{{peticion.evento?.name}}</p>
+      <p *ngIf="peticion.evento" >{{peticion.evento?.name}}</p>
+      <p *ngIf="peticion.tituloAlternativo" >{{peticion.tituloAlternativo}}</p>
     </div>
   </div>
   <br>

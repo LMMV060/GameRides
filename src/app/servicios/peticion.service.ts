@@ -23,7 +23,7 @@ export class PeticionService {
     return this.Peticion;
   }
 
-  async guardarNuevaPeticion(id:any, fecha:any, evento:any, precio:any, descripcion:any){
+  async guardarNuevaPeticion(id:any, fecha:any, evento:any, precio:any, descripcion:any, tituloAlternativo:any, descripcionAlternativa:any){
 
     let peticionEditar = await doc(this.fire.basededatos(), "Peticiones", id);
 
@@ -31,7 +31,9 @@ export class PeticionService {
       evento: evento,
       precio:precio,
       descripcion: descripcion,
-      fecha: fecha
+      fecha: fecha,
+      tituloAlternativo: tituloAlternativo,
+      descripcionAlternativa: descripcionAlternativa
     });
 
   }

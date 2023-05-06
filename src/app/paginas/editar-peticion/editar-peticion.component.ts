@@ -19,6 +19,8 @@ export class EditarPeticionComponent {
   descripcionEditar:any;
   torneoEditar:any = [];
   precioEditar:any;
+  tituloAlternativo:any;
+  descripcionAlternativa:any;
   constructor(
     private p:PeticionService,
     private router: Router
@@ -47,6 +49,8 @@ export class EditarPeticionComponent {
     this.torneoEditar.push(this.peticionEditar.evento);
     this.descripcionEditar = this.peticionEditar.descripcion;
     this.precioEditar = this.peticionEditar.precio;
+    this.tituloAlternativo = this.peticionEditar.tituloAlternativo;
+    this.descripcionAlternativa = this.peticionEditar.descripcionAlternativa;
 
     } catch(err){
       this.router.navigateByUrl("/error")
@@ -61,12 +65,25 @@ export class EditarPeticionComponent {
   logEventos(event:any) {
     const id = event.target.value;
     this.torneoEditar = this.eventos.filter((evento:any) => evento.id == id)
-    this.eventoEditarNombre = this.torneoEditar[0].name;
-    this.fechaEditar = this.convertirUnixAFecha(this.torneoEditar[0].startAt);
+    if(this.torneoEditar[0]){
+      this.eventoEditarNombre = this.torneoEditar[0].name;
+      this.fechaEditar = this.convertirUnixAFecha(this.torneoEditar[0].startAt);
+    } else {
+      this.eventoEditarNombre = null;
+    }
+
   }
 
   guardarEdicion(id:any){
-    this.p.guardarNuevaPeticion(id, this.fechaEditar, this.torneoEditar[0], this.precioEditar,this.descripcionEditar);
+
+    if(this.eventoEditarNombre){
+      this.tituloAlternativo = null;
+      this.descripcionAlternativa = null;
+    } else {
+      this.eventoEditarNombre = null;
+    }
+
+    this.p.guardarNuevaPeticion(id, this.fechaEditar, this.torneoEditar[0], this.precioEditar,this.descripcionEditar, this.tituloAlternativo, this.descripcionAlternativa);
 
     this.router.navigateByUrl("/perfil")
   }

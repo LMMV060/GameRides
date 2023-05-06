@@ -8,6 +8,7 @@ import { Ofertas } from 'src/app/interfaces/ofertas';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Evento } from 'src/app/interfaces/evento';
 import { PeticionService } from 'src/app/servicios/peticion.service';
+import { SmashAPIService } from 'src/app/servicios/smash-api.service';
 @Component({
   selector: 'app-peticiones',
   templateUrl: './peticiones.component.html',
@@ -28,6 +29,8 @@ export class PeticionesComponent implements OnInit {
   eventoSeleccionado:any;
   eventos:any = [];
   descripcion:any;
+  tituloAlternativo:any;
+  descripcionAlternativa:any;
 
 
   constructor(
@@ -35,7 +38,7 @@ export class PeticionesComponent implements OnInit {
     private router:Router,
     private auth:Auth,
     private transporte:TransporteService,
-    private peticion: PeticionService
+    private peticion: PeticionService,
   ) { }
 
   Peticiones:any = [];
@@ -125,6 +128,10 @@ export class PeticionesComponent implements OnInit {
           }
         } else {
           const real:any = await this.fire.getUserDataReal();
+          if(this.eventoSeleccionado){
+            this.tituloAlternativo = null;
+            this.descripcionAlternativa = null;
+          }
           const pet:Peticion= {
             id: "Peticion-"+ i + "-"+this.auth.currentUser.uid,
             uid:this.auth.currentUser?.uid,
@@ -134,7 +141,9 @@ export class PeticionesComponent implements OnInit {
             precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
-            email: this.auth.currentUser?.email
+            email: this.auth.currentUser?.email,
+            tituloAlternativo:this.tituloAlternativo,
+            descripcionAlternativa:this.descripcionAlternativa
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Peticiones", "Peticion-"+ i + "-"+this.auth.currentUser.uid), pet)
@@ -142,9 +151,7 @@ export class PeticionesComponent implements OnInit {
           location.reload();
           i = 21;
         }
-
       }
-
 
     } else {
       alert("Faltan datos necesarios");
@@ -168,6 +175,10 @@ export class PeticionesComponent implements OnInit {
           }
         } else {
           const real:any = await this.fire.getUserDataReal();
+          if(this.eventoSeleccionado){
+            this.tituloAlternativo = null;
+            this.descripcionAlternativa = null;
+          }
 
           const pet:Ofertas= {
             id: "Transporte-"+ i + "-"+this.auth.currentUser.uid,
@@ -179,7 +190,9 @@ export class PeticionesComponent implements OnInit {
             precio: this.precio,
             evento: this.eventoSeleccionado || null,
             descripcion: this.descripcion,
-            email: this.auth.currentUser?.email
+            email: this.auth.currentUser?.email,
+            tituloAlternativo:this.tituloAlternativo,
+            descripcionAlternativa:this.descripcionAlternativa
           }
 
           const response = await setDoc(doc(this.fire.basededatos(), "Transportes", "Transporte-"+ i + "-"+this.auth.currentUser.uid), pet)

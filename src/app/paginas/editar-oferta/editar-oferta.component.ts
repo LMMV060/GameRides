@@ -23,6 +23,8 @@ export class EditarOfertaComponent {
   cocheId:any;
   torneoEditar:any = []
   precioEditar:any;
+  tituloAlternativo:any;
+  descripcionAlternativa:any;
   constructor(
     private transporte: TransporteService,
     private coche: CocheService,
@@ -58,6 +60,8 @@ export class EditarOfertaComponent {
       this.fecha = this.transporteAEditar.fecha;
       this.descripcion = this.transporteAEditar.descripcion;
       this.precioEditar = this.transporteAEditar.precio;
+      this.tituloAlternativo = this.transporteAEditar.tituloAlternativo;
+      this.descripcionAlternativa = this.transporteAEditar.descripcionAlternativa;
 
     } catch(err){
       this.router.navigateByUrl("/error")
@@ -71,12 +75,14 @@ export class EditarOfertaComponent {
   logEventos(event:any) {
     const id = event.target.value;
     this.torneoEditar = this.eventos.filter((evento:any) => evento.id == id)
-    this.eventoEditarNombre = this.torneoEditar[0].name;
-    this.fecha = this.convertirUnixAFecha(this.torneoEditar[0].startAt);
-
+    if(this.torneoEditar[0]){
+      this.eventoEditarNombre = this.torneoEditar[0].name;
+      this.fecha = this.convertirUnixAFecha(this.torneoEditar[0].startAt);
+    } else {
+      this.eventoEditarNombre = null;
+    }
 
   }
-
 
   logCoches(event:any) {
     const id = event.target.value;
@@ -87,7 +93,14 @@ export class EditarOfertaComponent {
 
   guardarEdicion(id:any){
 
-    this.transporte.actualizarTransporte(id, this.fecha, this.torneoEditar[0], this.precioEditar , this.descripcion, this.cocheId);
+    if(this.eventoEditarNombre){
+      this.tituloAlternativo = null;
+      this.descripcionAlternativa = null;
+    } else {
+      this.eventoEditarNombre = null;
+    }
+
+    this.transporte.actualizarTransporte(id, this.fecha, this.torneoEditar[0], this.precioEditar , this.descripcion, this.cocheId, this.tituloAlternativo, this.descripcionAlternativa);
     this.router.navigateByUrl("/perfil")
   }
 
