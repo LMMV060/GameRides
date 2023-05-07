@@ -1,23 +1,20 @@
-<br>
-<br>
-<br>
-<br>
+
 <div class="login-page">
 
   <label position="floating" >Correo electrónico</label>
   <br>
-
   <input required type="email" id="email" (input)="ObtenerEmail($event)">
-<br>
+  <div id="emailError" style="color: red;"></div>
 
   <label position="floating">Contraseña</label>
   <br>
   <input required type="password" id="contra" (input)="ObtenerPWD($event)">
+  <div id="pwdError" style="color: red;"></div>
 
 
-<button expand="block" (click)="Login()">Login</button>
+<button expand="block" class="btn-login" (click)="Login()">Login</button>
 
-<button expand="block" class="btn btn-info" (click)="LoginWithGoogle()">Google</button>
+<button expand="block" class="btn-google" (click)="LoginWithGoogle()">Google</button>
 
 <div class="externos">
   <br>

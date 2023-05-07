@@ -1,19 +1,15 @@
-<br>
-<br>
-<br>
-
+ <div class="register-page">
   <label position="floating">Nombre</label>
-  <br>
   <input required type="string" id="email" (input)="ObtenerNombre($event)">
+  <div id="nombreError" style="color: red;"></div>
   <br>
   <label position="floating" >Correo electrónico</label>
-  <br>
   <input required type="email" id="email" (input)="ObtenerEmail($event)">
+  <div id="emailError" style="color: red;"></div>
   <br>
-
   <label position="floating">Contraseña</label>
-  <br>
   <input required type="password" id="contra" (input)="ObtenerPWD($event)">
-
-
-<button expand="block" (click)="Register()">Register</button>
+  <div id="pwdError" style="color: red;"></div>
+  <br>
+  <button expand="block" class="btn-register" (click)="Register()">Registrarme</button>
+</div>

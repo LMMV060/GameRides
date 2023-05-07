@@ -78,13 +78,30 @@ export class LoginComponent implements OnInit {
         this.auth.signOut();
       } else {
         this.router.navigateByUrl('/home');
-
       }
 
 
     })
-    .catch(error => console.log(error)
-    )
+    .catch(error => {
+      const errorEmail = document.getElementById("emailError");
+      if(errorEmail){
+        if (error.code === "auth/invalid-email") {
+          errorEmail.innerHTML = "Error: Dirección de correo electrónico inválida.";
+        } else if (error.code === "auth/user-not-found") {
+          errorEmail.innerHTML = "Error: El correo electrónico ingresado no está registrado.";
+        } else {
+          errorEmail.innerHTML = ""
+        }
+      }
+      const errorPWD = document.getElementById("pwdError");
+      if(errorPWD){
+        if(error.code === "auth/wrong-password") {
+          errorPWD.innerHTML = "Error: Contraseña incorrecta.";
+        } else {
+          errorPWD.innerHTML = "";
+        }
+      }
+    })
 
   }
 

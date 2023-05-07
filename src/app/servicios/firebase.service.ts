@@ -30,6 +30,7 @@ export class FirebaseService {
     ) { }
 
   register(email:any, pwd:any, nombre:any){
+    
     return createUserWithEmailAndPassword(this.auth, email, pwd)
     .then(()=> {
       if(this.auth.currentUser){

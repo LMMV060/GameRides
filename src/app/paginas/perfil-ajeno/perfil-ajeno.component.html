@@ -31,7 +31,7 @@
 
   <div>
     <div class="container">
-      <div class="feedback">
+      <div class="feedback"  *ngFor="let user of usuarioActual">
         <div class="rating">
           <input type="radio" name="rating" id="rating-5" value="5" (input)="ObtenerCalificacion($event)" [(ngModel)]="calificacion" [checked]="calificacion === 5">
           <label for="rating-5"></label>
@@ -44,6 +44,7 @@
           <input type="radio" name="rating" id="rating-1" value="1" (input)="ObtenerCalificacion($event)" [(ngModel)]="calificacion" [checked]="calificacion === 1">
           <label for="rating-1"></label>
         </div>
+        <div *ngIf="user.calificacionMedia">({{user.calificacionMedia}})</div>
       </div>
     </div>
   </div>

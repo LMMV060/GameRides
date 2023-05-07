@@ -8,12 +8,15 @@
   </select>
 
   <br>
-
-
   <div *ngIf="opcionSeleccionada === 'Pasajeros'">
     <button type="button" class="btn btn-primary" (click)="mostrarContenido = !mostrarContenido">
       Da la información de la peticion
     </button>
+
+    <br>
+    <br>
+    <button (click)="onBackP()" [disabled]="!canGoBackP()">Atras</button>
+    <button (click)="onForwardP()" [disabled]="!canGoForwardP()">Adelante</button>
 
     <br>
     <div *ngIf="mostrarContenido">
@@ -55,7 +58,7 @@
     </div>
 
 
-    <div *ngFor="let peticion of Peticiones">
+    <div *ngFor="let peticion of Peticiones.slice(currentPageIndexPeticiones, currentPageIndexPeticiones + peticionesPerPage)">
       <br>
       <div class="card" >
         <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)" style="cursor: pointer;">
@@ -76,8 +79,14 @@
   </div>
   <div *ngIf="opcionSeleccionada === 'Conductores'">
     <button type="button" class="btn btn-primary mi-boton-toggle" (click)="mostrarContenido = !mostrarContenido">
-      Da la información de la peticion
+      Da la información de la oferta
     </button>
+    <br>
+
+    <br>
+    <button (click)="onBackO()" [disabled]="!canGoBackO()">Atras</button>
+    <button (click)="onForwardO()" [disabled]="!canGoForwardO()">Adelante</button>
+    <br>
 
     <div *ngIf="mostrarContenido" class="mi-contenedor">
       <label class="mi-label" position="floating">Fecha de ida</label>
@@ -136,7 +145,7 @@
     <br>
     <br>
 
-    <div *ngFor="let transporte of Transportes">
+    <div *ngFor="let transporte of Transportes.slice(currentPageIndexOfertas, currentPageIndexOfertas + ofertasPerPage)">
       <div class="card">
         <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)" style="cursor: pointer;">
         <div class="card-body" (click)="verDatosTransporte(transporte)" style="cursor: pointer;">

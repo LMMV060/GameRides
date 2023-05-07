@@ -118,8 +118,13 @@ export class PerfilAjenoComponent implements OnInit {
   }
 
   async ObtenerCalificacion(event:any){
-    this.calificacion = event.target.value
-    await this.fire.calificar(this.calificacion, this.usuarioActual[0].uid, this.auth.currentUser?.uid)
+    if(this.auth.currentUser){
+      this.calificacion = event.target.value
+      await this.fire.calificar(this.calificacion, this.usuarioActual[0].uid, this.auth.currentUser?.uid)
+    } else {
+      alert("Porfavor, inicie sesión")
+    }
+
 
   }
 

@@ -310,5 +310,53 @@ export class PeticionesComponent implements OnInit {
       this.router.navigateByUrl("/solicitudesPeticiones")
     }
   }
+
+  //Pasar paginas para las ofertas
+
+  currentPageIndexOfertas = 0;
+  ofertasPerPage = 4;
+
+  canGoBackO() {
+    return this.currentPageIndexOfertas > 0;
+  }
+
+  canGoForwardO() {
+    return this.currentPageIndexOfertas + this.ofertasPerPage < this.Transportes.length;
+  }
+
+  onBackO(): void {
+    if (this.canGoBackO()) {
+      this.currentPageIndexOfertas -= this.ofertasPerPage;
+    }
+  }
+
+  onForwardO(): void {
+    if (this.canGoForwardO()) {
+      this.currentPageIndexOfertas += this.ofertasPerPage;
+    }
+  }
+
+  currentPageIndexPeticiones= 0;
+  peticionesPerPage = 4;
+
+  canGoBackP() {
+    return this.currentPageIndexPeticiones > 0;
+  }
+
+  canGoForwardP() {
+    return this.currentPageIndexPeticiones + this.peticionesPerPage < this.Peticiones.length;
+  }
+
+  onBackP(): void {
+    if (this.canGoBackP()) {
+      this.currentPageIndexPeticiones -= this.peticionesPerPage;
+    }
+  }
+
+  onForwardP(): void {
+    if (this.canGoForwardP()) {
+      this.currentPageIndexPeticiones += this.peticionesPerPage;
+    }
+  }
 }
 

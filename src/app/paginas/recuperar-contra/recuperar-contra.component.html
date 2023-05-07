@@ -1,7 +1,9 @@
 <div>
   <label position="floating" >Correo electrónico</label>
-  <br>
   <input required type="email" id="email" [(ngModel)]="email">
+
+  <br>
+  <button expand="block" class="btn-recuperar" (click)="recuperar()">Enviar email</button>
 </div>
 
-<button expand="block" (click)="recuperar()">Enviar email</button>
+

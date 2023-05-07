@@ -101,8 +101,8 @@ export class AjustesComponent implements OnInit {
 
       if (this.encry.decryptData(this.pwdBorrar) === this.encry.decryptData(this.currentUser.password)) {
         //empieza a borrar
-        console.log(this.encry.decryptData(this.pwdBorrar));
-        console.log(this.encry.decryptData(this.currentUser.password));
+        /*console.log(this.encry.decryptData(this.pwdBorrar));
+        console.log(this.encry.decryptData(this.currentUser.password));*/
 
 
         await this.fire.deleteAllFromUser(this.currentUser.uid);

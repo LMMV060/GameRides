@@ -48,6 +48,7 @@ export class RegistrarComponent implements OnInit {
 
   creaUsuario:boolean = true;
   async Register(){
+    this.creaUsuario = true;
     let datos:any = [];
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
@@ -56,17 +57,18 @@ export class RegistrarComponent implements OnInit {
     });
 
     datos.forEach((doc:any) => {
+      //console.log(doc.nombre);
 
       if(doc.nombre == this.nombre){
         this.creaUsuario = false;
-      } else {
       }
-
     })
 
-    if(this.creaUsuario){
-      this.fire.register(this.email, this.pwd, this.nombre)
-
+    if(this.creaUsuario == true){
+      if(!this.nombre){
+        alert("No hay nombre de usuario")
+      } else {
+        this.fire.register(this.email, this.pwd, this.nombre)
       .then(async () => {
         if(this.auth.currentUser){
           const usuario:Usuarios= {
@@ -88,16 +90,34 @@ export class RegistrarComponent implements OnInit {
             this.location.go('/home');
             window.location.reload();
           });
+        } else {
+          alert("No hay nombre")
         }
       })
+      .catch(error => {
+        const errorEmail = document.getElementById("emailError");
+        if(errorEmail){
+          if (error.code === "auth/email-already-in-use") {
+            errorEmail.innerHTML = "Error: La dirección de correo electrónico ya está siendo utilizada por otra cuenta.";
+          } else {
+            errorEmail.innerHTML = "";
+          }
+        }
+
+        const errorPWD = document.getElementById("pwdError");
+        if(errorPWD){
+          if (error.code === "auth/weak-password") {
+            errorPWD.innerHTML = "Error: La contraseña es demasiado débil. Debe tener al menos 6 caracteres.";
+          } else {
+            errorPWD.innerHTML = "";
+
+          }
+        }
+      })
+      }
     } else {
       alert("Usuario con nombre " + this.nombre + " ya registrado");
-
     }
-
-
-
-
   }
 
 }
