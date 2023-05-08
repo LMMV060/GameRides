@@ -43,6 +43,7 @@ export class PeticionesComponent implements OnInit {
 
   Peticiones:any = [];
   Transportes:any = [];
+  TransportesFiltrados:any = [];
 
   async ngOnInit() {
     this.unixTime = Math.floor(new Date().getTime() / 1000);
@@ -85,6 +86,8 @@ export class PeticionesComponent implements OnInit {
       this.Transportes.sort(() => Math.random() - 0.5);
 
     });
+
+    this.TransportesFiltrados = this.Transportes;
   }
 
   opcionSeleccionada:any = "Conductores";
@@ -357,6 +360,36 @@ export class PeticionesComponent implements OnInit {
     if (this.canGoForwardP()) {
       this.currentPageIndexPeticiones += this.peticionesPerPage;
     }
+  }
+
+  filtro:any;
+  BuscarPor:any;
+
+  ObtenerFiltro(event:any){
+    const text = event.target.value;
+    const filtro = this.filtro;
+    const buscarPor = this.BuscarPor;
+    this.TransportesFiltrados = this.Transportes.filter((transporte:any) => {
+      // Transformar el valor de la propiedad a minúsculas para hacer una búsqueda insensible a mayúsculas
+      if(buscarPor == "evento.name"){
+          // Obtener la propiedad evento.name del objeto transporte
+          const eventoNombre = transporte.evento?.name?.toString().toLowerCase() || '';
+          // Obtener la propiedad tituloAlternativo del objeto transporte
+          const tituloAlternativo = transporte.tituloAlternativo?.toString().toLowerCase() || '';
+
+          // Verificar si el texto buscado se encuentra en alguna de las propiedades
+          return eventoNombre.includes(text.toLowerCase()) || tituloAlternativo.includes(text.toLowerCase());
+      }
+      const valorPropiedad = transporte[buscarPor] + '';
+
+      // Retorna verdadero si el valor de la propiedad incluye el texto buscado
+      return valorPropiedad.toLowerCase().includes(text.toLowerCase());
+    });
+
+  }
+
+  Filtro(event:any){
+    this.BuscarPor = event.target.value;
   }
 }
 

@@ -1,3 +1,20 @@
+select.Busqueda {
+  width: calc(100% - 100px); /* El ancho del select es el ancho de la pantalla menos el ancho del input */
+  max-width: 250px; /* Ancho máximo del select */
+  margin-right: 10px; /* Separación entre el select y el input */
+}
+
+input[type="text"] {
+  width: 100px; /* Ancho inicial del input */
+}
+
+input[type="text"] + select.Busqueda {
+  width: calc(100% - 110px); /* El ancho del select es el ancho de la pantalla menos el ancho del input y el margen */
+  max-width: none; /* Quitar el ancho máximo del select */
+  margin-right: 0; /* Quitar la separación entre el select y el input */
+}
+
+
 .boton-flotante {
   position: fixed;
   bottom: 20px;

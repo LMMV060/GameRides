@@ -1,8 +1,15 @@
 <br>
-
-
 <div>
-  <select id="segmento" name="segmento" (change)="Busqueda($event)">
+  <select class="Busqueda" id="segmento" name="segmento" (change)="Filtro($event)">
+    <option value=''>Buscar por...</option>
+    <option value="nombre">Nombre de usuario</option>
+    <option value="fecha">Fecha</option>
+    <option value="precio">Precio</option>
+    <option value="evento.name">Nombre de evento</option>
+  </select>
+
+  <input *ngIf="BuscarPor && BuscarPor != ''"  type="text" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+  <select class="segmento" id="segmento" name="segmento" (change)="Busqueda($event)">
     <option value="Conductores">Conductores</option>
     <option value="Pasajeros">Pasajeros</option>
   </select>
@@ -25,7 +32,7 @@
       <input required type="date" id="date" (input)="ObtenerFecha($event)" [(ngModel)]="fecha">
       <label position="floating" >Eventos</label>
 
-      <select id="vehiculo" name="vehiculo" (change)="Evento($event)" >
+      <select class="segmento" id="vehiculo" name="vehiculo" (change)="Evento($event)" >
         <option value=null>- Seleccione un evento -</option>
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
           {{ evento.name}}
@@ -97,7 +104,7 @@
 
       <label class="mi-label" position="floating">Coche</label>
 
-      <select id="vehiculo" name="vehiculo" (change)="Alias($event)" class="mi-select">
+      <select class="segmento" id="vehiculo" name="vehiculo" (change)="Alias($event)" class="mi-select">
         <ng-container *ngIf="misVehiculos.length > 0; else noVehiculos">
           <option value="">- Seleccione un coche -</option>
           <option *ngFor="let vehiculo of misVehiculos" value="{{vehiculo.id}}">{{ vehiculo.alias }}</option>
@@ -112,7 +119,7 @@
 
       <label class="mi-label" position="floating">Eventos</label>
 
-      <select id="evento" name="evento" (change)="Evento($event)" class="mi-select">
+      <select class="segmento" id="evento" name="evento" (change)="Evento($event)" class="mi-select">
         <option value=null>- Seleccione un evento -</option>
         <option class="select-image-option" *ngFor="let evento of eventos" value="{{evento.id}}">
           {{ evento.name}}
@@ -145,7 +152,7 @@
     <br>
     <br>
 
-    <div *ngFor="let transporte of Transportes.slice(currentPageIndexOfertas, currentPageIndexOfertas + ofertasPerPage)">
+    <div *ngFor="let transporte of TransportesFiltrados.slice(currentPageIndexOfertas, currentPageIndexOfertas + ofertasPerPage)">
       <div class="card">
         <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)" style="cursor: pointer;">
         <div class="card-body" (click)="verDatosTransporte(transporte)" style="cursor: pointer;">
@@ -162,10 +169,6 @@
     </div>
 
   </div>
-
-
-
-
 
 </div>
 
