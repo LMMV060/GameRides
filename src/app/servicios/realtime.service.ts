@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { get, getDatabase, ref, set,  } from "firebase/database";
+import { get, getDatabase, ref, set, remove} from "firebase/database";
 import { Chat } from 'src/app/interfaces/chat';
 import { EmailService } from './email.service';
 import { FirebaseService } from './firebase.service';
-import { doc, updateDoc } from '@angular/fire/firestore';
+import { arrayRemove, deleteField, doc, updateDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -162,6 +162,44 @@ export class RealtimeService {
       otrosChats: otros2
     });
 
+  }
+
+  async borrarSalas(uid:any){
+    let userRef = await doc(this.fire.basededatos(), "Usuarios", "Usuario-"+uid);
+
+    let Usuario = await this.fire.getUserByUID(uid);
+
+    if(Usuario.otrosChats){
+      for(let i = 0; i < Usuario.otrosChats.length; i++){
+        console.log(Usuario.otrosChats[i]);
+
+        let sala1 = ref(this.db, 'Sala-' + uid + '-' + Usuario.otrosChats[i]);
+
+        let sala2 = ref(this.db, 'Sala-' + Usuario.otrosChats[i] + '-' + uid);
+
+        get(sala1).then(async (snapshot) => {
+          if (snapshot.exists()) {
+            remove(sala1);
+          } else {
+            remove(sala2)
+          }
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
+
+      await updateDoc(userRef, {
+        otrosChats: deleteField()
+      });
+    }
+
+  }
+
+  async actualizarUsers(uid:any, usuarios:any){
+    const userRef = doc(this.fire.basededatos(), "Usuarios", "Usuario-"+uid);
+    await updateDoc(userRef, {
+      otrosChats: usuarios
+    });
   }
 
 }

@@ -1,14 +1,5 @@
 <br>
 <div>
-  <select class="Busqueda" id="segmento" name="segmento" (change)="Filtro($event)">
-    <option value=''>Buscar por...</option>
-    <option value="nombre">Nombre de usuario</option>
-    <option value="fecha">Fecha</option>
-    <option value="precio">Precio</option>
-    <option value="evento.name">Nombre de evento</option>
-  </select>
-
-  <input *ngIf="BuscarPor && BuscarPor != ''"  type="text" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
   <select class="segmento" id="segmento" name="segmento" (change)="Busqueda($event)">
     <option value="Conductores">Conductores</option>
     <option value="Pasajeros">Pasajeros</option>
@@ -16,15 +7,24 @@
 
   <br>
   <div *ngIf="opcionSeleccionada === 'Pasajeros'">
+    <select class="Busqueda" id="segmento" name="segmento" (change)="FiltroP($event)">
+      <option value=''>Buscar por...</option>
+      <option value="nombre">Nombre de usuario</option>
+      <option value="fecha">Fecha</option>
+      <option value="precio">Precio</option>
+      <option value="evento.name">Nombre de evento</option>
+    </select>
+
+    <div *ngIf="BuscarPorP && BuscarPorP != ''">
+      <input *ngIf="BuscarPorP === 'nombre' || BuscarPorP === 'evento.name'"  type="text" placeholder="Filtro por" (input)="ObtenerFiltroP($event)">
+      <input *ngIf="BuscarPorP === 'precio'"  type="number" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+      <input *ngIf="BuscarPorP === 'fecha'"  type="text" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+    </div>
+
+    <br>
     <button type="button" class="btn btn-primary" (click)="mostrarContenido = !mostrarContenido">
       Da la información de la peticion
     </button>
-
-    <br>
-    <br>
-    <button (click)="onBackP()" [disabled]="!canGoBackP()">Atras</button>
-    <button (click)="onForwardP()" [disabled]="!canGoForwardP()">Adelante</button>
-
     <br>
     <div *ngIf="mostrarContenido">
       <label position="floating" >Fecha de ida</label>
@@ -63,9 +63,15 @@
       <button class="mi-boton" (click)="realizarPeticion()">Pedir peticion</button>
       <br>
     </div>
+      <br>
+    <div class="botones-navegacion">
+      <button class="boton-anterior" (click)="onBackP()" [disabled]="!canGoBackP()">Atras</button>
+      <button class="boton-siguiente" (click)="onForwardP()" [disabled]="!canGoForwardP()">Adelante</button>
+    </div>
+    <br>
 
 
-    <div *ngFor="let peticion of Peticiones.slice(currentPageIndexPeticiones, currentPageIndexPeticiones + peticionesPerPage)">
+    <div *ngFor="let peticion of PeticionesFiltradas.slice(currentPageIndexPeticiones, currentPageIndexPeticiones + peticionesPerPage)">
       <br>
       <div class="card" >
         <img class="card-img-top" src="{{peticion.url}}"  alt="Card image cap" (click)="irAPerfil(peticion.nombre)" style="cursor: pointer;">
@@ -85,14 +91,26 @@
 
   </div>
   <div *ngIf="opcionSeleccionada === 'Conductores'">
+
+    <select class="Busqueda" id="segmento" name="segmento" (change)="Filtro($event)">
+      <option value=''>Buscar por...</option>
+      <option value="nombre">Nombre de usuario</option>
+      <option value="fecha">Fecha</option>
+      <option value="precio">Precio</option>
+      <option value="evento.name">Nombre de evento</option>
+    </select>
+    <div *ngIf="BuscarPor && BuscarPor != ''">
+      <input *ngIf="BuscarPor === 'nombre' || BuscarPor === 'evento.name'"  type="text" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+      <input *ngIf="BuscarPor === 'precio'"  type="number" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+      <input *ngIf="BuscarPor === 'fecha'"  type="text" placeholder="Filtro por" (input)="ObtenerFiltro($event)">
+    </div>
+    <br>
+
     <button type="button" class="btn btn-primary mi-boton-toggle" (click)="mostrarContenido = !mostrarContenido">
       Da la información de la oferta
     </button>
     <br>
 
-    <br>
-    <button (click)="onBackO()" [disabled]="!canGoBackO()">Atras</button>
-    <button (click)="onForwardO()" [disabled]="!canGoForwardO()">Adelante</button>
     <br>
 
     <div *ngIf="mostrarContenido" class="mi-contenedor">
@@ -149,12 +167,15 @@
       <br>
       <button class="btn btn-success mi-boton-ofrecer" (click)="ofrecerTransporte()">Ofrecer transporte</button>
     </div>
-    <br>
-    <br>
 
+    <div class="botones-navegacion">
+      <button class="boton-anterior" (click)="onBackO()" [disabled]="!canGoBackO()">Atras</button>
+      <button class="boton-siguiente" (click)="onForwardO()" [disabled]="!canGoForwardO()">Adelante</button>
+    </div>
+    <br>
     <div *ngFor="let transporte of TransportesFiltrados.slice(currentPageIndexOfertas, currentPageIndexOfertas + ofertasPerPage)">
       <div class="card">
-        <img class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)" style="cursor: pointer;">
+        <img *ngIf="transporte.url"  class="card-img-top" src="{{transporte.url}}"  alt="Card image cap" (click)="irAPerfil(transporte.nombre)" style="cursor: pointer;">
         <div class="card-body" (click)="verDatosTransporte(transporte)" style="cursor: pointer;">
           <img class="logo-t" *ngIf="transporte.evento"  src="{{transporte.evento.images[0].url}}" alt="">
           <h4 class="card-title" *ngIf="transporte.evento">{{transporte.evento.name}}</h4>

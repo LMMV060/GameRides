@@ -42,6 +42,7 @@ export class PeticionesComponent implements OnInit {
   ) { }
 
   Peticiones:any = [];
+  PeticionesFiltradas:any = [];
   Transportes:any = [];
   TransportesFiltrados:any = [];
 
@@ -88,6 +89,7 @@ export class PeticionesComponent implements OnInit {
     });
 
     this.TransportesFiltrados = this.Transportes;
+    this.PeticionesFiltradas = this.Peticiones;
   }
 
   opcionSeleccionada:any = "Conductores";
@@ -369,6 +371,9 @@ export class PeticionesComponent implements OnInit {
     const text = event.target.value;
     const filtro = this.filtro;
     const buscarPor = this.BuscarPor;
+    if(!buscarPor || buscarPor === ''){
+      this.TransportesFiltrados === this.Transportes;
+    }
     this.TransportesFiltrados = this.Transportes.filter((transporte:any) => {
       // Transformar el valor de la propiedad a minúsculas para hacer una búsqueda insensible a mayúsculas
       if(buscarPor == "evento.name"){
@@ -380,6 +385,7 @@ export class PeticionesComponent implements OnInit {
           // Verificar si el texto buscado se encuentra en alguna de las propiedades
           return eventoNombre.includes(text.toLowerCase()) || tituloAlternativo.includes(text.toLowerCase());
       }
+
       const valorPropiedad = transporte[buscarPor] + '';
 
       // Retorna verdadero si el valor de la propiedad incluye el texto buscado
@@ -390,6 +396,41 @@ export class PeticionesComponent implements OnInit {
 
   Filtro(event:any){
     this.BuscarPor = event.target.value;
+  }
+
+  filtroP:any
+  BuscarPorP:any;
+
+  FiltroP(event:any){
+    this.BuscarPorP = event.target.value;
+  }
+
+  ObtenerFiltroP(event:any){
+    const text = event.target.value;
+    const filtroP = this.filtroP;
+    const buscarPorP = this.BuscarPorP;
+
+    if(!buscarPorP || buscarPorP === ''){
+      this.PeticionesFiltradas === this.Peticiones;
+    }
+
+    this.PeticionesFiltradas = this.Peticiones.filter((peticion:any) => {
+      // Transformar el valor de la propiedad a minúsculas para hacer una búsqueda insensible a mayúsculas
+      if(buscarPorP == "evento.name"){
+          // Obtener la propiedad evento.name del objeto peticion
+          const eventoNombre = peticion.evento?.name?.toString().toLowerCase() || '';
+          // Obtener la propiedad tituloAlternativo del objeto peticion
+          const tituloAlternativo = peticion.tituloAlternativo?.toString().toLowerCase() || '';
+
+          // Verificar si el texto buscado se encuentra en alguna de las propiedades
+          return eventoNombre.includes(text.toLowerCase()) || tituloAlternativo.includes(text.toLowerCase());
+      }
+
+      const valorPropiedad = peticion[buscarPorP] + '';
+
+      // Retorna verdadero si el valor de la propiedad incluye el texto buscado
+      return valorPropiedad.toLowerCase().includes(text.toLowerCase());
+    });
   }
 }
 

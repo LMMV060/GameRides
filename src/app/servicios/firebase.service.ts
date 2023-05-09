@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, signInWithPopup, GoogleAuthProvider, updateProfile, getAuth, deleteUser, updateEmail, updatePassword, sendPasswordResetEmail } from '@angular/fire/auth';
-import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
+import { collection, deleteDoc, deleteField, doc, DocumentData, Firestore, getDocs, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Usuarios } from '../interfaces/usuarios';
 import { Router } from '@angular/router';
 import * as crypto from 'crypto-js';
 import { Storage, getDownloadURL, getStorage, listAll, ref, uploadBytes } from '@angular/fire/storage';
 import { EncriptadoService } from './encriptado.service';
 import { EmailService } from './email.service';
+import { deleteObject } from 'firebase/storage';
+import { RealtimeService } from './realtime.service';
+import { get, getDatabase, remove } from 'firebase/database';
+import { FuncionesService } from './funciones.service';
 
 
 
@@ -25,12 +29,13 @@ export class FirebaseService {
     private router: Router,
     private storage:Storage,
     private crypt: EncriptadoService,
-    private email: EmailService
-
+    private email: EmailService,
     ) { }
 
+    private db:any;
+
   register(email:any, pwd:any, nombre:any){
-    
+
     return createUserWithEmailAndPassword(this.auth, email, pwd)
     .then(()=> {
       if(this.auth.currentUser){
@@ -209,22 +214,39 @@ export class FirebaseService {
       await deleteDoc(doc(this.basededatos(), "Transportes", "Transporte-"+i+"-" + uid));
     }
 
-
-    //Borrar usuario
-    if(this.auth.currentUser){
-      await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + this.auth.currentUser?.uid));
-      await this.auth.currentUser.delete().then(function () {
-        location.reload()
-      }).catch(function (error) {
-        console.error({error})
-      })
+    //Borrar noticias
+    for(let i = 1; i <= 50; i++){
+      await deleteDoc(doc(this.basededatos(), "Noticias", "Noticia-"+i+"-" + uid));
     }
 
+    //Borrar imagen de perfil
+
+    const ImgUserRef = ref(this.storage, `ImagenesUsuarioPerfil/${uid}`);
+    try {
+      let a = await getDownloadURL(ImgUserRef);
+      await deleteObject(ImgUserRef)
+    } catch (error) {
+      console.error(error);
+    }
+
+
+    localStorage.clear();
+    
     } catch(err){
       console.log(err);
     }
 
+  }
 
+  async finallyDeletUser(){
+    //Borrar usuario
+    await deleteDoc(doc(this.basededatos(), "Usuarios", "Usuario-" + this.auth.currentUser?.uid));
+    await this.auth.currentUser?.delete().then(function () {
+      alert("Cuenta borrada");
+      location.reload()
+    }).catch(function (error) {
+      console.error({error})
+    })
 
   }
 
@@ -382,6 +404,7 @@ export class FirebaseService {
     } else {
       uploadBytes(imgRef, img)
     .then(response => {
+      console.log(response);
 
     }).catch(err => console.log(err))
     }
@@ -693,5 +716,7 @@ export class FirebaseService {
 
     return reports;
   }
+
+
 
 }

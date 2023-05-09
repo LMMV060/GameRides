@@ -130,8 +130,9 @@ export class LoginComponent implements OnInit {
         })
 
         if(filtro === undefined){
-          const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario);
-          this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.auth.currentUser.photoURL);
+          const respuesta = await setDoc(doc(this.fire.basededatos(), "Usuarios", "Usuario-"+this.auth.currentUser.uid), usuario).then(async () => {
+            await this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.auth.currentUser?.photoURL);
+          })
           this.router.navigateByUrl('/home').then(() => {
             this.location.go('/home');
             window.location.reload();

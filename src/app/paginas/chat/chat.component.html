@@ -18,8 +18,10 @@
         <button (click)="toggleMenu()" class="mostrar">Mostrar Usuarios</button>
         <ul class="menu-list" *ngIf="menuVisible">
           <div *ngFor="let usuario of otrosUsuarios" (click)="chatear(usuario)" style="cursor: pointer;" class="usuario">
-            <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 60px; height: 60px;">
-            {{usuario.nombre}}
+            <div>
+              <img class="card-img-top" src="{{usuario.imgUrl}}" alt="Card image cap"  style="width: 60px; height: 60px;">
+              {{usuario.nombre}}
+            </div>
           </div>
         </ul>
       </div>

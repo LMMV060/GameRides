@@ -1,3 +1,4 @@
+<div class="loading" *ngIf="isDeleting" >Loading&#8230;</div>
 
   <div class="aviso" *ngIf="cuentaGoogle">
     <p class="mensaje">Se está usando una cuenta Google, solo estará disponible la opción "Borrar cuenta"</p>
@@ -103,7 +104,7 @@
   </ng-container>
 
   <ng-container *ngIf="mensaje === 'Borrar cuenta'">
-    <div *ngIf="!cuentaGoogle">
+    <div *ngIf="!cuentaGoogle && currentUser.password">
       <h2>Borrar cuenta</h2>
 
       <div>

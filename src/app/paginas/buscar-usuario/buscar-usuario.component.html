@@ -1,8 +1,8 @@
 <br>
 
 <div class="topnav">
-  <button (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
-  <button (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>
+  <button class="boton-anterior" (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
+  <button class="boton-siguiente" (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>
   <br>
   <input type="text" placeholder="Search.." (input)="ObtenerNombre($event)">
 </div>

@@ -39,7 +39,8 @@ export class EditarPerfilComponent {
 
       const usuario:any = await this.fire.getUserDataReal();
       this.img = usuario.imgUrl;
-      this.descripcion = usuario.descripcion;
+      this.descripcion = usuario.descripcion.replace(/<br>/g, '\n');
+      this.updateDescripcionHtml();
 
     } catch(err){
       this.router.navigateByUrl("/error")
@@ -85,7 +86,7 @@ export class EditarPerfilComponent {
 
     if(comprobador){
       await this.fire.guardarNuevaImagen(this.auth.currentUser?.uid, this.imgAGuardar);
-      await this.fire.guardarNuevaDescripcion(this.descripcion);
+      await this.fire.guardarNuevaDescripcion(this.descripcionHtml);
       await this.fire.guardarNuevoNombre(this.nombre);
       await this.fire.guardar(this.auth.currentUser?.uid).then(() => {
         this.router.navigateByUrl('/perfil').then(async () => {
@@ -112,4 +113,11 @@ export class EditarPerfilComponent {
     // Establecer la variable img con la URL sanitizada
     this.img = urlSegura;
   }
+
+  public descripcionHtml: string = '';
+
+  updateDescripcionHtml() {
+    this.descripcionHtml = this.descripcion.replace(/\n/g, '<br>');
+  }
+
 }

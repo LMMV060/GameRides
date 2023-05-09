@@ -12,7 +12,7 @@
       "icono": "man-outline"
   },
   {
-    "nombre":"Peticiones",
+    "nombre":"Peticiones/Ofertas",
     "ruta":"/peticiones",
     "color": "tertiary",
     "icono": "car-outline"

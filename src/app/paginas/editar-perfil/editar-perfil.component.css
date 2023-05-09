@@ -153,14 +153,7 @@ input[type="file"]:before {
   cursor: pointer;
   font-size: 16px;
   border-radius: 4px;
-
-}
-
-.upload-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+  pointer-events: none;
 }
 
 

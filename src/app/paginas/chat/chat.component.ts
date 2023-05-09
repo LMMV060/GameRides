@@ -7,6 +7,7 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { RealtimeService } from 'src/app/servicios/realtime.service';
 import * as io from 'socket.io-client';
 import { getDatabase } from 'firebase/database';
+import { doc, updateDoc } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-chat',
@@ -43,16 +44,21 @@ export class ChatComponent {
 
 
   async ngOnInit() {
-
+    let actualizarChats:any = [];
     this.comprobador = this.chat.UsuarioPrimero;
 
     this.user = await this.fire.getUserDataReal();
-
-    for(let i = 0; i < this.user.otrosChats.length;i++){
+    if(this.user.otrosChats){
+      for(let i = 0; i < this.user.otrosChats.length;i++){
       let usuario = await this.fire.getUserByUID(this.user.otrosChats[i]);
-      this.otrosUsuarios.push(usuario);
+      if(usuario && usuario.uid != this.auth.currentUser?.uid){
+        this.otrosUsuarios.push(usuario);
+        actualizarChats.push(usuario.uid)
+      }
+    }
     }
 
+    await this.chat.actualizarUsers(this.auth.currentUser?.uid, actualizarChats);
 
     await this.chat.getMensajes().then((mensajes:any) => {
       this.mensajes = mensajes;
@@ -62,14 +68,16 @@ export class ChatComponent {
 
     setInterval(async () => {
       await this.chat.getMensajes().then((mensajes:any) => {
-        if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
-          this.mensajes = mensajes;
-          this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+        if(mensajes){
+          if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
+            this.mensajes = mensajes;
+            this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+          }
+          mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
         }
-        mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
+
       });
     }, 100);
-
 
     this.scrollToBottom();
   }
@@ -84,9 +92,6 @@ export class ChatComponent {
       });
       this.scrollToBottom();
     }
-
-
-
   }
 
 

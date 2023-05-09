@@ -5,6 +5,8 @@ import * as crypto from 'crypto-js';
 import { Router } from '@angular/router';
 import { deleteDoc, doc } from '@angular/fire/firestore';
 import { EncriptadoService } from 'src/app/servicios/encriptado.service';
+import { RealtimeService } from 'src/app/servicios/realtime.service';
+import { FuncionesService } from 'src/app/servicios/funciones.service';
 
 @Component({
   selector: 'app-ajustes',
@@ -12,6 +14,7 @@ import { EncriptadoService } from 'src/app/servicios/encriptado.service';
   styleUrls: ['./ajustes.component.css']
 })
 export class AjustesComponent implements OnInit {
+  isDeleting:boolean = false;
 
   currentUser:any;
   cuentaGoogle:boolean = false;
@@ -27,14 +30,22 @@ export class AjustesComponent implements OnInit {
     private auth: Auth,
     private fire: FirebaseService,
     private router: Router,
-    private encry: EncriptadoService
+    private encry: EncriptadoService,
+    private chat: RealtimeService,
   ) { }
 
   async ngOnInit() {
     this.currentUser = await this.fire.getUserDataReal();
+
+    if(!this.currentUser){
+      alert("Disculpe las molestias, se va a borrar su cuenta de forma correcta")
+      await this.borrarError();
+    }
     if(this.currentUser.password === "??????"){
       this.cuentaGoogle = true;
     }
+
+
   }
 
   async mostrarMensaje(item: { nombre: string; }) {
@@ -98,20 +109,22 @@ export class AjustesComponent implements OnInit {
 
   async borrarCuenta(){
     if(this.auth.currentUser?.email == this.emailBorrar){
-
       if (this.encry.decryptData(this.pwdBorrar) === this.encry.decryptData(this.currentUser.password)) {
         //empieza a borrar
-        /*console.log(this.encry.decryptData(this.pwdBorrar));
-        console.log(this.encry.decryptData(this.currentUser.password));*/
-
-
-        await this.fire.deleteAllFromUser(this.currentUser.uid);
-
-        this.router.navigateByUrl("/home")
+        this.isDeleting = true;
+        try{
+          await this.fire.deleteAllFromUser(this.currentUser.uid).then(async ()=> {
+            await this.chat.borrarSalas(this.auth.currentUser?.uid);
+            await this.fire.finallyDeletUser();
+          })
+        }catch(err){
+          alert("Ha ocurrido un error, cierre sesión, inicie sesión de nuevo y vuelva a intentarlo")
+        } finally {
+          this.isDeleting = false;
+        }
       } else {
         alert('La contraseña no coincide');
       }
-
     } else {
       alert("Error: El email no es el de la sesión actual")
     }
@@ -119,11 +132,32 @@ export class AjustesComponent implements OnInit {
 
   async borrarCuentaGoogle(){
     if(this.auth.currentUser?.email == this.emailBorrar){
-        //empieza a borrar
-        await this.fire.deleteAllFromUser(this.currentUser.uid);
-        this.router.navigateByUrl("/home")
+      this.isDeleting = true;
+      try{
+        await this.fire.deleteAllFromUser(this.currentUser.uid).then(async ()=> {
+          await this.chat.borrarSalas(this.auth.currentUser?.uid);
+          await this.fire.finallyDeletUser();
+        })
+      }catch(err){
+        alert("Ha ocurrido un error, cierre sesión, inicie sesión de nuevo y vuelva a intentarlo")
+      } finally {
+        this.isDeleting = false;
+      }
     } else {
       alert("Error: El email no es el de la sesión actual")
+    }
+  }
+
+  async borrarError(){
+    this.isDeleting = true;
+    try{
+      this.fire.finallyDeletUser();
+    }
+    catch(err){
+
+      alert("Ha ocurrido un error, cierre sesión, inicie sesión de nuevo y vuelva a intentarlo")
+    } finally {
+      this.isDeleting = false;
     }
   }
 

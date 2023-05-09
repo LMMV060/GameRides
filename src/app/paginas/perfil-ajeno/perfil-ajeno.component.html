@@ -10,10 +10,13 @@
 
 <div *ngIf="cargaPerfil">
 
-  <button (click)="chatear()">Chatear</button>
-  <button (click)="mostrarContenido = !mostrarContenido">Reportar</button>
+  <div class="botones">
+    <button class="boton-chatear" (click)="chatear()">Chatear</button>
+    <button class="boton-reportar" (click)="mostrarContenido = !mostrarContenido">Reportar</button>
+  </div>
 
   <div *ngIf="mostrarContenido" >
+    <br>
     <textarea placeholder="Da informacion adicional sobre el reporte" rows="10" cols="50" maxlength="450" [(ngModel)]="descripcionRep"></textarea>
     <br>
     <button (click)="reportar()">Enviar informacion</button>

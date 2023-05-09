@@ -283,3 +283,40 @@ img{
   align-items: center;
   box-shadow: 0 4px 30px rgba(0,0,0,.05);
 }
+
+.botones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.boton-chatear, .boton-reportar {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.boton-chatear {
+  background-color: #28a745;
+  margin-right: 10px;
+}
+
+.boton-chatear:hover {
+  background-color: #218838;
+}
+
+.boton-reportar {
+  background-color: #dc3545;
+}
+
+.boton-reportar:hover {
+  background-color: #c82333;
+}
+
+.boton-reportar:focus {
+  outline: none;
+}
