@@ -231,7 +231,7 @@ export class FirebaseService {
 
 
     localStorage.clear();
-    
+
     } catch(err){
       console.log(err);
     }
@@ -404,7 +404,6 @@ export class FirebaseService {
     } else {
       uploadBytes(imgRef, img)
     .then(response => {
-      console.log(response);
 
     }).catch(err => console.log(err))
     }
@@ -496,6 +495,10 @@ export class FirebaseService {
         });
       }
     })
+  }
+
+  async guardarIMGNoticia(){
+
   }
 
 

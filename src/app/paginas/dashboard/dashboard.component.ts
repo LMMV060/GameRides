@@ -1,11 +1,13 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { firebaseApp$, initializeApp } from '@angular/fire/app';
 import { Auth, deleteUser, getAuth } from '@angular/fire/auth';
-import { deleteDoc, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/app/servicios/firebase.service';
 import { Noticia } from 'src/app/interfaces/noticia';
 import { FuncionesService } from 'src/app/servicios/funciones.service';
+import { getDownloadURL, getStorage, ref, uploadBytes } from '@angular/fire/storage';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,7 +33,8 @@ export class DashboardComponent implements OnInit {
     private fire: FirebaseService,
     private router:Router,
     private auth: Auth,
-    private a: FuncionesService
+    private a: FuncionesService,
+    private sanitizer: DomSanitizer,
   ) { }
 
   async ngOnInit(): Promise<void> {
@@ -156,27 +159,39 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  imgAGuardar:any = '';
+  img:any = '';
+  cargarImagen($event: any) {
+    const archivo = $event.target.files[0];
+    const storage = getStorage();
+    this.imgAGuardar = archivo;
 
+    // Crear URL de objeto para la imagen
+    const urlImagen = URL.createObjectURL(archivo);
 
-  /*
-  rutaImagen = ''; // propiedad para guardar la ruta de la imagen
+    // Sanitizar la URL creada
+    const urlSegura: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(urlImagen);
 
-  insertarImagen() {
-    const imagen = '<img src="' + this.rutaImagen + ' style="width: 50px;"">'; // agregar la ruta de la imagen
-    this.contenidoEditor += imagen;
+    // Establecer la variable img con la URL sanitizada
+    this.img = urlSegura
+
+    /*
+    Funciona
+
+    const storageRef = ref(storage,'NoticiasImgs/Noticia-'+ this.auth.currentUser?.uid);
+    uploadBytes(storageRef, archivo)
+    .then(response => {
+      console.log(response);
+      getDownloadURL(ref(storage, 'NoticiasImgs/Noticia-'+ this.auth.currentUser?.uid))
+    .then(async (url) => {
+      console.log(url);
+    })
+
+    }).catch(err => console.log(err))
+
+    */
 
   }
-
-  seleccionarImagen(event: any) {
-    const archivo = event.target.files[0]; // obtener el archivo seleccionado
-    const lector = new FileReader();
-    lector.readAsDataURL(archivo); // leer el archivo como base64
-    lector.onload = () => {
-      this.rutaImagen = lector.result as string; // guardar la ruta de la imagen como base64
-
-      this.insertarImagen();
-    };
-  }*/
 
   mostrandoEmojis = false;
 
@@ -191,9 +206,9 @@ export class DashboardComponent implements OnInit {
   }
 
   async guardarNoticia(){
-    if(this.titulo === "" || this.subtitulo === "" || this.contenidoEditor === ''){
+    const storage = getStorage();
+    if(this.titulo === "" || this.subtitulo === "" || this.contenidoEditor === '' || this.imgAGuardar === ''){
       alert("No se pudo crear la noticia, faltán atributos");
-
     } else {
       for(let i = 1; i<= 30; i++){
         const docRef = doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
@@ -204,6 +219,14 @@ export class DashboardComponent implements OnInit {
           }
         } else {
           let usuarioActual:any = await this.fire.getUserDataReal();
+
+          const storageRef = ref(storage,'NoticiasImgs/Noticia-'+i+'-'+ this.auth.currentUser?.uid);
+          //Hay que arreglar la propiedad de img
+          await uploadBytes(storageRef, this.imgAGuardar)
+          .then(async response => {
+
+          }).catch(err => console.log(err));
+
           let noticia:Noticia = {
             id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
             titulo: this.titulo,
@@ -211,12 +234,23 @@ export class DashboardComponent implements OnInit {
             contenido: this.contenidoEditor,
             fecha_creacion: this.convertirUnixAFecha(Math.floor(new Date().getTime() / 1000)),
             uid: this.auth.currentUser?.uid,
-            nombre_user: usuarioActual.nombre
+            nombre_user: usuarioActual.nombre,
+            imagen: ''
           }
+
 
           const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
           alert("Noticia creada");
-          location.reload();
+          let noticiaRef = await doc(this.fire.basededatos(), "Noticias",  "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
+          getDownloadURL(ref(storage, 'NoticiasImgs/Noticia-'+i+'-'+ this.auth.currentUser?.uid))
+          .then(async (url) => {
+            await updateDoc(noticiaRef, {
+              imagen: url,
+            })
+            .then(()=> {
+              location.reload();
+            })
+          })
           i = 31;
 
         }

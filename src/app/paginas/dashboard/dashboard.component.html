@@ -105,6 +105,15 @@
   <input type="text" class="subtitulo" placeholder="Escribe aquí el subtítulo" maxlength="50" [(ngModel)]="subtitulo">
   <div>{{subtitulo.length}} / 50 caracteres</div>
 
+  <br>
+  <h2>Imagen</h2>
+  <br>
+  <div class="upload-container">
+    <input class="imagen" type="file" accept=".jpg, .png, .jpeg" (change)="cargarImagen($event)">
+  </div>
+
+  <img [src]="img">
+
 
   <br>
 

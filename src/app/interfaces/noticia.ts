@@ -5,5 +5,6 @@ export interface Noticia {
   contenido:any,
   fecha_creacion:any,
   uid:any,
-  nombre_user:any
+  nombre_user:any,
+  imagen?:any
 }
