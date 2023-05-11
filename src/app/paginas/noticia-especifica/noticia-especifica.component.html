@@ -1,6 +1,36 @@
+
 <div *ngFor="let not of noticiaEspecifica" >
-  <h1>{{not.titulo}}</h1>
-  <h2>{{not.subtitulo}}</h2>
-  <p>{{not.nombre_user}}</p>
-  <div [innerHTML]="not.contenido"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9 col-lg-8 col-xl-7">
+        <br>
+        <div class="noticia">
+          <div class="card my-card">
+            <h1>{{not.titulo}}</h1>
+            <h2>{{not.subtitulo}}</h2>
+            <br>
+            <img class="img-Noticia" src="{{not.imagen}}"  alt="Card image cap">
+            <hr>
+            <div [innerHTML]="not.contenido"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-lg-4 col-xl-5">
+        <br>
+        <div class="usuario">
+          <div class="card my-card">
+            <h1>Otras noticias de {{not.nombre_user}}</h1>
+            <div *ngFor="let otras of otrasNoticias" style="cursor: pointer" (click)="irANoticia(otras.titulo)">
+              <hr>
+              <img class="card-img-top" src="{{otras.imagen}}"  alt="Card image cap">
+              <br>
+              <h3>{{otras.titulo}}</h3>
+              <h4>{{otras.subtitulo}}</h4>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

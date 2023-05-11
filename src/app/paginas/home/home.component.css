@@ -135,3 +135,9 @@ html, body {
 
   cursor: pointer;
 }
+
+.my-card .card-img-top {
+
+  height: 200px;
+  object-fit: cover;
+}

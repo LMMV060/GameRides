@@ -387,7 +387,19 @@ export class FirebaseService {
   }
 
   async getNoticiaByUser(uid:any){
+      let noticias:any[] = await this.getAllNoticias();
+      let noticiasFiltradas:any[] = [];
 
+      noticias.forEach((noticia:any) => {
+        if(noticia.uid === uid){
+
+          noticiasFiltradas.push(noticia);
+        }
+      });
+
+
+
+      return noticiasFiltradas;
   }
 
   async enviarRecuperacionContra(email:any){

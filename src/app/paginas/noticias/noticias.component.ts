@@ -10,7 +10,7 @@ import { FirebaseService } from 'src/app/servicios/firebase.service';
 export class NoticiasComponent {
   noticias:any = [];
   currentNoticiaIndex = 0;
-  noticiasPerPage = 2;
+  noticiasPerPage = 4;
 
   constructor(
     private fire: FirebaseService,

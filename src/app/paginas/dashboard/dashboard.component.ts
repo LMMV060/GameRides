@@ -206,10 +206,16 @@ export class DashboardComponent implements OnInit {
   }
 
   async guardarNoticia(){
+
     const storage = getStorage();
     if(this.titulo === "" || this.subtitulo === "" || this.contenidoEditor === '' || this.imgAGuardar === ''){
       alert("No se pudo crear la noticia, faltán atributos");
     } else {
+      if(/[\[\]{}\|\\\^~\[\]`"<>#?%]/.test(this.titulo)){
+        alert("No se permiten caracteres especiales en el título.");
+      } else {
+
+        this.loading = true;
       for(let i = 1; i<= 30; i++){
         const docRef = doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
         const docSnap = await getDoc(docRef);
@@ -226,37 +232,43 @@ export class DashboardComponent implements OnInit {
           .then(async response => {
 
           }).catch(err => console.log(err));
+            let noticia:Noticia = {
+              id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
+              titulo: this.titulo,
+              subtitulo: this.subtitulo,
+              contenido: this.contenidoEditor,
+              fecha_creacion: this.convertirUnixAFecha(Math.floor(new Date().getTime() / 1000)),
+              uid: this.auth.currentUser?.uid,
+              nombre_user: usuarioActual.nombre,
+              imagen: ''
+            }
 
-          let noticia:Noticia = {
-            id: "Noticia-"+ i + "-"+this.auth.currentUser?.uid,
-            titulo: this.titulo,
-            subtitulo: this.subtitulo,
-            contenido: this.contenidoEditor,
-            fecha_creacion: this.convertirUnixAFecha(Math.floor(new Date().getTime() / 1000)),
-            uid: this.auth.currentUser?.uid,
-            nombre_user: usuarioActual.nombre,
-            imagen: ''
-          }
 
-
-          const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
-          alert("Noticia creada");
-          let noticiaRef = await doc(this.fire.basededatos(), "Noticias",  "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
-          getDownloadURL(ref(storage, 'NoticiasImgs/Noticia-'+i+'-'+ this.auth.currentUser?.uid))
-          .then(async (url) => {
-            await updateDoc(noticiaRef, {
-              imagen: url,
+            const response = await setDoc(doc(this.fire.basededatos(), "Noticias", "Noticia-"+ i + "-"+this.auth.currentUser?.uid), noticia)
+            alert("Noticia creada");
+            let noticiaRef = await doc(this.fire.basededatos(), "Noticias",  "Noticia-"+ i + "-"+this.auth.currentUser?.uid);
+            getDownloadURL(ref(storage, 'NoticiasImgs/Noticia-'+i+'-'+ this.auth.currentUser?.uid))
+            .then(async (url) => {
+              await updateDoc(noticiaRef, {
+                imagen: url,
+              })
+              .then(()=> {
+                this.loading = false;
+                location.reload();
+              })
             })
-            .then(()=> {
-              location.reload();
-            })
-          })
-          i = 31;
+            i = 31;
 
         }
       }
+
+      }
     }
   }
+
+
+
+
 
   convertirUnixAFecha(unix: number): string {
     const fecha = new Date(unix * 1000); // Convertir el número unix a milisegundos
@@ -286,4 +298,6 @@ export class DashboardComponent implements OnInit {
       this.reportes[i].usuario = usuario;
     }
   }
+
+  loading = false;
 }
