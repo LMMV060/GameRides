@@ -2,6 +2,7 @@
 * {
   box-sizing: border-box;
   text-align: center;
+
 }
 
 /* Create three equal columns that floats next to each other */
@@ -22,6 +23,9 @@
 }
 
 
+
+
+/*Redes sociales*/
 .twitter{
   background-color: blue;
 }

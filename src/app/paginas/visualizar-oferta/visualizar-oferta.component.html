@@ -1,6 +1,8 @@
 <div *ngIf="datos" >
-  <button (click)="chatear()">Chatear</button>
-  <button (click)="interesado(datos.id)">Me interesa!</button>
+  <div class="button-container">
+    <button class="chatear" (click)="chatear()">Chatear</button>
+    <button class="interesa" (click)="interesado(datos.id)">Me interesa!</button>
+  </div>
 
   <h3>{{ datos.nombre }}</h3>
   <p>{{ datos.descripcion }}</p>

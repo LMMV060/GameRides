@@ -74,6 +74,7 @@
 
 <div *ngIf="opcionSeleccionada === 'Mis-Noticias'">
   <div *ngFor="let noticia of NoticiasUsuario" >
+    <button class="prueba" (click)="eliminarNoticia(noticia)">Eliminar</button>
     <div class="card my-card" >
       <h4 class="card-title" >{{noticia.titulo}}</h4>
       <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
@@ -95,6 +96,10 @@
         <h4>{{oa.fecha}}</h4>
         <p>{{oa.descripcion}}</p>
       </div>
+
+      <div *ngIf="!ofertasAceptadasMostrar || ofertasAceptadasMostrar.length === 0" >
+        <p>No se ha aceptado ninguna oferta</p>
+      </div>
     </div>
 
     <div class="col-sm-6">
@@ -105,9 +110,9 @@
         <h4>{{pa.fecha}}</h4>
         <p>{{pa.descripcion}}</p>
       </div>
+      <div *ngIf="!peticionesAceptadasMostrar || peticionesAceptadasMostrar.length === 0" >
+        <p>No se ha aceptado ninguna petición</p>
+      </div>
     </div>
-  </div>
-  <div *ngIf="!ofertasAceptadasMostrar || ofertasAceptadasMostrar.length === 0" >
-    <p>No se ha aceptado ninguna oferta</p>
   </div>
 </div>

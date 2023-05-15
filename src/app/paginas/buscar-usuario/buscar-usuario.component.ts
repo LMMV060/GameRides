@@ -16,7 +16,7 @@ export class BuscarUsuarioComponent implements OnInit {
   datosFiltrados:any = [];
 
   currentUsersIndx = 0;
-  usersPerPage = 3;
+  usersPerPage = 10;
 
   constructor(
     private fire:FirebaseService,

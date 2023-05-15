@@ -3,3 +3,35 @@
   height: 200px;
   object-fit: cover;
 }
+
+.botones-navegacion {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+.boton-anterior, .boton-siguiente {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.boton-anterior:hover, .boton-siguiente:hover {
+  background-color: #0062cc;
+}
+
+.boton-anterior:disabled, .boton-siguiente:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.boton-siguiente {
+  margin-left: auto;
+}

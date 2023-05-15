@@ -515,7 +515,10 @@ export class FirebaseService {
 
 
   async meInteresaTransporte(id:any, uid:any){
-    let ofertaInteresada = await doc(this.bbdd, "Transportes", id);
+
+    try{
+
+      let ofertaInteresada = await doc(this.bbdd, "Transportes", id);
     let prueba = await this.getAllTransportes()
     let interesados:any = [];
     let rechazados:any = [];
@@ -563,10 +566,17 @@ export class FirebaseService {
       interesados: interesados
     });
 
+    } catch(err){
+      alert("Ocurrió un error, porfavor, actualiza e intentelo de nuevo");
+    }
+
   }
 
   async meInteresaPeticion(id:any, uid:any){
-    let peticionInteresada = await doc(this.bbdd, "Peticiones", id);
+
+    try{
+
+      let peticionInteresada = await doc(this.bbdd, "Peticiones", id);
     let prueba = await this.getAllPeticiones()
     let interesados:any = [];
     let rechazados:any = [];
@@ -612,6 +622,10 @@ export class FirebaseService {
     await updateDoc(peticionInteresada, {
       interesados: interesados
     });
+
+    } catch(err){
+      alert("Ocurrió un error, porfavor, actualiza e intentelo de nuevo");
+    }
   }
 
   async calificar(calificacion:any, uidUsuarioCalificado:any, currentUserUID:any){

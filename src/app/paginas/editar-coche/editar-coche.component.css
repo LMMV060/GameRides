@@ -1,0 +1,56 @@
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+label {
+  position: relative;
+  margin-bottom: 5px;
+}
+
+label::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #007bff; /* Cambia el color si lo deseas */
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+input[type="number"] {
+  width: 50px;
+}
+
+input:focus + label::after,
+input:not(:placeholder-shown) + label::after {
+  transform: scaleX(1);
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #0056b3; /* Cambia el color si lo deseas */
+}

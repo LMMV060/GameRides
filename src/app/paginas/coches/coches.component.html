@@ -1,15 +1,26 @@
 <br>
 
-<div class="labels-container">
-  <label for="matricula" class="label-floating">Matricula</label>
-  <input required type="string" id="matricula" (input)="ObtenerMatricula($event)" pattern="[A-Za-z]{3}">
-
-  <label for="alias" class="label-floating">Alias</label>
-  <input required type="string" id="alias" (input)="ObtenerAlias($event)">
-
-  <label for="alias" class="label-floating">Número de plazas</label>
-  <input required type="number" id="plazas" (input)="ObtenerPlazas($event)">
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="matricula" class="label-floating">Matricula</label>
+      <br>
+      <input required type="string" id="matricula" (input)="ObtenerMatricula($event)" pattern="[A-Za-z]{3}">
+    </div>
+    <br>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="alias" class="label-floating">Alias</label>
+      <br>
+      <input required type="string" id="alias" (input)="ObtenerAlias($event)">
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+      <label for="plazas" class="label-floating">Número de plazas</label>
+      <br>
+      <input required type="number" id="plazas" (input)="ObtenerPlazas($event)">
+    </div>
+  </div>
 </div>
+
 
   <br>
   <br>

@@ -203,4 +203,14 @@ export class PerfilComponent implements OnInit {
     this.peticion.setPeticion(peticion);
     this.router.navigateByUrl("/solicitudesPeticiones")
   }
+
+  async eliminarNoticia(Noticia:any){
+    if (confirm('¿Está seguro de que desea eliminar esta noticia?')) {
+
+      await deleteDoc(doc(this.fire.basededatos(), "Noticias", Noticia.id));
+
+      this.NoticiasUsuario = this.NoticiasUsuario.filter((o:any) => o !== Noticia);
+      alert("Noticia eliminada");
+    }
+  }
 }

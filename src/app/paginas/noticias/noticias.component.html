@@ -1,7 +1,9 @@
-<button (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
-<button (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>
+<div class="botones-navegacion">
+  <button class="boton-anterior" (click)="onBack()" [disabled]="!canGoBack()">Atras</button>
+  <button class="boton-siguiente" (click)="onForward()" [disabled]="!canGoForward()">Adelante</button>
+</div>
 <br>
-<br>
+
 <div *ngFor="let noticia of noticias.slice(currentNoticiaIndex, currentNoticiaIndex + noticiasPerPage)">
   <div class="card my-card" (click)="irANoticia(noticia.titulo)" style="cursor: pointer;">
     <img class="card-img-top" src="{{noticia.imagen}}"  alt="Card image cap">
@@ -14,5 +16,3 @@
   </div>
   <br>
 </div>
-
-

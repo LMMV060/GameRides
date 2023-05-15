@@ -300,4 +300,6 @@ export class DashboardComponent implements OnInit {
   }
 
   loading = false;
+
 }
+

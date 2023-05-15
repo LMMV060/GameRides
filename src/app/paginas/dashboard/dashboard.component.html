@@ -5,7 +5,7 @@
 
 </div>
 
-<select id="segmento" name="segmento" (change)="Busqueda($event)">
+<select class="Seccion" id="segmento" name="segmento" (change)="Busqueda($event)">
   <option value="Usuarios">Usuarios</option>
   <option value="Transportes">Transportes</option>
   <option value="Peticiones">Peticiones</option>
@@ -181,6 +181,10 @@
   <br>
   <h1>Reportes</h1>
   <br>
+  <div *ngIf="!reportes || reportes.length === 0" style="text-align: center;">
+    <p>No hay reportes</p>
+  </div>
+
   <div *ngFor="let r of reportes">
     <div class="card">
 
@@ -193,7 +197,6 @@
       </div>
       <hr>
       {{r.asunto}}
-
     </div>
     <br>
   </div>

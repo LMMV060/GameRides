@@ -13,7 +13,7 @@
 
   <br>
   <div *ngIf="aceptadosMostrar" >
-    <h2>Personas aceptadas</h2>
+    <h2>Personas aceptadas:</h2>
     <div class="usuario" class="personas_interesadas" *ngFor="let aceptado of aceptadosMostrar">
       <div class="botones">
         <button (click)="quitar(aceptado.uid)">Quitar</button>

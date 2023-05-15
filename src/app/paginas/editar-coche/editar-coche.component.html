@@ -1,14 +1,14 @@
 <div>
   <label position="floating" >Alias</label>
-  <br>
   <input required type="text" id="alias" [(ngModel)]="alias">
   <br>
   <label position="floating">Matricula</label>
   <input required type="text" id="matricula"  [(ngModel)]="matricula">
   <br>
   <label position="floating">Numero de plazas</label>
-  <br>
   <input required type="number" id="plazas"  [(ngModel)]="plazas">
 </div>
 
-<button (click)="guardarCambiosCoche()">Guardar</button>
+<div>
+  <button (click)="guardarCambiosCoche()">Guardar</button>
+</div>

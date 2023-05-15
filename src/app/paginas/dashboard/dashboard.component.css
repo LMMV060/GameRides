@@ -205,3 +205,13 @@ select.color option.morado {
     transform: rotate(360deg);
   }
 }
+
+.Seccion{
+    font-size: 20px;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    margin-bottom: 10px;
+}
