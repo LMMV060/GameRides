@@ -77,7 +77,10 @@ export class LoginComponent implements OnInit {
 
         this.auth.signOut();
       } else {
-        this.router.navigateByUrl('/home');
+        this.router.navigateByUrl('/home')
+        .then(() => {
+          location.reload();
+        })
       }
 
 

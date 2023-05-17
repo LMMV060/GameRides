@@ -49,6 +49,11 @@ export class AppComponent implements OnInit{
         // Si se encontró la página, la elimina del arreglo
         this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaChat);
       }
+
+      const paginaCoches = this.paginas.find((pagina:any) => pagina.nombre === 'Coches');
+      if(paginaCoches){
+        this.paginas = this.paginas.filter((pagina:any) => pagina !== paginaCoches);
+      }
     }
 
     const unixTime = Math.floor(new Date().getTime() / 1000);
