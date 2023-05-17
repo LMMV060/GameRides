@@ -50,8 +50,10 @@ export class PerfilAjenoComponent implements OnInit {
 
     this.usuarioActual = this.datos.filter((objeto:any) => objeto.nombre === this.nombre);
 
+    try{
+      this.isBan = this.usuarioActual[0].isDisabled
 
-    this.isBan = this.usuarioActual[0].isDisabled
+
     const queryPeticiones = await getDocs(collection(this.fire.basededatos(), "Peticiones"));
     queryPeticiones.forEach((doc) => {
       this.Peticiones.push(doc.data());
@@ -66,8 +68,6 @@ export class PerfilAjenoComponent implements OnInit {
 
     this.Transportes.filter((objeto:any) => objeto.uid == this.usuarioActual[0].uid).forEach((objeto: any) => this.TransportesUsuario.push(objeto));
 
-
-
     if(this.usuarioActual.length === 0){
       this.router.navigateByUrl('/error');
     }
@@ -81,6 +81,10 @@ export class PerfilAjenoComponent implements OnInit {
     }
 
     this.calificacion = await this.fire.obtenerCalificacion(this.usuarioActual[0].uid, this.auth.currentUser?.uid)
+    } catch(err){
+      this.router.navigateByUrl('/error');
+
+    }
 
   }
 

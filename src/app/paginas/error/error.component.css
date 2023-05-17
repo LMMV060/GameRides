@@ -1,0 +1,41 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.error-container {
+  text-align: center;
+  background-color: #ff4d4f;
+  border-radius: 10px;
+  padding: 20px;
+  color: #fff;
+}
+
+.error-container p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+img {
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+  margin-top: 20px;
+}
+
+.volver{
+  text-align: center;
+}
+
+button{
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #007bff;
+  font-size: 16px;
+  cursor: pointer;
+}
