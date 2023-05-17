@@ -1,4 +1,4 @@
-<div>
+<div class="edicion">
   <label position="floating" >Alias</label>
   <input required type="text" id="alias" [(ngModel)]="alias">
   <br>
@@ -9,6 +9,13 @@
   <input required type="number" id="plazas"  [(ngModel)]="plazas">
 </div>
 
-<div>
+<div class="edicion">
   <button (click)="guardarCambiosCoche()">Guardar</button>
+</div>
+
+<br>
+<div class="footer">
+  <div class="notcontainer">
+    <app-footer></app-footer>
+  </div>
 </div>

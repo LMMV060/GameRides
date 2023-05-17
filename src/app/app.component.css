@@ -40,7 +40,5 @@ nav a {
 .row {
   display: flex;
   justify-content: center;
-  margin-left: 14%;
-  margin-right: 14%;
 }
 

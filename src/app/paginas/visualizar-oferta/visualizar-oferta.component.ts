@@ -63,7 +63,7 @@ export class VisualizarOfertaComponent {
     if(this.auth.currentUser){
       await this.fire.meInteresaTransporte(id, this.auth.currentUser?.uid)
     } else {
-      alert("Por favor, inicie sesión primero")
+      this.router.navigateByUrl("/login");
     }
   }
 

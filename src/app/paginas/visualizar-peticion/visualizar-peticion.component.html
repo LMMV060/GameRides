@@ -1,6 +1,8 @@
 <div *ngIf="datos" >
-  <button (click)="chatear()">Chatear</button>
-  <button (click)="interesado(datos.id)">Me interesa!</button>
+  <div class="button-container">
+    <button class="chatear" (click)="chatear()">Chatear</button>
+    <button class="interesa" (click)="interesado(datos.id)">Me interesa!</button>
+  </div>
 
   <h3>{{ datos.nombre }}</h3>
   <p>{{ datos.descripcion }}</p>
@@ -39,5 +41,12 @@
 
   <div *ngIf="!datos.interesados">
       <p>Actualmente no hay ninguna persona interesada, se el primero!</p>
+  </div>
+</div>
+
+<br>
+<div class="footer">
+  <div class="notcontainer">
+    <app-footer></app-footer>
   </div>
 </div>

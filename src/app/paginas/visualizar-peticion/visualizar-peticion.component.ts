@@ -56,14 +56,14 @@ export class VisualizarPeticionComponent {
 
     this.chat.chat(usuarioActual, this.usuarioActual[0]);
 
-    this.router.navigateByUrl("/mis-chats")
+    this.router.navigateByUrl("/mis-chats");
   }
 
   async interesado(id:any){
     if(this.auth.currentUser){
       await this.fire.meInteresaPeticion(id, this.auth.currentUser?.uid);
     } else {
-      alert("Por favor, inicie sesión primero")
+      this.router.navigateByUrl("/login");
     }
   }
 

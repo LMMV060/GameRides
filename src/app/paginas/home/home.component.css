@@ -117,10 +117,7 @@
   }
 }
 
-html, body {
-  height: 100%;
-  margin: 0;
-}
+
 .content {
   padding: 20px;
   min-height: 100%;
@@ -141,3 +138,8 @@ html, body {
   height: 200px;
   object-fit: cover;
 }
+
+html, body{
+  margin: 0;
+}
+
