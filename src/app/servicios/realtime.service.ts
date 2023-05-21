@@ -78,11 +78,11 @@ export class RealtimeService {
     await this.getMensajes();
 
     if(this.UsuarioPrimero.uid === this.auth.currentUser?.uid){
-      this.mail.enviarEmailChat(this.UsuarioSegundo.email, mensaje, this.auth.currentUser?.displayName);
+      //this.mail.enviarEmailChat(this.UsuarioSegundo.email, mensaje, this.auth.currentUser?.displayName);
     }
 
     if(this.UsuarioSegundo.uid === this.auth.currentUser?.uid){
-      this.mail.enviarEmailChat(this.UsuarioPrimero.email, mensaje, this.auth.currentUser?.displayName);
+      //this.mail.enviarEmailChat(this.UsuarioPrimero.email, mensaje, this.auth.currentUser?.displayName);
     }
 
   }
