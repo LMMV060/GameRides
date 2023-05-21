@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { get, getDatabase, ref, set, remove} from "firebase/database";
+import { get, getDatabase, ref, set, remove, onValue} from "firebase/database";
 import { Chat } from 'src/app/interfaces/chat';
 import { EmailService } from './email.service';
 import { FirebaseService } from './firebase.service';
@@ -101,6 +101,7 @@ export class RealtimeService {
             mensajes.push(mensajeData);
           }
         }
+
         return mensajes;
 
       } else {
@@ -110,6 +111,19 @@ export class RealtimeService {
       console.error(error);
       return null;
     });
+  }
+
+  actualizarMensajes(){
+    let sala = ref(this.db, this.SalaActual);
+
+  onValue(sala, (snapshot) => {
+    const mensajes:any = [];
+    snapshot.forEach((childSnapshot) => {
+      const mensaje = childSnapshot.val();
+      mensajes.push(mensaje);
+    });
+    return mensajes;
+  });
   }
 
   async getSalaActual(){

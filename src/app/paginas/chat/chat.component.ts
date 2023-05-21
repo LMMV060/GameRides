@@ -75,7 +75,6 @@ export class ChatComponent {
           }
           mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
         }
-
       });
     }, 100);
 
@@ -106,9 +105,8 @@ export class ChatComponent {
 
   async cargarMensajes(){
 
-    await this.chat.getMensajes().then((mensajes:any) => {
+    await this.chat.getMensajes().then(async (mensajes:any) => {
       this.mensajes = mensajes;
-
     });
   }
 
