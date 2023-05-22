@@ -15,8 +15,8 @@ export class BuscarUsuarioComponent implements OnInit {
   datos:any = [];
   datosFiltrados:any = [];
 
-  currentUsersIndx = 0;
-  usersPerPage = 10;
+  currentUserIndex = 0;
+  usersPerPage = 5;
 
   constructor(
     private fire:FirebaseService,
@@ -42,13 +42,10 @@ export class BuscarUsuarioComponent implements OnInit {
   async Mostrar(){
     const querySnapshot = await getDocs(collection(this.fire.basededatos(), "Usuarios"));
     querySnapshot.forEach((doc) => {
-
       this.datos.push(doc.data());
-
     });
 
-    this.datosFiltrados = this.datos;
-
+    this.datosFiltrados = this.datos.filter((data:any) => !data.isDisabled);
     await this.ordenarUsuarios();
 
   }
@@ -93,24 +90,23 @@ export class BuscarUsuarioComponent implements OnInit {
   }
 
   canGoBack() {
-    return this.currentUsersIndx > 0;
+    return this.currentUserIndex > 0;
   }
 
   canGoForward() {
-    return this.currentUsersIndx + this.usersPerPage < this.datosFiltrados.length;
+    return this.currentUserIndex + this.usersPerPage < this.datosFiltrados.length;
   }
 
   onBack(): void {
     if (this.canGoBack()) {
-      this.currentUsersIndx -= this.usersPerPage;
+      this.currentUserIndex -= this.usersPerPage;
     }
   }
 
   onForward(): void {
     if (this.canGoForward()) {
-      this.currentUsersIndx += this.usersPerPage;
+      this.currentUserIndex += this.usersPerPage;
     }
   }
-
 
 }

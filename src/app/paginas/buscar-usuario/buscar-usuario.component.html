@@ -8,7 +8,7 @@
 </div>
 <br>
 
-<div *ngFor="let data of datosFiltrados.slice(currentUsersIndx, currentUsersIndx + usersPerPage)" (click)="irAPerfil(data.uid)">
+<div *ngFor="let data of datosFiltrados.slice(currentUserIndex, currentUserIndex + usersPerPage)" (click)="irAPerfil(data.uid)">
 <div *ngIf="data.isDisabled" >
 
 </div>

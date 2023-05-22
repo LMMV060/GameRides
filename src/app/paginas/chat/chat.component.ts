@@ -73,8 +73,8 @@ export class ChatComponent {
             if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
               this.mensajes = mensajes;
               this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+              mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
             }
-            mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
           }
         });
       }, 100);
