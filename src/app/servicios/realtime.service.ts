@@ -50,7 +50,8 @@ export class RealtimeService {
           } else {
             set(ref(this.db, 'Sala-' + usuario1.uid + '-' + usuario2.uid), {
               username1: usuario1.nombre,
-              username2: usuario2.nombre
+              username2: usuario2.nombre,
+              id: 'Sala-' + usuario1.uid + '-' + usuario2.uid
             });
 
             await localStorage.setItem("SalaActual", 'Sala-' + usuario1.uid + '-' + usuario2.uid)
@@ -116,12 +117,20 @@ export class RealtimeService {
   actualizarMensajes(){
     let sala = ref(this.db, this.SalaActual);
 
-  onValue(sala, (snapshot) => {
+
+    onValue(sala, (snapshot) => {
+
     const mensajes:any = [];
     snapshot.forEach((childSnapshot) => {
       const mensaje = childSnapshot.val();
-      mensajes.push(mensaje);
+      if(mensaje.id === this.SalaActual){
+        console.log(mensaje.id);
+
+        mensajes.push(mensaje);
+      }
     });
+    console.log(mensajes);
+
     return mensajes;
   });
   }

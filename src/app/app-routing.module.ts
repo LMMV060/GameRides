@@ -110,6 +110,7 @@ const rutas:Routes = [
   {
     path:'coches',
     component: CochesComponent,
+    ...canActivate(() => redirectUnauthorizedTo(['/login']))
   },
   {
     path:'noticias',

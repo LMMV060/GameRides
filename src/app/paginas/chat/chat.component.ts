@@ -66,17 +66,19 @@ export class ChatComponent {
 
     let mensajesAnteriores = [];
 
-    setInterval(async () => {
-      await this.chat.getMensajes().then((mensajes:any) => {
-        if(mensajes){
-          if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
-            this.mensajes = mensajes;
-            this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+    if(this.mensajes.length === 0){
+      setInterval(async () => {
+        await this.chat.getMensajes().then((mensajes:any) => {
+          if(mensajes){
+            if (mensajes.length !== mensajesAnteriores.length) { // Si la longitud del arreglo ha cambiado
+              this.mensajes = mensajes;
+              this.scrollToBottom(); // Desplazar el div de mensajes hacia abajo
+            }
+            mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
           }
-          mensajesAnteriores = mensajes; // Actualizar la longitud anterior del arreglo
-        }
-      });
-    }, 100);
+        });
+      }, 100);
+    }
 
     this.scrollToBottom();
   }
@@ -104,7 +106,6 @@ export class ChatComponent {
   }
 
   async cargarMensajes(){
-
     await this.chat.getMensajes().then(async (mensajes:any) => {
       this.mensajes = mensajes;
     });
