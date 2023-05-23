@@ -18,19 +18,49 @@ nav {
 
 a {
   color: #fff;
+  background-color: rgba(65, 60, 60, 0.5);;
   text-decoration: none;
 }
 
-nav a {
-  left: 5;
-  right:5;
-  display: block; /* Establece los elementos a como bloques */
-  border-bottom: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
-  border-top: 1px solid white; /* Agrega una línea blanca debajo de cada elemento a */
-  border-left: 1px solid white;
-  border-right: 1px solid white;
-  padding: 10px; /* Agrega un espacio de relleno para separar los elementos */
+.header-nav a {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  margin: 0 12px; /* Ajusta el valor de los márgenes según tus preferencias */
+  padding: 10px; /* Ajusta el valor del relleno según tus preferencias */
+  border: 2px solid transparent;
+  position: relative;
+  cursor: pointer; /* Agregado: Cambia el cursor al indicar que es interactivo */
 }
+
+.header-nav a::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.header-nav a:hover::before,
+.header-nav a:focus::before {
+  opacity: 1;
+}
+
+
+.header-nav a:hover {
+  background-color: rgba(139, 129, 129, 0.1);
+}
+
+.header-nav a:hover::before {
+  opacity: 1;
+}
+
+
 
 .container-fluid {
   display: flex;
