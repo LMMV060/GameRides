@@ -66,7 +66,6 @@ export class ChatComponent {
 
     let mensajesAnteriores = [];
 
-    if(this.mensajes.length === 0){
       setInterval(async () => {
         await this.chat.getMensajes().then((mensajes:any) => {
           if(mensajes){
@@ -78,7 +77,7 @@ export class ChatComponent {
           }
         });
       }, 100);
-    }
+
 
     this.scrollToBottom();
   }

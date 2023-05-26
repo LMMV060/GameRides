@@ -1,4 +1,5 @@
 <div class="loading" *ngIf="!cargar" >Loading&#8230;</div>
+<!--
 <div class="otherUsers">
 
     <span class="d-block d-sm-none d-md-none d-lg-none" style="font-size: 0.75rem;">
@@ -51,6 +52,10 @@
       </div>
       <br>
     </span>
+</div>
+-->
+<div *ngIf="!comprobador" >
+  <p>Ups, no ha seleccionado a nadie para chatear</p>
 </div>
 
 <div class="chat" *ngIf="comprobador" >
