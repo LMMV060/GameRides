@@ -124,8 +124,6 @@ export class RealtimeService {
     snapshot.forEach((childSnapshot) => {
       const mensaje = childSnapshot.val();
       if(mensaje.id === this.SalaActual){
-        console.log(mensaje.id);
-
         mensajes.push(mensaje);
       }
     });

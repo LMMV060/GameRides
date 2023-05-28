@@ -65,6 +65,7 @@ export class ChatComponent {
     });
 
     let mensajesAnteriores = [];
+    this.chat.actualizarMensajes();
 
       setInterval(async () => {
         await this.chat.getMensajes().then((mensajes:any) => {
