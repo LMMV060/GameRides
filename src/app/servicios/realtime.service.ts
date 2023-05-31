@@ -79,11 +79,11 @@ export class RealtimeService {
     await this.getMensajes();
 
     if(this.UsuarioPrimero.uid === this.auth.currentUser?.uid){
-      //this.mail.enviarEmailChat(this.UsuarioSegundo.email, mensaje, this.auth.currentUser?.displayName);
+      this.mail.enviarEmailChat(this.UsuarioSegundo.email, mensaje, this.auth.currentUser?.displayName);
     }
 
     if(this.UsuarioSegundo.uid === this.auth.currentUser?.uid){
-      //this.mail.enviarEmailChat(this.UsuarioPrimero.email, mensaje, this.auth.currentUser?.displayName);
+      this.mail.enviarEmailChat(this.UsuarioPrimero.email, mensaje, this.auth.currentUser?.displayName);
     }
 
   }
@@ -127,7 +127,6 @@ export class RealtimeService {
         mensajes.push(mensaje);
       }
     });
-    console.log(mensajes);
 
     return mensajes;
   });
@@ -192,7 +191,6 @@ export class RealtimeService {
 
     if(Usuario.otrosChats){
       for(let i = 0; i < Usuario.otrosChats.length; i++){
-        console.log(Usuario.otrosChats[i]);
 
         let sala1 = ref(this.db, 'Sala-' + uid + '-' + Usuario.otrosChats[i]);
 
