@@ -255,3 +255,13 @@ img{
       transform: rotate(360deg);
     }
   }
+
+  .boton{
+  text-align: center;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-right: 5px;
+  }

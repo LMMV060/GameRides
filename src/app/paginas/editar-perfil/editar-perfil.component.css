@@ -97,13 +97,15 @@ img{
   }
 
   .container {
+
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
   background-color: #f2f2f2;
+  max-width: 300px;
 }
 
 .izquierdo,
@@ -160,6 +162,9 @@ input[type="file"]:before {
 textarea {
   display: block;
   margin: auto;
+  max-width: 300px;
+  min-height: 300px;
+  max-height: 300px;
 }
 
 #editor {

@@ -21,7 +21,7 @@
   <br>
 <div *ngFor="let usuario of usuariosFiltrados" >
   <div class="card">
-    <button class="delete-button" (click)="eliminarUsuario(usuario)">Eliminar</button>
+    <button class="delete-button" (click)="eliminarUsuario(usuario)">Deshabilitar cuenta</button>
     <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" (click)="irAPerfil(usuario.nombre)">
     <div class="container">
       <h4><b>{{usuario.nombre}}</b></h4>
@@ -40,7 +40,7 @@
   <br>
 <div *ngFor="let transporte of transportesFiltrados" >
   <div class="card">
-    <button class="delete-button" (click)="eliminarTransporte(transporte)">Eliminar</button>
+    <button class="delete-button" (click)="eliminarTransporte(transporte)">Eliminar oferta</button>
     <img class="imagen-perfil"src={{transporte.url}} alt="Avatar" (click)="irAPerfil(transporte.nombre)">
     <div class="container">
       <h4><b>{{transporte.nombre}}</b></h4>
@@ -59,7 +59,7 @@
   <br>
 <div *ngFor="let peticion of peticionesFiltradas" >
   <div class="card">
-    <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar</button>
+    <button class="delete-button" (click)="eliminarPeticion(peticion)">Eliminar petición</button>
     <img class="imagen-perfil"src={{peticion.url}} alt="Avatar" (click)="irAPerfil(peticion.nombre)">
     <div class="container">
       <h4><b>{{peticion.nombre}}</b></h4>
@@ -79,7 +79,7 @@
   <br>
   <div *ngFor="let usuario of lista_negra_filtrada" >
     <div class="card">
-      <button class="delete-button" (click)="perdonarUsuario(usuario)">Desbanear</button>
+      <button class="delete-button" (click)="perdonarUsuario(usuario)">Habilitar cuenta</button>
       <img class="imagen-perfil"src={{usuario.imgUrl}} alt="Avatar" (click)="irAPerfil(usuario.nombre)">
       <div class="container">
         <h4><b>{{usuario.nombre}}</b></h4>
@@ -168,7 +168,7 @@
   </div>
   <br>
 
-  <button (click)="guardarNoticia()">Guardar</button>
+  <button class="noticia" (click)="guardarNoticia()">Guardar</button>
 
   <div class="loading" *ngIf="loading" >Loading&#8230;</div>
 
@@ -200,4 +200,8 @@
     </div>
     <br>
   </div>
+</div>
+
+<div class="footer">
+  <app-footer></app-footer>
 </div>

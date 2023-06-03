@@ -47,7 +47,9 @@ export class InteresadosPeticionComponent {
     if(this.interesados){
       this.interesados.forEach(async (objeto:any) => {
         const dato = await this.interP.getInteresados(objeto)
-        this.interesadosMostrar.push(dato);
+        if(dato != undefined){
+          this.interesadosMostrar.push(dato);
+        }
       });
     }
 

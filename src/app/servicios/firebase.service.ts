@@ -555,9 +555,9 @@ export class FirebaseService {
           if(aceptados.includes(uid)){
             alert("Ya estas aceptado, ten un buen viaje!")
           } else {
-            await this.email.enviarEmailInteresado(prueba[0].email);
             alert("Te interesa esta oferta de transporte, ahora debes esperar a que te acepten o rechacen la plaza")
             interesados.push(uid);
+            await this.email.enviarEmailInteresado(prueba[0].email);
           }
         }
       }

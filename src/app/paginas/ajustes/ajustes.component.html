@@ -68,7 +68,7 @@
         <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdEmail">
       </div>
       <br>
-      <button expand="block" (click)="cambiarEmail()">Cambiar email</button>
+      <button class="boton" expand="block" (click)="cambiarEmail()">Cambiar email</button>
 
     </div>
   </ng-container>
@@ -99,7 +99,7 @@
               <input required type="password" class="pwd" autocomplete="off" [(ngModel)]="pwdConfirmar">
             </div>
             <br>
-            <button expand="block" (click)="cambiarPwd()">Cambiar contraseña</button>
+            <button class="boton" expand="block" (click)="cambiarPwd()">Cambiar contraseña</button>
     </div>
   </ng-container>
 
@@ -119,7 +119,7 @@
         <input required type="password" id="pwd" autocomplete="off" [(ngModel)]="pwdBorrar">
       </div>
       <br>
-      <button expand="block" (click)="borrarCuenta()">Borrar cuenta</button>
+      <button class="boton" expand="block" (click)="borrarCuenta()">Borrar cuenta</button>
     </div>
 
     <div *ngIf="cuentaGoogle">
@@ -131,7 +131,7 @@
         <input required type="email" id="CurrEmail" autocomplete="off" [(ngModel)]="emailBorrar">
       </div>
       <br>
-      <button expand="block" (click)="borrarCuentaGoogle()">Borrar cuenta</button>
+      <button class="boton" expand="block" (click)="borrarCuentaGoogle()">Borrar cuenta</button>
 
     </div>
   </ng-container>

@@ -31,7 +31,7 @@
 
   <h2> Personas interesadas: </h2>
 
-  <div *ngIf="interesadosMostrar" >
+  <div *ngIf="interesadosMostrar">
 
     <div *ngFor="let inter of interesadosMostrar" class="personas_interesadas">
       <div class="botones">
@@ -39,7 +39,7 @@
         <button (click)="rechazar(inter.uid)">Rechazar</button>
       </div>
       <div class="usuario" (click)="irAPerfil(inter.uid)">
-        <img [ngSrc]="inter.imgUrl" width="100" height="100">
+        <img *ngIf="inter.imgUrl"  [ngSrc]="inter.imgUrl" width="100" height="100">
         <p>
           {{inter.nombre}}
         </p>

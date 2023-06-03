@@ -300,6 +300,12 @@ img{
   cursor: pointer;
 }
 
+textarea {
+  max-width: 300px;
+  min-height: 300px;
+  max-height: 300px;
+}
+
 .boton-chatear {
   background-color: #28a745;
   margin-right: 10px;

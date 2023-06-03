@@ -51,16 +51,22 @@ export class InteresadosComponent {
     if(this.interesados){
       this.interesados.forEach(async (objeto:any) => {
         const dato = await this.inter.getInteresados(objeto)
-        this.interesadosMostrar.push(dato);
+        if(dato != undefined){
+          this.interesadosMostrar.push(dato);
+        }
       });
     }
+
+
 
     this.aceptados = this.ofertaDeTransporte.aceptados;
 
     if(this.aceptados){
       this.aceptados.forEach(async (uid:any) => {
         let dato = await this.inter.getAceptados(uid);
-        this.aceptadosMostrar.push(dato);
+        if(dato != undefined){
+          this.aceptadosMostrar.push(dato);
+        }
       });
     }
 

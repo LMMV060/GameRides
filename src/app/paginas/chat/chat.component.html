@@ -54,9 +54,6 @@
     </span>
 </div>
 
-<div *ngIf="!comprobador" >
-  <p>No se ha seleccionado ningún usuario para chatear, haga click en "Mostrar usuarios" para seleccionar uno</p>
-</div>
 
 <div class="chat" *ngIf="comprobador" >
   <br>
@@ -111,4 +108,9 @@
   </div>
 
   <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escriba su mensaje aquí"/>
+</div>
+<br>
+<br>
+<div class="footer" *ngIf="comprobador" >
+  <app-footer></app-footer>
 </div>

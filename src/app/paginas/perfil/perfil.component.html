@@ -76,6 +76,8 @@
   <div *ngFor="let noticia of NoticiasUsuario" >
     <button class="prueba" (click)="eliminarNoticia(noticia)">Eliminar</button>
     <div class="card my-card" >
+      <img class="card-img-top" src="{{noticia.imagen}}"  alt="Card image cap">
+          <hr>
       <h4 class="card-title" >{{noticia.titulo}}</h4>
       <h6 class="card-subtitle mb-2 text-muted">Autor: {{noticia.nombre_user}}</h6>
       <h6 class="card-subtitle mb-2 text-muted">{{noticia.subtitulo}}</h6>
