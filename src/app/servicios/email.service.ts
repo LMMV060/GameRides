@@ -42,4 +42,20 @@ export class EmailService {
     });
   }
 
+  enviarEmailInteresadoPeticion(EmailAEnviar:any){
+    let emailParams = {
+      from_email: 'GameRides',
+      from_name: 'GameRides',
+      to_email: EmailAEnviar,
+      subject: 'Una nueva persona se ha interesado en su petición',
+    };
+
+    emailjs.send('service_oqlhvny', 'template_z9fiy9r', emailParams, 'MxbfF8StlKGfU3P8-')
+    .then(function(response) {
+
+    }, function(error) {
+
+    });
+  }
+
 }

@@ -41,9 +41,6 @@ export class VisualizarOfertaComponent {
 
     this.nombre = this.datos.nombre;
 
-    console.log(this.datos);
-
-
   }
 
   async chatear(){

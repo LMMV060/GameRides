@@ -346,7 +346,8 @@ export class FirebaseService {
   async borrarPeticion(Peticion:any){
     await deleteDoc(doc(this.basededatos(), "Peticiones", Peticion.id))
     .then(()=> {
-      alert("Peticion borrada, porfavor, actualiza")
+      alert("Peticion borrada");
+      location.reload();
     })
     .catch(err => {
       console.log(err);
@@ -516,8 +517,6 @@ export class FirebaseService {
 
   async meInteresaTransporte(id:any, uid:any){
 
-    try{
-
       let ofertaInteresada = await doc(this.bbdd, "Transportes", id);
     let prueba = await this.getAllTransportes()
     let interesados:any = [];
@@ -527,7 +526,9 @@ export class FirebaseService {
     prueba = prueba.filter((transporte:any) => transporte.id === id);
 
     if(prueba[0].interesados === undefined){
+      alert("Te interesa esta oferta de transporte, ahora debes esperar a que te acepten o rechacen la plaza");
       interesados.push(uid);
+      this.email.enviarEmailInteresado(prueba[0].email);
     } else {
       //Obtiene si ya esta interesado
       interesados = prueba[0].interesados
@@ -557,7 +558,7 @@ export class FirebaseService {
           } else {
             alert("Te interesa esta oferta de transporte, ahora debes esperar a que te acepten o rechacen la plaza")
             interesados.push(uid);
-            await this.email.enviarEmailInteresado(prueba[0].email);
+            this.email.enviarEmailInteresado(prueba[0].email);
           }
         }
       }
@@ -566,15 +567,9 @@ export class FirebaseService {
       interesados: interesados
     });
 
-    } catch(err){
-      alert("Ocurrió un error, porfavor, actualiza e intentelo de nuevo");
-    }
-
   }
 
   async meInteresaPeticion(id:any, uid:any){
-
-    try{
 
       let peticionInteresada = await doc(this.bbdd, "Peticiones", id);
     let prueba = await this.getAllPeticiones()
@@ -585,7 +580,9 @@ export class FirebaseService {
     prueba = prueba.filter((transporte:any) => transporte.id === id);
 
     if(prueba[0].interesados === undefined){
+      alert("Te interesa esta petición de transporte, ahora debes esperar a que te acepten o rechacen")
       interesados.push(uid);
+      this.email.enviarEmailInteresadoPeticion(prueba[0].email);
     } else {
       //Obtiene si ya esta interesado
       interesados = prueba[0].interesados
@@ -613,19 +610,19 @@ export class FirebaseService {
           if(aceptados.includes(uid)){
             alert("Ya estas aceptado, dale un buen viaje!")
           } else {
+            //console.log(prueba[0]);
+
             alert("Te interesa esta petición de transporte, ahora debes esperar a que te acepten o rechacen")
             interesados.push(uid);
+            this.email.enviarEmailInteresadoPeticion(prueba[0].email);
           }
         }
       }
     }
     await updateDoc(peticionInteresada, {
       interesados: interesados
-    });
+    })
 
-    } catch(err){
-      alert("Ocurrió un error, porfavor, actualiza e intentelo de nuevo");
-    }
   }
 
   async calificar(calificacion:any, uidUsuarioCalificado:any, currentUserUID:any){
